@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LibraryComponent } from './library/library.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     MainmenuComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    LibraryComponent
   ],
   imports: [
     BrowserModule,
