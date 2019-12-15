@@ -1,1 +1,25 @@
-<p>login works!</p>
+<div class="login-card">
+  <mat-card>
+    <form [formGroup]="form" (ngSubmit)="login()">
+    <mat-card-title style="text-align: center">Login</mat-card-title>
+    <mat-card-content>
+
+        <div class="login-form">
+          <mat-form-field class="input-namepass">
+            <input matInput  type="text" formControlName="username"/>
+          </mat-form-field>
+          <br/>
+          <mat-form-field class="input-namepass">
+            <input matInput type="text" formControlName="password"/>
+          </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div>
+        <button mat-stroked-button style="margin-left: 45%" type="submit">Log me in</button>
+        <button mat-flat-button style="float: right; font-size: 50%" type="button" (click)="forgotPassword()">Forgot my password</button>
+      </div>
+    </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
