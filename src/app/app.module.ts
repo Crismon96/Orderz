@@ -4,7 +4,11 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
-  MatFormFieldModule, MatInputModule
+  MatFormFieldModule,
+  MatInputModule,
+  MatExpansionModule,
+  MatDialogModule,
+  MatToolbarModule, MatIconModule, MatMenuModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +20,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LibraryComponent } from './library/library.component';
+import { CollectionViewComponent } from './library/collections/collection-view/collection-view.component';
+import { AddNewCollectionModalComponent } from '../templates/add-new-collection-modal/add-new-collection-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +30,9 @@ import { LibraryComponent } from './library/library.component';
     MainmenuComponent,
     HeaderComponent,
     SidebarComponent,
-    LibraryComponent
+    LibraryComponent,
+    CollectionViewComponent,
+    AddNewCollectionModalComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +42,15 @@ import { LibraryComponent } from './library/library.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddNewCollectionModalComponent]
 })
 export class AppModule { }

@@ -1,0 +1,26 @@
+.header {
+  background-color: #1e3799;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+    :first-child {
+      border-right: 2px solid black;
+    }
+}
+
+.header-option {
+  width: 49%;
+  min-width: 400px;
+  text-align: center;
+  font-size: 150%;
+  font-weight: bold;
+  color: aliceblue;
+}
+
+.header-option:hover {
+
+  cursor: pointer;
+  border-bottom: 2px solid black;
+  background-color: #0c2461;
+}
