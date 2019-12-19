@@ -1,9 +1,9 @@
 <mat-toolbar id="header" color="primary" class="top-bar">
   <mat-toolbar-row class="mat-elevation-z8">
-     <button mat-icon-button><i class="material-icons">reply</i></button>
+    <button mat-icon-button (click)="navigateBackButton()"><i class="material-icons">reply</i></button>
 
     <div class="header-title">
-      <div class="header-title">Section-Title</div>
+      <div class="header-title">{{ title }}</div>
     </div>
 
     <span class="toolbar-spacer"></span>

@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  constructor(private router: Router,
-              private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService) {}
 
   ngOnInit() {
     this.initForm();
@@ -20,7 +19,7 @@ export class LoginComponent implements OnInit {
   initForm() {
     this.form = new FormGroup({
       username: new FormControl(),
-      password: new FormControl()
+      password: new FormControl(),
     });
   }
 
@@ -29,9 +28,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('SUBMITTET')
     this.router.navigateByUrl('/main').then(() => {
       this.auth.isLoggedIn.next(true);
+      this.auth.isLoggedIn.subscribe(val => {
+        console.log(val);
+      });
     });
   }
 }

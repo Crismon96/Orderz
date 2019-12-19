@@ -8,7 +8,9 @@ import {
   MatInputModule,
   MatExpansionModule,
   MatDialogModule,
-  MatToolbarModule, MatIconModule, MatMenuModule
+  MatToolbarModule,
+  MatIconModule,
+  MatMenuModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LibraryComponent } from './library/library.component';
 import { CollectionViewComponent } from './library/collections/collection-view/collection-view.component';
 import { AddNewCollectionModalComponent } from '../templates/add-new-collection-modal/add-new-collection-modal.component';
+import { VizardComponent } from './vizard/vizard.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserOptionsComponent } from './user-options/user-options.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,10 @@ import { AddNewCollectionModalComponent } from '../templates/add-new-collection-
     SidebarComponent,
     LibraryComponent,
     CollectionViewComponent,
-    AddNewCollectionModalComponent
+    AddNewCollectionModalComponent,
+    VizardComponent,
+    UserProfileComponent,
+    UserOptionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,10 +55,10 @@ import { AddNewCollectionModalComponent } from '../templates/add-new-collection-
     MatDialogModule,
     MatToolbarModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [AddNewCollectionModalComponent]
+  entryComponents: [AddNewCollectionModalComponent],
 })
-export class AppModule { }
+export class AppModule {}

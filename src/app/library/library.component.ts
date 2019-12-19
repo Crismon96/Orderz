@@ -1,20 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
-import {AddNewCollectionModalComponent} from '../../templates/add-new-collection-modal/add-new-collection-modal.component';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddNewCollectionModalComponent } from '../../templates/add-new-collection-modal/add-new-collection-modal.component';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
-  styleUrls: ['./library.component.scss']
+  styleUrls: ['./library.component.scss'],
 })
 export class LibraryComponent implements OnInit {
-  collections = ['one', 'two', 'three', '21312', 'one', 'two', 'three', '21312', 'one', 'two', 'three', '21312', 'one', 'two', 'three', '21312', 'one', 'two', 'three', '21312', 'one', 'two', 'three', '21312', 'one', 'two', 'three', '21312'];
-  constructor(private router: Router,
-              public dialog: MatDialog
-              ) { }
+  collections = [
+    'one',
+    'two',
+    'three',
+    '21312',
+    'one',
+    'two',
+    'three',
+    '21312',
+    'one',
+    'two',
+    'three',
+    '21312',
+    'one',
+    'two',
+    'three',
+    '21312',
+    'one',
+    'two',
+    'three',
+    '21312',
+    'one',
+    'two',
+    'three',
+    '21312',
+    'one',
+    'two',
+    'three',
+    '21312',
+  ];
+  constructor(private router: Router, public dialog: MatDialog, private header: HeaderService) {}
 
   ngOnInit() {
+    this.header.setTitle('Library');
   }
 
   navigateToVizBoard(choosenCollection) {
@@ -23,11 +52,10 @@ export class LibraryComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddNewCollectionModalComponent, {
-      width: '500px'
+      width: '500px',
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
-
 }

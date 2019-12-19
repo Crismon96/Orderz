@@ -1,6 +1,6 @@
-<div class="container">
-    <button mat-stroked-button class="nav-circle" (click)="onMobileNavActivation()" [@navState]="navState"></button>
-    <button mat-mini-fab class="sub-menu-button" (click)="onNavDataLib()" [@navState-sub1]="navState"><i class="material-icons">storage</i></button>
-    <button mat-mini-fab class="sub-menu-button" [@navState-sub2]="navState"><i class="material-icons">multiline_chart</i></button>
-    <button mat-mini-fab class="sub-menu-button" [@navState-sub3]="navState"><i class="material-icons">settings_applications</i></button>
+<div class="container" *ngIf="isLoggedIn | async">
+  <button mat-stroked-button class="nav-circle" (click)="onMobileNavActivation()" [@navState]="navState"></button>
+  <button mat-mini-fab class="sub-menu-button" (click)="onNavDataLib()" [@navState-sub1]="navState"><i class="material-icons">storage</i></button>
+  <button mat-mini-fab class="sub-menu-button" (click)="onNavDataViz()" [@navState-sub2]="navState"><i class="material-icons">multiline_chart</i></button>
+  <button mat-mini-fab class="sub-menu-button" (click)="onNavUserOpt()" [@navState-sub3]="navState"><i class="material-icons">settings_applications</i></button>
 </div>

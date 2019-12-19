@@ -1,18 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
+import { HeaderService } from '../../services/header.service';
+import { debounceTime, skip, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  title = 'Data Diary';
+  subscription: Subscription;
+  constructor(private router: Router, private auth: AuthService, private header: HeaderService) {}
 
-  constructor(private router: Router,
-              private auth: AuthService) { }
+  ngOnInit(): void {
+    this.subscription = this.header.activeTitle.pipe(debounceTime(100)).subscribe(title => {
+      this.title = title;
+    });
+  }
 
-  ngOnInit() {
+  navigateBackButton() {
+    this.header.activeUrl.pipe(skip(0), take(1)).subscribe(lastPage => {
+      this.router.navigateByUrl(lastPage);
+    });
   }
 
   logout() {
@@ -20,5 +32,9 @@ export class HeaderComponent implements OnInit {
       console.log('Logging user out!');
       this.auth.isLoggedIn.next(false);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,19 +1,20 @@
-<link rel="stylesheet" href="../sidebar/sidebar.component.scss">
+<link rel="stylesheet" href="../sidebar/sidebar.component.scss" />
 <div class="lib-accordion">
-    <mat-accordion>
-      <mat-expansion-panel  *ngFor="let collection of collections">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Here goes the title of the collection
-          </mat-panel-title>
-          <mat-panel-description>
-            This is a short description
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>This is the example for a longer description text with any kind of look.
-          <button mat-raised-button color="warn" (click)="navigateToVizBoard(collection)">Visit my Detail!</button>
-        </p>
-      </mat-expansion-panel>
-    </mat-accordion>
-  <button class="addNewCollection-Btn" mat-fab color="warn" (click)="openDialog()"><i class="material-icons">playlist_add</i></button>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let collection of collections">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Here goes the title of the collection
+        </mat-panel-title>
+        <mat-panel-description>
+          This is a short description
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>
+        This is the example for a longer description text with any kind of look.
+        <button mat-raised-button color="warn" (click)="navigateToVizBoard(collection)">Visit my Detail!</button>
+      </p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <button class="addNewCollection-Btn" mat-fab (click)="openDialog()"><i class="material-icons">playlist_add</i></button>
 </div>
