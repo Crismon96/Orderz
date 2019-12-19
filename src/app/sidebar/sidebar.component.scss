@@ -1,16 +1,17 @@
 .nav-circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  position: fixed;
-  bottom: -50px;
-  left: -50px;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    position: fixed;
+    bottom: -50px;
+    left: -50px;
+    z-index: 100;
 }
 
 .sub-menu-button {
-  background-color: red;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: -100;
+    background-color: #3f51b5;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    cursor: pointer;
 }
