@@ -1,1 +1,7 @@
-<p>sidebar works!</p>
+<div class="container">
+  <button mat-stroked-button class="nav-circle" (click)="onMobileNavActivation()" [@navState]="navState">
+  </button>
+  <button mat-mini-fab class="sub-menu-button" [@navState-sub1]="navState"><i class="material-icons">playlist_add</i></button>
+  <button mat-mini-fab class="sub-menu-button" [@navState-sub2]="navState"><i class="material-icons">playlist_add</i></button>
+  <button mat-mini-fab class="sub-menu-button" [@navState-sub3]="navState"><i class="material-icons">playlist_add</i></button>
+</div>
