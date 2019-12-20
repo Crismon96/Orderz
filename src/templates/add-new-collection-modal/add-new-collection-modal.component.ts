@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ICollection } from '../../shared/Icollection';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Dataset } from '../../shared/Icollection';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AddNewDatasetModalComponent } from '../add-new-dataset-modal/add-new-dataset-modal.component';
 
 @Component({
@@ -11,10 +11,11 @@ import { AddNewDatasetModalComponent } from '../add-new-dataset-modal/add-new-da
 })
 export class AddNewCollectionModalComponent implements OnInit {
   form: FormGroup;
-  arrayItems: {
-    title: string
-    numberOfDataControls: number
-  }[];
+  arrayItems: Dataset[];
+
+  get formArray() {
+    return this.form.get('formArray') as FormArray;
+  }
 
   constructor(public dialogRef: MatDialogRef<AddNewCollectionModalComponent>, private formBuilder: FormBuilder, public dialog: MatDialog) {
     this.form = this.formBuilder.group({
@@ -28,18 +29,23 @@ export class AddNewCollectionModalComponent implements OnInit {
 
   addNewDataset() {
     const dialogRef = this.dialog.open(AddNewDatasetModalComponent, {
-      width: '300px',
+      width: '600px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The inner dialog was closed');
+      if (result) {
+        this.arrayItems.push(result);
+        this.formArray.push(this.formBuilder.control(result.title));
+        console.log(this.formArray);
+      }
     });
   }
 
-  onNoClick(): void {
+  discardChanges(): void {
     this.dialogRef.close();
   }
 
   createNewCollection() {
-    console.log('form submitet');
+    // TODO: Send Form to server
+    this.dialogRef.close(this.arrayItems);
   }
 }

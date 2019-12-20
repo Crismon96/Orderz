@@ -1,8 +1,9 @@
 export interface ICollection {
-  name: string;
+  title: string;
   datasets: Dataset[];
 }
 
 export interface Dataset {
-  name: string;
+  title: string;
+  dataType: string;
 }

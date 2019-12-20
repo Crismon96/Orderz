@@ -1,39 +1,47 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LibraryService } from '../../services/library.service';
 import { MatDialogRef } from '@angular/material';
-import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Dataset } from '../../shared/Icollection';
 
 @Component({
   selector: 'app-add-new-dataset-modal',
   templateUrl: './add-new-dataset-modal.component.html',
   styleUrls: ['./add-new-dataset-modal.component.scss'],
 })
-export class AddNewDatasetModalComponent implements OnInit {
+export class AddNewDatasetModalComponent implements OnInit, OnDestroy {
   title: string;
-  dataa: any;
+  dataType: string;
+  subscription: Subscription;
   types = [
-    'numbered Input (e.g. sizes, currency a.o.)',
-    'decisive Input (e.g. yes or no / true or false)',
-    'selection Input (e.g. choose from a predefined selection)',
+    { text: 'numbered Input (e.g. sizes, currency a.o.)', value: 'number' },
+    { text: 'decisive Input (e.g. yes or no / true or false)', value: 'boolean' },
+    { text: 'selection Input (e.g. choose from a predefined selection)', value: 'selection' },
   ];
   //  @ViewChild('datasetTitle', {static: true}) title: ElementRef;
-  @ViewChild('datasetType', { static: true }) dataType: ElementRef;
+  @ViewChild('datasetType', { static: true }) dataTypeInput: ElementRef;
   constructor(private lib: LibraryService, public dialogRef: MatDialogRef<AddNewDatasetModalComponent>) {}
 
-  ngOnInit() {}
-
-  datasetTypeChange(event: any) {
-    console.log(event);
+  ngOnInit() {
+    // @ts-ignore
+    this.subscription = this.dataTypeInput.valueChange.subscribe(val => {
+      this.dataType = val;
+    });
   }
 
   addDatasetToCollection() {
-    console.log('send the Data to donw compoenent');
-    console.log('title: ', this.title);
-    console.log('dataType: ', this.dataType);
-    console.log('DATTAA: ', this.dataa);
+    const newDataset: Dataset = {
+      title: this.title,
+      dataType: this.dataType,
+    };
+    this.dialogRef.close(newDataset);
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
