@@ -1,0 +1,21 @@
+<div>
+  <h1 mat-dialog-title>Please choose the preset of your dataset.</h1>
+  <div mat-dialog-content>
+    <mat-form-field class="dataset-title-input">
+      <input matInput placeholder="Title of the dataset" [(ngModel)]="title" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Type of Data</mat-label>
+      <mat-select #datasetType>
+        <mat-option *ngFor="let type of types" [value]="type" (selectionChange)="datasetTypeChange($event)">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button (click)="addDatasetToCollection()">Add to Collection</button>
+  </div>
+</div>

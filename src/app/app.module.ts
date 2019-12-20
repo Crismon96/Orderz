@@ -11,6 +11,8 @@ import {
   MatToolbarModule,
   MatIconModule,
   MatMenuModule,
+  MatOptionModule,
+  MatSelectModule,
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,13 +22,14 @@ import { MainmenuComponent } from './mainmenu/mainmenu.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LibraryComponent } from './library/library.component';
 import { CollectionViewComponent } from './library/collections/collection-view/collection-view.component';
 import { AddNewCollectionModalComponent } from '../templates/add-new-collection-modal/add-new-collection-modal.component';
 import { VizardComponent } from './vizard/vizard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserOptionsComponent } from './user-options/user-options.component';
+import { AddNewDatasetModalComponent } from '../templates/add-new-dataset-modal/add-new-dataset-modal.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { UserOptionsComponent } from './user-options/user-options.component';
     VizardComponent,
     UserProfileComponent,
     UserOptionsComponent,
+    AddNewDatasetModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,9 +60,12 @@ import { UserOptionsComponent } from './user-options/user-options.component';
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
+    MatOptionModule,
+    MatSelectModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [AddNewCollectionModalComponent],
+  entryComponents: [AddNewCollectionModalComponent, AddNewDatasetModalComponent],
 })
 export class AppModule {}

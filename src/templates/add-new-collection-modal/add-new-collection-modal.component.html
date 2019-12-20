@@ -2,7 +2,7 @@
   <div>
     <form [formGroup]="form" (ngSubmit)="createNewCollection()">
       <h1 mat-dialog-title>Hi</h1>
-      <button (click)="addDataControl()">Add Category</button>
+      <button (click)="addNewDataset()">Add Category</button>
       <div mat-dialog-content>
         <p>What's your favorite animal?</p>
       </div>
@@ -11,5 +11,5 @@
       </div>
     </form>
   </div>
-  <div></div>
+  <button (click)="addNewDataset()"></button>
 </div>

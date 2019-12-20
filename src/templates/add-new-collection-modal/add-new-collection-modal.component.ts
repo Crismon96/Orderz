@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ICollection } from '../../shared/Icollection';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AddNewDatasetModalComponent } from '../add-new-dataset-modal/add-new-dataset-modal.component';
 
 @Component({
   selector: 'app-add-new-collection-modal',
@@ -15,7 +16,7 @@ export class AddNewCollectionModalComponent implements OnInit {
     numberOfDataControls: number
   }[];
 
-  constructor(public dialogRef: MatDialogRef<AddNewCollectionModalComponent>, private formBuilder: FormBuilder) {
+  constructor(public dialogRef: MatDialogRef<AddNewCollectionModalComponent>, private formBuilder: FormBuilder, public dialog: MatDialog) {
     this.form = this.formBuilder.group({
       formArray: this.formBuilder.array([]),
     });
@@ -25,9 +26,13 @@ export class AddNewCollectionModalComponent implements OnInit {
     this.arrayItems = [];
   }
 
-  addDataControl() {
-    // TODO: Push real Data Control
-    this.arrayItems.push();
+  addNewDataset() {
+    const dialogRef = this.dialog.open(AddNewDatasetModalComponent, {
+      width: '300px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The inner dialog was closed');
+    });
   }
 
   onNoClick(): void {
