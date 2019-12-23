@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="../sidebar/sidebar.component.scss" />
 <div class="lib-accordion">
-  <mat-accordion>
+    <mat-card class="accordion-element" *ngFor="let collection of collections">Just testing the library</mat-card>
+
+
+
+
+<!--  <mat-accordion>
     <mat-expansion-panel *ngFor="let collection of collections">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -15,6 +20,6 @@
         <button mat-raised-button color="warn" (click)="navigateToVizBoard(collection)">Visit my Detail!</button>
       </p>
     </mat-expansion-panel>
-  </mat-accordion>
+  </mat-accordion>-->
   <button class="addNewCollection-Btn" mat-fab (click)="openDialog()"><i class="material-icons">playlist_add</i></button>
 </div>

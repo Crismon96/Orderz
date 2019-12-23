@@ -1,0 +1,20 @@
+.addNewCollection-Btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background-color: #ffa801;
+}
+
+.lib-accordion {
+  margin: 100px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.accordion-element {
+  margin: 10px;
+  width: 44%;
+  height: 300px;
+}
