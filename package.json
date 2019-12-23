@@ -1,0 +1,45 @@
+{
+  "name": "orderz",
+  "version": "1.0.0",
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "concurrently \"cd frontend && npm run start\" \"cd backend && npm run serve\"",
+    "postinstall": "cd frontend && npm install && cd ../backend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Crismon96/Orderz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Crismon96/Orderz/issues"
+  },
+  "homepage": "https://github.com/Crismon96/Orderz#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^3.7.4",
+    "concurrently": "^5.0.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
+    "tslint": "^5.20.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts, js,css,json,md,html,scss}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts": [
+      "tslint --fix",
+      "git add"
+    ]
+  }
+}
