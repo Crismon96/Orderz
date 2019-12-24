@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser'
+import { NgModule } from '@angular/core'
 
 import {
   MatButtonModule,
@@ -13,23 +13,24 @@ import {
   MatMenuModule,
   MatOptionModule,
   MatSelectModule,
-} from '@angular/material';
+} from '@angular/material'
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { MainmenuComponent } from './mainmenu/mainmenu.component';
-import { HeaderComponent } from './header/header.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LibraryComponent } from './library/library.component';
-import { CollectionViewComponent } from './library/collections/collection-view/collection-view.component';
-import { AddNewCollectionModalComponent } from '../templates/add-new-collection-modal/add-new-collection-modal.component';
-import { VizardComponent } from './vizard/vizard.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { UserOptionsComponent } from './user-options/user-options.component';
-import { AddNewDatasetModalComponent } from '../templates/add-new-dataset-modal/add-new-dataset-modal.component';
+import { HttpClientModule } from '@angular/common/http'
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
+import { LoginComponent } from './login/login.component'
+import { MainmenuComponent } from './mainmenu/mainmenu.component'
+import { HeaderComponent } from './header/header.component'
+import { SidebarComponent } from './sidebar/sidebar.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { LibraryComponent } from './library/library.component'
+import { CollectionViewComponent } from './library/collections/collection-view/collection-view.component'
+import { AddNewCollectionModalComponent } from '../templates/add-new-collection-modal/add-new-collection-modal.component'
+import { VizardComponent } from './vizard/vizard.component'
+import { UserProfileComponent } from './user-profile/user-profile.component'
+import { UserOptionsComponent } from './user-options/user-options.component'
+import { AddNewDatasetModalComponent } from '../templates/add-new-dataset-modal/add-new-dataset-modal.component'
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { AddNewDatasetModalComponent } from '../templates/add-new-dataset-modal/
     MatOptionModule,
     MatSelectModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

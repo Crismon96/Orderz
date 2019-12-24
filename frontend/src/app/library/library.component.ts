@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
-import {AddNewCollectionModalComponent} from '../../templates/add-new-collection-modal/add-new-collection-modal.component';
-import {HeaderService} from '../../services/header.service';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddNewCollectionModalComponent } from '../../templates/add-new-collection-modal/add-new-collection-modal.component';
+import { HeaderService } from '../../services/header.service';
+import { LibraryService } from '../../services/library.service';
 
 @Component({
   selector: 'app-library',
@@ -12,14 +13,17 @@ import {HeaderService} from '../../services/header.service';
 export class LibraryComponent implements OnInit {
   collections = ['one', 'two', 'three'];
 
-  constructor(private router: Router, public dialog: MatDialog, private header: HeaderService) {}
+  constructor(private router: Router, public dialog: MatDialog, private header: HeaderService, private lib: LibraryService) {}
 
   ngOnInit() {
     this.header.setTitle('Library');
   }
 
-  navigateToVizBoard(choosenCollection) {
-    this.router.navigateByUrl(`collection?${choosenCollection}`);
+  openCollection(choosenCollection) {
+    //  this.router.navigateByUrl(`collection?${choosenCollection}`);
+    this.lib.getAllCollections().subscribe(data => {
+      console.log(data);
+    });
   }
 
   openDialog() {

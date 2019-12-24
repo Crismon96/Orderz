@@ -1,11 +1,8 @@
 <link rel="stylesheet" href="../sidebar/sidebar.component.scss" />
 <div class="lib-accordion">
-    <mat-card class="accordion-element" *ngFor="let collection of collections">Just testing the library</mat-card>
+  <mat-card (click)="openCollection(collection)" class="accordion-element" *ngFor="let collection of collections">Just testing the library</mat-card>
 
-
-
-
-<!--  <mat-accordion>
+  <!--  <mat-accordion>
     <mat-expansion-panel *ngFor="let collection of collections">
       <mat-expansion-panel-header>
         <mat-panel-title>

@@ -18,3 +18,8 @@
   width: 44%;
   height: 300px;
 }
+
+.accordion-element:hover {
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}

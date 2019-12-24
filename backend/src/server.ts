@@ -3,6 +3,8 @@ import bodyParser from 'koa-bodyparser'
 import koaStatic from 'koa-static'
 import path from 'path'
 import mount from 'koa-mount'
+import { collectionController } from './controller/collection.controller'
+import { authenticationController } from './controller/authentication.controller'
 
 const app = new Koa()
 
@@ -14,8 +16,8 @@ app.use(koaStatic(assetPath))
 // Serve API
 app.use(bodyParser())
 
-/*app.use(mount('/api/auth', authenticationController()));
-app.use(mount('/api/categories', categoriesController()));*/
+app.use(mount('/api/auth', authenticationController()))
+app.use(mount('/api/collections', collectionController()))
 
 // Start server
 if (process.env.NODE_ENV !== 'test') {
