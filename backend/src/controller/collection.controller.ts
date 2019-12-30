@@ -16,6 +16,7 @@ client.connect(function(err) {
   console.log('Connected successfully to server');
   db = client.db(dbName);
   fitnessCollection = db.collection('fitness');
+  fitnessCollection.insertOne({ test: 'abc' });
   client.close().then(() => {
     console.log('Made Preset of Collections');
   });
