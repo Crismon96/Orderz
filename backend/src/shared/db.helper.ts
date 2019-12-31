@@ -8,6 +8,7 @@ const dbName = 'Orderz';
 let client: MongoClient;
 export let db: any;
 export let fitnessCollection: any;
+export let collectionInfo: any;
 
 export async function connect() {
   client = await MongoClient.connect(dbUrl, { useNewUrlParser: true });
@@ -17,10 +18,24 @@ export async function connect() {
   client.connect(function(err) {
     console.log('Connected successfully to server');
     db = client.db(dbName);
+    collectionInfo = db.collection('collectionInfo');
+
     fitnessCollection = db.collection('fitness');
-    fitnessCollection.insertOne({ test: 'abc' });
+    fitnessCollection.insertOne({
+      sprint: 10,
+      pushUps: 15,
+      benchpress: 40,
+      squat: 45,
+    });
+    collectionInfo.insertOne({
+      name: 'fitness',
+      numberOfDatasets: 4,
+      description: 'Track your progress in any disciplin and observe how you get better every day',
+      numberOfEntries: 1,
+    });
   });
 }
+
 export async function disconnect() {
   if (client) {
     console.log('DB: closing connection');

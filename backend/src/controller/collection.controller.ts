@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import { Context } from 'koa';
-import { db, fitnessCollection } from '../shared/db.helper';
+import { db, fitnessCollection, collectionInfo } from '../shared/db.helper';
 import { FitnessEntry } from '../../../sharedModules/schemaInterfaces/fitness-POST-addNewEntry.schema';
 import { CreateNewCollection } from '../../../sharedModules/schemaInterfaces/collection-POST-createNewCollection.schema';
 import { MongoError } from 'mongodb';
@@ -17,9 +17,11 @@ export function collectionController() {
 
 export async function getAllCollections(ctx: Context) {
   // TODO: Store the information about the collection in the first entry or in different collection
-  const allCollections = (await db.listCollections().toArray()).map((col: any) => {
+  const allCollections = await db.getCollection('collectionInfo').find({});
+  console.log('THIS ARE ALL COLLECTIONS: ', allCollections);
+  /*  const allCollections = (await db.listCollections().toArray()).map((col: any) => {
     return col.name;
-  });
+  });*/
   ctx.status = 200;
   ctx.body = allCollections;
 }
