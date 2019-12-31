@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/mongodb": "^3.3.14",
+    "ajv": "^6.10.2",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-compose": "^4.1.0",
@@ -21,6 +21,7 @@
     "mongodb": "^3.4.1"
   },
   "devDependencies": {
+    "@types/mongodb": "^3.3.14",
     "@types/koa": "^2.0.51",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-mount": "^4.0.0",

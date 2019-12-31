@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="../sidebar/sidebar.component.scss" />
 <div class="lib-accordion">
-  <mat-card (click)="openCollection(collection)" class="accordion-element" *ngFor="let collection of collections">Just testing the library</mat-card>
+  <mat-card (click)="openCollection(collection)" class="accordion-element" *ngFor="let collection of collections"> {{ collection }}</mat-card>
 
   <!--  <mat-accordion>
     <mat-expansion-panel *ngFor="let collection of collections">

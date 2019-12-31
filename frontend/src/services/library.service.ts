@@ -8,6 +8,6 @@ export class LibraryService {
   constructor(private http: HttpClient) {}
 
   getAllCollections() {
-    return this.http.get('api/collections');
+    return this.http.get<string[]>('api/collections');
   }
 }

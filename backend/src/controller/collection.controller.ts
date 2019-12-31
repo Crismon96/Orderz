@@ -1,27 +1,9 @@
 import Router from 'koa-router';
 import { Context } from 'koa';
-import { MongoClient } from 'mongodb';
-
-// Connection URL
-const url = 'mongodb://localhost:27017';
-// Database Name
-const dbName = 'Orderz';
-// Create a new MongoClient
-const client = new MongoClient(url);
-let db: any;
-let fitnessCollection: any;
-
-// Connect to Mongo and initiate DB with preset collections
-client.connect(function(err) {
-  console.log('Connected successfully to server');
-  db = client.db(dbName);
-  fitnessCollection = db.collection('fitness');
-  fitnessCollection.insertOne({ test: 'abc' });
-  client.close().then(() => {
-    console.log('Made Preset of Collections');
-  });
-});
-
+import { db, fitnessCollection } from '../shared/db.helper';
+import { FitnessEntry } from '../../../sharedModules/schemaInterfaces/fitness-POST-addNewEntry.schema';
+import { CreateNewCollection } from '../../../sharedModules/schemaInterfaces/collection-POST-createNewCollection.schema';
+import { MongoError } from 'mongodb';
 // Routes
 export function collectionController() {
   const router = new Router();
@@ -34,31 +16,40 @@ export function collectionController() {
 }
 
 export async function getAllCollections(ctx: Context) {
-  console.log('API WORKS');
+  // TODO: Store the information about the collection in the first entry or in different collection
+  const allCollections = (await db.listCollections().toArray()).map((col: any) => {
+    return col.name;
+  });
   ctx.status = 200;
-  ctx.body = 'success';
+  ctx.body = allCollections;
 }
 
 export async function createNewCollection(ctx: Context) {
-  const collectionName: string = ctx.request.body.name;
-  const firstCollectionEntry = ctx.request.body.entry;
-  console.log('collectionnmae: ', collectionName, 'entry: ', firstCollectionEntry);
-  // Use connect method to connect to the Server
-  await client.connect(function() {
-    const newCollection = db.collection(collectionName);
-    newCollection.insertOne(firstCollectionEntry);
-    client.close();
-  });
+  const newCollectionObj: CreateNewCollection = ctx.request.body;
 
-  console.log('created the new Collections');
-  ctx.body = 'success';
-  ctx.status = 200;
+  const newCollection = await db.collection(newCollectionObj.name);
+  await newCollection.insertOne(newCollectionObj.entry);
+
+  console.log('created the new Collection: ' + newCollectionObj.name);
+  if (newCollection) {
+    ctx.body = newCollectionObj;
+    ctx.status = 200;
+  } else {
+    ctx.body = 'Error while trying to create new Collection';
+    ctx.status = 400;
+  }
 }
 
 export async function addNewFitnessData(ctx: Context) {
-  const fitnessData = ctx.request.body;
-  await client.connect(function() {
-    fitnessCollection.insertOne(fitnessData);
-    client.close();
-  });
+  const fitnessData: FitnessEntry = ctx.request.body;
+  await fitnessCollection
+    .insertOne(fitnessData)
+    .then(() => {
+      ctx.body = fitnessData;
+      ctx.status = 200;
+    })
+    .catch((err: MongoError) => {
+      ctx.body = 'Error trying to add new fitness entry: ' + err;
+      ctx.status = 400;
+    });
 }

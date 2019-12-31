@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "FitnessEntry",
+  "title": "FitnessEntry",
+  "type": "object",
+  "properties": {
+    "50m-sprint": "number",
+    "push-ups": "number",
+    "benchpress": "number",
+    "squat": "number"
+  }
+}

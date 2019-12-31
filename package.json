@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "concurrently \"cd frontend && npm run start\" \"cd backend && npm run serve\"",
-    "postinstall": "cd frontend && npm install && cd ../backend && npm install"
+    "postinstall": "cd frontend && npm install && cd ../backend && npm install",
+    "interface": "bash schema_to_interface.sh"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,8 @@
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
-    "tslint": "^5.20.0"
+    "tslint": "^5.20.0",
+    "json-schema-to-typescript": "^7.1.0"
   },
   "husky": {
     "hooks": {
