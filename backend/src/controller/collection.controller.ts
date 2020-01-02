@@ -17,7 +17,10 @@ export function collectionController() {
 
 export async function getAllCollections(ctx: Context) {
   // TODO: Store the information about the collection in the first entry or in different collection
-  const allCollections = await db.getCollection('collectionInfo').find({});
+  const allCollections = await db
+    .collection('collectionInfo')
+    .find({})
+    .toArray();
   console.log('THIS ARE ALL COLLECTIONS: ', allCollections);
   /*  const allCollections = (await db.listCollections().toArray()).map((col: any) => {
     return col.name;

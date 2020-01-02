@@ -31,6 +31,7 @@ import { VizardComponent } from './vizard/vizard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserOptionsComponent } from './user-options/user-options.component';
 import { AddNewDatasetModalComponent } from '../templates/add-new-dataset-modal/add-new-dataset-modal.component';
+import { CollectionPanelComponent } from './library/collection-panel/collection-panel.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AddNewDatasetModalComponent } from '../templates/add-new-dataset-modal/
     UserProfileComponent,
     UserOptionsComponent,
     AddNewDatasetModalComponent,
+    CollectionPanelComponent,
   ],
   imports: [
     BrowserModule,

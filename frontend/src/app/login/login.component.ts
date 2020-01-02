@@ -30,9 +30,6 @@ export class LoginComponent implements OnInit {
   login() {
     this.router.navigateByUrl('/main').then(() => {
       this.auth.isLoggedIn.next(true);
-      this.auth.isLoggedIn.subscribe(val => {
-        console.log(val);
-      });
     });
   }
 }
