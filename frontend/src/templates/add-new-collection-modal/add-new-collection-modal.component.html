@@ -1,14 +1,14 @@
 <div class="dialog">
   <button class="bottom-banner-button" mat-fab (click)="addNewDataset()"><i class="material-icons">add_circle_outline</i></button>
   <form [formGroup]="form" (ngSubmit)="createNewCollection()">
-    <h1 mat-dialog-title>Create a new Collection</h1>
+    <h1 mat-dialog-title style="text-align: center">Create a new Collection</h1>
     <div mat-dialog-content class="dialog-content">
       <p>
-        Enter the title of the collection.
+        Enter the title of the collection:
         <input type="text" formControlName="collectionTitle" />
       </p>
-      <div formArrayName="formArray" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
-        <input type="text" [formControl]="formArray.controls[i]" value="arrayItem.title" />
+      <div formArrayName="datasets" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
+        <input type="text" [formControl]="datasets.controls[i]" [value]="arrayItem.title" readonly />
         <label [for]="arrayItem" class="array-item-title"> {{ arrayItem.dataType }}</label>
         <br />
       </div>

@@ -9,7 +9,7 @@ export function collectionController() {
   const router = new Router();
 
   router.get('', getAllCollections);
-  router.post('/create', createNewCollection);
+  router.put('/create', createNewCollection);
   router.post('/fitness/entry', addNewFitnessData);
 
   return router.routes();
@@ -30,12 +30,20 @@ export async function getAllCollections(ctx: Context) {
 }
 
 export async function createNewCollection(ctx: Context) {
+  console.log(ctx.request.body);
   const newCollectionObj: CreateNewCollection = ctx.request.body;
 
-  const newCollection = await db.collection(newCollectionObj.name);
-  await newCollection.insertOne(newCollectionObj.entry);
+  const newCollection = await db.collection(newCollectionObj.collectionTitle);
+  await newCollection.insertOne({ configuration: newCollectionObj.datasets });
 
-  console.log('created the new Collection: ' + newCollectionObj.name);
+  await collectionInfo.insertOne({
+    name: newCollectionObj.collectionTitle,
+    numberOfDatasets: newCollectionObj.datasets.length,
+    description: 'Some other description',
+    numberOfEntries: 1,
+  });
+
+  console.log('created the new Collection: ' + newCollectionObj.collectionTitle);
   if (newCollection) {
     ctx.body = newCollectionObj;
     ctx.status = 200;

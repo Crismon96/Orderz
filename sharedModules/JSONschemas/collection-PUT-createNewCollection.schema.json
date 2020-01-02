@@ -4,8 +4,8 @@
   "title": "CreateNewCollection",
   "type": "object",
   "properties": {
-    "name": { "type": "string" },
-    "entry": { "type": "object" }
+    "collectionTitle": { "type": "string" },
+    "datasets": { "type": "object" }
   },
   "required": ["name", "entry"]
 }

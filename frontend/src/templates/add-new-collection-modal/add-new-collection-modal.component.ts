@@ -14,8 +14,8 @@ export class AddNewCollectionModalComponent implements OnInit {
   form: FormGroup;
   arrayItems: Dataset[];
 
-  get formArray() {
-    return this.form.get('formArray') as FormArray;
+  get datasets() {
+    return this.form.get('datasets') as FormArray;
   }
 
   constructor(
@@ -26,7 +26,7 @@ export class AddNewCollectionModalComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       collectionTitle: this.formBuilder.control([]),
-      formArray: this.formBuilder.array([]),
+      datasets: this.formBuilder.array([]),
     });
   }
 
@@ -41,8 +41,8 @@ export class AddNewCollectionModalComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.arrayItems.push(result);
-        this.formArray.push(this.formBuilder.control(result));
-        console.log(this.formArray);
+        this.datasets.push(this.formBuilder.control(result));
+        console.log(this.datasets);
       }
     });
   }

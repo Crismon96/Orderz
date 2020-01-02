@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddNewCollectionModalComponent } from '../../templates/add-new-collection-modal/add-new-collection-modal.component';
 import { HeaderService } from '../../services/header.service';
 import { LibraryService } from '../../services/library.service';
+import { ICollection } from '../../shared/Icollection';
 
 @Component({
   selector: 'app-library',
@@ -11,7 +12,7 @@ import { LibraryService } from '../../services/library.service';
   styleUrls: ['./library.component.scss'],
 })
 export class LibraryComponent implements OnInit {
-  collections = ['one', 'two', 'three'];
+  collections = [];
 
   constructor(private router: Router, public dialog: MatDialog, private header: HeaderService, private lib: LibraryService) {}
 
@@ -23,17 +24,16 @@ export class LibraryComponent implements OnInit {
     });
   }
 
-  openCollection(choosenCollection) {
-    //  this.router.navigateByUrl(`collection?${choosenCollection}`);
-  }
-
-  openDialog() {
+  createNewCollection() {
     const dialogRef = this.dialog.open(AddNewCollectionModalComponent, {
       width: '500px',
       height: '500px',
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.lib.createNewCollection(result).subscribe(newCollection => {
+        console.log(newCollection);
+      });
     });
   }
 }
