@@ -2,6 +2,8 @@
   <mat-card-title class="collection-panel-title">{{ collection.name }}</mat-card-title>
   <mat-card-content>
     <div class="collection-panel-description">{{ collection.description }}</div>
-    <div class="collection-panel-stats"></div>
+    <div class="collection-panel-stats">
+      Number of published entries: {{ collection.numberOfEntries }} Number of Datasets: {{ collection.numberOfDatasets }}
+    </div>
   </mat-card-content>
 </mat-card>

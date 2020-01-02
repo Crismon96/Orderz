@@ -3,9 +3,12 @@
   <form [formGroup]="form" (ngSubmit)="createNewCollection()">
     <h1 mat-dialog-title>Create a new Collection</h1>
     <div mat-dialog-content class="dialog-content">
-      <p>What's your favorite animal?</p>
+      <p>
+        Enter the title of the collection.
+        <input type="text" formControlName="collectionTitle" />
+      </p>
       <div formArrayName="formArray" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
-        <input type="text" [formControl]="formArray.controls[i]" />
+        <input type="text" [formControl]="formArray.controls[i]" value="arrayItem.title" />
         <label [for]="arrayItem" class="array-item-title"> {{ arrayItem.dataType }}</label>
         <br />
       </div>

@@ -13,6 +13,7 @@ import {
   MatMenuModule,
   MatOptionModule,
   MatSelectModule,
+  MatSnackBarModule,
 } from '@angular/material';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -67,6 +68,7 @@ import { CollectionPanelComponent } from './library/collection-panel/collection-
     MatSelectModule,
     FormsModule,
     HttpClientModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -9,7 +9,17 @@
   text-transform: uppercase;
 }
 
-.collection-panel-content {
+.collection-panel-description {
   position: relative;
   display: inline-block;
+  width: 40%;
+  margin-right: 5px;
+  padding-right: 5px;
+  border-right: 2px solid black;
+}
+
+.collection-panel-stats {
+  position: relative;
+  display: inline-block;
+  width: 55%;
 }

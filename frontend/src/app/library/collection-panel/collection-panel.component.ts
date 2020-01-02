@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ICollectionInfo } from '../../../shared/IcollectionInfo';
 
 @Component({
   selector: 'app-collection-panel',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./collection-panel.component.scss'],
 })
 export class CollectionPanelComponent implements OnInit {
-  @Input() collection: any;
+  @Input() collection: ICollectionInfo;
   constructor() {}
 
   ngOnInit() {}
