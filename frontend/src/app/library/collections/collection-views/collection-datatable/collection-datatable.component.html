@@ -1,1 +1,32 @@
-<p>{{ collection.name }}</p>
+<div>
+  <h2 style="text-align: center">Make a new submission for {{ collection.name }}</h2>
+  <div>
+    <form [formGroup]="form" (ngSubmit)="createNewDataPoint()">
+      <div mat-dialog-content class="dialog-content">
+        <div formArrayName="data" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
+          <input class="dynamic-number-input" *ngIf="arrayItem.dataType === 'number'" type="number" placeholder="null" [formControl]="data.controls[i]" />
+          <label *ngIf="arrayItem.dataType === 'number'" [for]="arrayItem" class="array-item-title"> {{ arrayItem.title }}</label>
+          <mat-slide-toggle
+            class="dynamic-boolean-input"
+            [checked]="false"
+            color="primary"
+            *ngIf="arrayItem.dataType === 'boolean'"
+            [formControl]="data.controls[i]"
+          >
+            {{ arrayItem.title }}
+          </mat-slide-toggle>
+          <mat-select *ngIf="arrayItem.dataType === 'selection'" class="dynamic-selection-input" [formControl]="data.controls[i]">
+            <mat-option *ngFor="let type of types" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <br />
+        </div>
+      </div>
+      <div mat-dialog-actions class="action-buttons">
+        <button mat-button type="submit">Save</button>
+        <button mat-button type="button">Discard All!</button>
+      </div>
+    </form>
+  </div>
+</div>

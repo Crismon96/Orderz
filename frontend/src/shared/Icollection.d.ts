@@ -6,4 +6,5 @@ export interface ICollection {
 export interface Dataset {
   title: string;
   dataType: string;
+  data?: string | number | boolean;
 }

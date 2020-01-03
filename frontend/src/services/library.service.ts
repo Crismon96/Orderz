@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ICollectionInfo } from '../shared/IcollectionInfo';
+import { ICollectionConfig, ICollectionInfo } from '../shared/IcollectionInfo';
 import { ICollection } from '../shared/Icollection';
 import { BehaviorSubject } from 'rxjs';
 
@@ -21,6 +21,6 @@ export class LibraryService {
   }
 
   getCollectionByName(collection: ICollectionInfo) {
-    return this.http.get<ICollection>(`api/collections/collection?name=${collection.name}`);
+    return this.http.get<ICollectionConfig>(`api/collections/collection?name=${collection.name}`);
   }
 }

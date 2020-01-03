@@ -14,6 +14,7 @@ import {
   MatOptionModule,
   MatSelectModule,
   MatSnackBarModule,
+  MatSlideToggleModule,
 } from '@angular/material';
 import { TextFieldModule } from '@angular/cdk/text-field';
 
@@ -75,6 +76,7 @@ import { CollectionDatatableComponent } from './library/collections/collection-v
     HttpClientModule,
     MatSnackBarModule,
     TextFieldModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

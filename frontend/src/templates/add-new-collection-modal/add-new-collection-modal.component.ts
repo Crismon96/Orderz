@@ -43,7 +43,6 @@ export class AddNewCollectionModalComponent implements OnInit {
       if (result) {
         this.arrayItems.push(result);
         this.datasets.push(this.formBuilder.control(result));
-        console.log(this.datasets);
       }
     });
   }
