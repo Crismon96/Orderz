@@ -5,6 +5,7 @@
   "type": "object",
   "properties": {
     "collectionTitle": { "type": "string" },
+    "collectionDescription": { "type": "string" },
     "datasets": { "type": "object" }
   },
   "required": ["name", "entry"]

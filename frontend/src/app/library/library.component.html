@@ -1,6 +1,12 @@
 <link rel="stylesheet" href="../sidebar/sidebar.component.scss" />
 <div class="lib-accordion">
-  <app-collection-panel class="accordion-element" *ngFor="let collection of collections" [collection]="collection"></app-collection-panel>
+  <app-collection-panel
+    class="accordion-element"
+    routerLink="collection"
+    *ngFor="let collection of collections"
+    [collection]="collection"
+    (click)="chooseActiveCollection(collection)"
+  ></app-collection-panel>
 
   <!--  <mat-accordion>
     <mat-expansion-panel *ngFor="let collection of collections">

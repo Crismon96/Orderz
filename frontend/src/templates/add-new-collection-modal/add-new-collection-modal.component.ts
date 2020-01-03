@@ -26,6 +26,7 @@ export class AddNewCollectionModalComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       collectionTitle: this.formBuilder.control([]),
+      collectionDescription: this.formBuilder.control([]),
       datasets: this.formBuilder.array([]),
     });
   }

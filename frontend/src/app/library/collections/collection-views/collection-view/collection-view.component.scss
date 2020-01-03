@@ -1,12 +1,16 @@
+.collection-view-header {
+  margin-top: 75px;
+}
+
 .header {
   background-color: #1e3799;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-    :first-child {
-      border-right: 2px solid black;
-    }
+  :first-child {
+    border-right: 2px solid black;
+  }
 }
 
 .header-option {
@@ -19,7 +23,6 @@
 }
 
 .header-option:hover {
-
   cursor: pointer;
   border-bottom: 2px solid black;
   background-color: #0c2461;

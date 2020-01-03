@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICollectionInfo } from '../../../shared/IcollectionInfo';
+import { ICollectionInfo } from '../../../../shared/IcollectionInfo';
 
 @Component({
   selector: 'app-collection-panel',

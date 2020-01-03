@@ -12,6 +12,10 @@
         <label [for]="arrayItem" class="array-item-title"> {{ arrayItem.dataType }}</label>
         <br />
       </div>
+      <mat-form-field class="collection-description">
+        <mat-label>Insert a detailed description of what you want to achieve and how to measure it.</mat-label>
+        <textarea matInput formControlName="collectionDescription" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+      </mat-form-field>
     </div>
     <div mat-dialog-actions class="action-buttons">
       <button mat-button type="submit">Save</button>

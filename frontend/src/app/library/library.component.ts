@@ -36,4 +36,8 @@ export class LibraryComponent implements OnInit {
       });
     });
   }
+
+  chooseActiveCollection(choosenCollection) {
+    this.lib.activeCollection.next(choosenCollection);
+  }
 }

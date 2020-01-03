@@ -1,0 +1,10 @@
+<div class="collection-view-header">
+  <mat-card>
+    <div class="header">
+      <div class="header-option" (click)="displayDataView()">Data View</div>
+      <div class="header-option" (click)="displayDataTable()">Data Tables</div>
+    </div>
+    <app-collection-datatable *ngIf="displayChoice === 'displayDataTable'"></app-collection-datatable>
+    <app-collection-dataview *ngIf="displayChoice === 'displayDataView'"></app-collection-dataview>
+  </mat-card>
+</div>
