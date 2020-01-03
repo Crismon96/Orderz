@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library.service';
 import { ICollectionInfo } from '../../../../../shared/IcollectionInfo';
 import { ICollection } from '../../../../../shared/Icollection';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-collection-datatable',
@@ -9,17 +10,20 @@ import { ICollection } from '../../../../../shared/Icollection';
   styleUrls: ['./collection-datatable.component.scss'],
 })
 export class CollectionDatatableComponent implements OnInit {
-  private collection: ICollectionInfo;
-  private collectionDefinition: ICollection;
+  collection: ICollectionInfo;
+  collectionDefinition: ICollection;
+  subscriptions = new Subscription();
   constructor(private lib: LibraryService) {}
 
   ngOnInit() {
-    this.lib.activeCollection.subscribe(activeCollection => {
-      this.collection = activeCollection;
-      this.lib.getCollectionByName(activeCollection).subscribe(result => {
-        this.collectionDefinition = result;
-      });
-      console.log(this.collectionDefinition);
-    });
+    this.subscriptions.add(
+      this.lib.activeCollection.subscribe(activeCollection => {
+        this.collection = activeCollection;
+        this.lib.getCollectionByName(activeCollection).subscribe(result => {
+          this.collectionDefinition = result;
+          console.log(activeCollection, result);
+        });
+      })
+    );
   }
 }

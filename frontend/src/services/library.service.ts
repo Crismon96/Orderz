@@ -21,6 +21,6 @@ export class LibraryService {
   }
 
   getCollectionByName(collection: ICollectionInfo) {
-    return this.http.get<ICollection>(`api/collections/collection?${collection.name}`);
+    return this.http.get<ICollection>(`api/collections/collection?name=${collection.name}`);
   }
 }
