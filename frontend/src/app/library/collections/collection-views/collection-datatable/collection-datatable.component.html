@@ -8,7 +8,7 @@
           <label *ngIf="arrayItem.dataType === 'number'" [for]="arrayItem" class="array-item-title"> {{ arrayItem.title }}</label>
           <mat-slide-toggle
             class="dynamic-boolean-input"
-            [checked]="false"
+            checked="false"
             color="primary"
             *ngIf="arrayItem.dataType === 'boolean'"
             [formControl]="data.controls[i]"
@@ -24,8 +24,8 @@
         </div>
       </div>
       <div mat-dialog-actions class="action-buttons">
-        <button mat-button type="submit">Save</button>
-        <button mat-button type="button">Discard All!</button>
+        <button mat-button type="submit">Submit Data</button>
+        <button mat-button type="button">Reset All!</button>
       </div>
     </form>
   </div>

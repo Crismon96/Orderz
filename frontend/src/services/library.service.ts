@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ICollectionConfig, ICollectionInfo } from '../shared/IcollectionInfo';
-import { ICollection } from '../shared/Icollection';
+import { Dataset, ICollection } from '../shared/Icollection';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -22,5 +22,9 @@ export class LibraryService {
 
   getCollectionByName(collection: ICollectionInfo) {
     return this.http.get<ICollectionConfig>(`api/collections/collection?name=${collection.name}`);
+  }
+
+  submitNewDatapoint(newDatapoint: Dataset[], collection: ICollectionInfo) {
+    return this.http.put(`api/collections/datapoint/create?name=${collection.name}`, newDatapoint);
   }
 }

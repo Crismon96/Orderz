@@ -30,9 +30,8 @@ export class LibraryComponent implements OnInit {
       height: '500px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
       this.lib.createNewCollection(result).subscribe(newCollection => {
-        console.log(newCollection);
+        this.collections.push(newCollection);
       });
     });
   }

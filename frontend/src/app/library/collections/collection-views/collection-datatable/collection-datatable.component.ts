@@ -4,6 +4,7 @@ import { ICollectionConfig, ICollectionInfo } from '../../../../../shared/Icolle
 import { Dataset } from '../../../../../shared/Icollection';
 import { Subscription } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-collection-datatable',
@@ -13,7 +14,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export class CollectionDatatableComponent implements OnInit {
   collection: ICollectionInfo;
   collectionDefinition: ICollectionConfig;
-  subscriptions = new Subscription();
+
   // TODO: Edit Types so they make sense
   types = [1, 2, 3, 4];
 
@@ -31,10 +32,12 @@ export class CollectionDatatableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscriptions.add(
-      this.lib.activeCollection.subscribe(activeCollection => {
-        this.collection = activeCollection;
-        this.lib.getCollectionByName(activeCollection).subscribe(result => {
+    this.lib.activeCollection.pipe(take(1)).subscribe(activeCollection => {
+      this.collection = activeCollection;
+      this.lib
+        .getCollectionByName(activeCollection)
+        .pipe(take(1))
+        .subscribe(result => {
           this.collectionDefinition = result;
           console.log(activeCollection, result);
           this.arrayItems = result.configuration;
@@ -42,8 +45,7 @@ export class CollectionDatatableComponent implements OnInit {
             this.data.push(this.formBuilder.control(undefined));
           }
         });
-      })
-    );
+    });
   }
 
   createNewDataPoint() {
@@ -53,5 +55,8 @@ export class CollectionDatatableComponent implements OnInit {
       positionCounter++;
     });
     console.log(this.form.value, 'END RESULT: ', this.arrayItems);
+    this.lib.submitNewDatapoint(this.arrayItems, this.collection).subscribe(result => {
+      console.log(result);
+    });
   }
 }
