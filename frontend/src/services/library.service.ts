@@ -25,6 +25,6 @@ export class LibraryService {
   }
 
   submitNewDatapoint(newDatapoint: Dataset[], collection: ICollectionInfo) {
-    return this.http.put(`api/collections/datapoint/create?name=${collection.name}`, newDatapoint);
+    return this.http.put(`api/collections/datapoint?collection=${collection.name}`, newDatapoint);
   }
 }
