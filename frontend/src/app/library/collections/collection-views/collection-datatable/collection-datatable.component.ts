@@ -3,8 +3,9 @@ import { LibraryService } from '../../../../../services/library.service';
 import { ICollectionConfig, ICollectionInfo } from '../../../../../shared/IcollectionInfo';
 import { Dataset } from '../../../../../shared/Icollection';
 import { Subscription } from 'rxjs';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { take } from 'rxjs/operators';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 
 @Component({
   selector: 'app-collection-datatable',
@@ -17,6 +18,7 @@ export class CollectionDatatableComponent implements OnInit {
 
   // TODO: Edit Types so they make sense
   types = [1, 2, 3, 4];
+  sendDatapointBtnDisabled = false;
 
   form: FormGroup;
   arrayItems: Dataset[];
@@ -25,7 +27,7 @@ export class CollectionDatatableComponent implements OnInit {
     return this.form.get('data') as FormArray;
   }
 
-  constructor(private lib: LibraryService, private formBuilder: FormBuilder) {
+  constructor(private lib: LibraryService, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
     this.form = this.formBuilder.group({
       data: this.formBuilder.array([]),
     });
@@ -39,7 +41,6 @@ export class CollectionDatatableComponent implements OnInit {
         .pipe(take(1))
         .subscribe(result => {
           this.collectionDefinition = result;
-          console.log(activeCollection, result);
           this.arrayItems = result.configuration;
           for (const dataPoint of result.configuration) {
             this.data.push(this.formBuilder.control(undefined));
@@ -48,15 +49,24 @@ export class CollectionDatatableComponent implements OnInit {
     });
   }
 
+  resetDatapointForm(form: NgForm) {
+    form.reset();
+  }
+
   createNewDataPoint() {
+    this.sendDatapointBtnDisabled = true;
     let positionCounter = 0;
     this.arrayItems.map(dataField => {
       dataField.data = this.form.value.data[positionCounter];
       positionCounter++;
     });
-    console.log(this.form.value, 'END RESULT: ', this.arrayItems);
     this.lib.submitNewDatapoint(this.arrayItems, this.collection).subscribe(result => {
-      console.log(result);
+      this.snackBar
+        .open('Your data was saved successfully. Close to continue sending.', 'close')
+        .afterDismissed()
+        .subscribe(wasDismissed => {
+          this.sendDatapointBtnDisabled = false;
+        });
     });
   }
 }

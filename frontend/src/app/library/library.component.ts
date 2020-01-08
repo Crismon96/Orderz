@@ -31,7 +31,9 @@ export class LibraryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.lib.createNewCollection(result).subscribe(newCollection => {
-        this.collections.push(newCollection);
+        this.lib.getAllCollections().subscribe(data => {
+          this.collections = data;
+        });
       });
     });
   }

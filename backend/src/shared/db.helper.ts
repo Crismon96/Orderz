@@ -15,19 +15,21 @@ export async function connect() {
   db = client.db(dbName);
 
   // Connect to Mongo and initiate DB with preset collections
-  client.connect(function(err) {
+  client.connect(async function(err) {
     console.log('Connected successfully to server');
     db = client.db(dbName);
     collectionInfo = db.collection('collectionInfo');
 
-    fitnessCollection = db.collection('fitness');
-    fitnessCollection.insertOne({
-      sprint: 10,
-      pushUps: 15,
-      benchpress: 40,
-      squat: 45,
+    fitnessCollection = await db.collection('fitness');
+    await fitnessCollection.insertOne({
+      configuration: [
+        { title: 'sprint', dataType: 'number' },
+        { title: 'pushUps', dataType: 'number' },
+        { title: 'benchpress', dataType: 'number' },
+        { title: 'squat', dataType: 'number' },
+      ],
     });
-    collectionInfo.insertOne({
+    await collectionInfo.insertOne({
       name: 'fitness',
       numberOfDatasets: 4,
       description: 'Track your progress in any disciplin and observe how you get better every day',
