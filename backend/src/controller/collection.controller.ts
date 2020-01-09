@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import { Context } from 'koa';
-import { db, fitnessCollection, collectionInfo } from '../shared/db.helper';
+import { db } from '../shared/db.helper';
 import { FitnessEntry } from '../../../sharedModules/schemaInterfaces/fitness-POST-addNewEntry.schema';
 import { CreateNewCollection } from '../../../sharedModules/schemaInterfaces/collection-POST-createNewCollection.schema';
 import { MongoError } from 'mongodb';
@@ -11,8 +11,8 @@ export function collectionController() {
   router.get('', getAllCollections);
   router.get('/collection', getSpecificCollection);
   router.put('/create', createNewCollection);
-  router.put('/fitness/datapoint', addNewFitnessDatapoint);
-  router.put('/datapoint', createNewDatapointForCollection);
+  /*  router.put('/fitness/datapoint', addNewFitnessDatapoint);
+  router.put('/datapoint', createNewDatapointForCollection);*/
 
   return router.routes();
 }
@@ -46,17 +46,25 @@ async function getSpecificCollection(ctx: Context) {
 
 async function createNewCollection(ctx: Context) {
   const newCollectionObj: CreateNewCollection = ctx.request.body;
+  // TODO: ERSETZEN ODER RICHTIGEN REQUEST STELLEN
+  /*  const newCollection = await db.collection(newCollectionObj.collectionTitle);
+  await newCollection.insertOne({ configuration: newCollectionObj.datasets });*/
 
-  const newCollection = await db.collection(newCollectionObj.collectionTitle);
-  await newCollection.insertOne({ configuration: newCollectionObj.datasets });
-
-  await collectionInfo
-    .insertOne({
-      name: newCollectionObj.collectionTitle,
-      numberOfDatasets: newCollectionObj.datasets.length,
-      description: newCollectionObj.collectionDescription,
-      numberOfEntries: 1,
-    })
+  await db
+    .collection('user')
+    .updateOne(
+      { title: 'collectionInfo' },
+      {
+        $push: {
+          collectionsMeta: {
+            title: newCollectionObj.collectionTitle,
+            numberOfDatasets: newCollectionObj.datasets.length,
+            description: newCollectionObj.collectionDescription,
+            numberOfEntries: 1,
+          },
+        },
+      }
+    )
     .then(() => {
       if (newCollection) {
         ctx.body = newCollectionObj;
@@ -68,6 +76,7 @@ async function createNewCollection(ctx: Context) {
       ctx.status = 400;
     });
 }
+/*
 
 async function addNewFitnessDatapoint(ctx: Context) {
   const fitnessData: FitnessEntry = ctx.request.body;
@@ -106,3 +115,4 @@ async function createNewDatapointForCollection(ctx: Context) {
       ctx.status = 400;
     });
 }
+*/

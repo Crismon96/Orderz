@@ -1,7 +1,7 @@
 <div>
   <h2 style="text-align: center">Make a new submission for {{ collection.name }}</h2>
   <div>
-    <form #myForm="ngForm" [formGroup]="form" (ngSubmit)="createNewDataPoint()">
+    <form [formGroup]="form" (ngSubmit)="createNewDataPoint()">
       <div mat-dialog-content class="dialog-content">
         <div formArrayName="data" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
           <input class="dynamic-number-input" *ngIf="arrayItem.dataType === 'number'" type="number" placeholder="null" [formControl]="data.controls[i]" />

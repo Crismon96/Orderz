@@ -49,8 +49,8 @@ export class CollectionDatatableComponent implements OnInit {
     });
   }
 
-  resetDatapointForm(form: NgForm) {
-    form.reset();
+  resetDatapointForm() {
+    this.form.reset();
   }
 
   createNewDataPoint() {
