@@ -49,7 +49,9 @@ async function getSpecificCollection(ctx: Context) {
 
 async function createNewCollection(ctx: Context) {
   const newCollectionObj: CreateNewCollection = ctx.request.body;
-  const newCollection = await db.collection('username').insertOne({ configuration: newCollectionObj.datasets });
+  const newCollection = await db
+    .collection('username')
+    .insertOne({ title: newCollectionObj.collectionTitle, configuration: newCollectionObj.datasets, type: 'collection', data: [] });
 
   await db
     .collection('username')
@@ -103,7 +105,7 @@ async function createNewDatapointForCollection(ctx: Context) {
   });
   await db
     .collection('username')
-    .updateMany({ title: targedCollectionName }, { $push: { data: { each: newDatapoints } } })
+    .updateMany({ title: targedCollectionName }, { $push: { data: { $each: newDatapoints } } })
     .catch(() => {
       ctx.body = 'Didnt find the collection you were looking for';
       ctx.status = 400;
