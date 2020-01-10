@@ -21,10 +21,10 @@ export class LibraryService {
   }
 
   getCollectionByName(collection: ICollectionInfo) {
-    return this.http.get<ICollectionConfig>(`api/collections/collection?name=${collection.name}`);
+    return this.http.get<ICollectionConfig>(`api/collections/collection?name=${collection.title}`);
   }
 
   submitNewDatapoint(newDatapoint: Dataset[], collection: ICollectionInfo) {
-    return this.http.put(`api/collections/datapoint?collection=${collection.name}`, newDatapoint);
+    return this.http.put(`api/collections/datapoint?collection=${collection.title}`, newDatapoint);
   }
 }

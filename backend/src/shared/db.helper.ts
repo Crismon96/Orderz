@@ -37,6 +37,7 @@ export async function createFitnessCollection(userCollection: string) {
       { title: 'benchpress', dataType: 'number' },
       { title: 'squat', dataType: 'number' },
     ],
+    type: 'collection',
     data: [],
   });
   await db.collection(userCollection).insertOne({

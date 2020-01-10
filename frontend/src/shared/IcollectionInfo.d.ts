@@ -1,10 +1,12 @@
 import { Dataset } from './Icollection';
 
 export interface ICollectionInfo {
-  name: string;
+  uuid: string;
+  title: string;
   description: string;
   numberOfDatasets: number;
   numberOfEntries: number;
+  created: string;
 }
 
 export interface ICollectionConfig {

@@ -4,6 +4,8 @@ import { db } from '../shared/db.helper';
 import { FitnessEntry } from '../../../sharedModules/schemaInterfaces/fitness-POST-addNewEntry.schema';
 import { CreateNewCollection } from '../../../sharedModules/schemaInterfaces/collection-POST-createNewCollection.schema';
 import { MongoError } from 'mongodb';
+import uuidv4 from 'uuid/v4';
+
 // Routes
 export function collectionController() {
   const router = new Router();
@@ -18,10 +20,8 @@ export function collectionController() {
 }
 
 async function getAllCollections(ctx: Context) {
-  const allCollections = await db
-    .collection('username')
-    .find({ type: 'collection' })
-    .toArray();
+  let allCollections = await db.collection('username').findOne({ title: 'collectionInfo' });
+  allCollections = allCollections.collectionsMeta;
   if (allCollections) {
     ctx.status = 200;
     ctx.body = allCollections;
@@ -33,9 +33,13 @@ async function getAllCollections(ctx: Context) {
 
 async function getSpecificCollection(ctx: Context) {
   const collectionName: string = ctx.query.name;
+
   const specCollection = await db.collection('username').findOne({ title: collectionName });
   if (specCollection) {
-    ctx.body = specCollection.configuration;
+    ctx.body = {
+      title: specCollection.title,
+      configuration: specCollection.configuration,
+    };
     ctx.status = 200;
   } else {
     ctx.body = 'Could not find the queried collection';
@@ -74,14 +78,13 @@ async function createNewCollection(ctx: Context) {
       ctx.status = 400;
     });
 }
-
+// This Api is not getting used right now.
 async function addNewFitnessDatapoint(ctx: Context) {
-  const fitnessData: FitnessEntry = ctx.request.body;
+  const fitnessData: FitnessEntry = ctx.request.body.newDatapoints;
   await db
     .collection('username')
     .updateOne({ title: 'fitness' }, { $push: { data: { fitnessData } } })
-    .then(async () => {
-      await db.collection('username').updateOne({ title: 'collectionInfo', collectionsMeta: { title: 'fitness' } }, { $inc: { numberOfEntries: +1 } });
+    .then(() => {
       ctx.body = fitnessData;
       ctx.status = 200;
     })
@@ -89,6 +92,7 @@ async function addNewFitnessDatapoint(ctx: Context) {
       ctx.body = 'Error trying to add new fitness entry: ' + err;
       ctx.status = 400;
     });
+  await db.collection('username').updateOne({ title: 'collectionInfo', collectionsMeta: { title: 'fitness' } }, { $inc: { numberOfEntries: +1 } });
 }
 
 async function createNewDatapointForCollection(ctx: Context) {
@@ -99,14 +103,14 @@ async function createNewDatapointForCollection(ctx: Context) {
   });
   await db
     .collection('username')
-    .updateMany({ title: targedCollectionName }, { $push: { data: { newDatapoints } } })
+    .updateMany({ title: targedCollectionName }, { $push: { data: { each: newDatapoints } } })
     .catch(() => {
       ctx.body = 'Didnt find the collection you were looking for';
       ctx.status = 400;
     });
   await db
     .collection('username')
-    .updateOne({ title: 'collectionInfo', collectionsMeta: { title: targedCollectionName } }, { $inc: { numberOfEntries: +1 } })
+    .updateOne({ collectionsMeta: { title: targedCollectionName } }, { $inc: { numberOfEntries: +1 } })
     .then(() => {
       ctx.body = ctx.request.body;
       ctx.status = 200;

@@ -1,9 +1,10 @@
 <mat-card class="collection-panel" (click)="openCollection(collection)">
-  <mat-card-title class="collection-panel-title">{{ collection.name }}</mat-card-title>
+  <mat-card-title class="collection-panel-title">{{ collection.title }}</mat-card-title>
   <mat-card-content>
     <div class="collection-panel-description">{{ collection.description }}</div>
     <div class="collection-panel-stats">
       Number of published entries: {{ collection.numberOfEntries }} Number of Datasets: {{ collection.numberOfDatasets }}
     </div>
+    <div class="created-timing">collection was created at: {{ collection.created | date }}</div>
   </mat-card-content>
 </mat-card>

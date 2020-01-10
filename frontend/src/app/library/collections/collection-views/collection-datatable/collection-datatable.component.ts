@@ -40,6 +40,7 @@ export class CollectionDatatableComponent implements OnInit {
         .getCollectionByName(activeCollection)
         .pipe(take(1))
         .subscribe(result => {
+          console.log(result);
           this.collectionDefinition = result;
           this.arrayItems = result.configuration;
           for (const dataPoint of result.configuration) {
