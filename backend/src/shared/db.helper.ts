@@ -24,11 +24,11 @@ export async function connect() {
   client.connect(async function(err) {
     console.log('Connected successfully to server');
     db = client.db(dbName);
+    await db.createCollection('userInfoBundle');
   });
 }
 
 export async function createFitnessCollection(userCollection: string) {
-  console.log('inside THE CREATION OF FITNESS', userCollection);
   await db.collection(userCollection).insertOne({
     title: 'fitness',
     configuration: [

@@ -28,8 +28,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.router.navigateByUrl('/main').then(() => {
-      this.auth.isLoggedIn.next(true);
+    this.auth.logUserIn(this.form.controls.username.value, this.form.controls.password.value).subscribe(res => {
+      console.log(res);
+      this.router.navigateByUrl('/main').then(() => {
+        this.auth.isLoggedIn.next(true);
+      });
     });
   }
 }

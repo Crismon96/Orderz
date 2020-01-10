@@ -11,17 +11,16 @@ export function collectionController() {
   router.get('', getAllCollections);
   router.get('/collection', getSpecificCollection);
   router.put('/create', createNewCollection);
-  /*  router.put('/fitness/datapoint', addNewFitnessDatapoint);
-  router.put('/datapoint', createNewDatapointForCollection);*/
+  router.put('/fitness/datapoint', addNewFitnessDatapoint);
+  router.put('/datapoint', createNewDatapointForCollection);
 
   return router.routes();
 }
 
 async function getAllCollections(ctx: Context) {
-  // TODO: Store the information about the collection in the first entry or in different collection
   const allCollections = await db
-    .collection('collectionInfo')
-    .find({})
+    .collection('username')
+    .find({ type: 'collection' })
     .toArray();
   if (allCollections) {
     ctx.status = 200;
@@ -34,9 +33,9 @@ async function getAllCollections(ctx: Context) {
 
 async function getSpecificCollection(ctx: Context) {
   const collectionName: string = ctx.query.name;
-  const specCollection = await db.collection(collectionName).findOne({ configuration: { $exists: true, $ne: null } });
+  const specCollection = await db.collection('username').findOne({ title: collectionName });
   if (specCollection) {
-    ctx.body = specCollection;
+    ctx.body = specCollection.configuration;
     ctx.status = 200;
   } else {
     ctx.body = 'Could not find the queried collection';
@@ -46,12 +45,10 @@ async function getSpecificCollection(ctx: Context) {
 
 async function createNewCollection(ctx: Context) {
   const newCollectionObj: CreateNewCollection = ctx.request.body;
-  // TODO: ERSETZEN ODER RICHTIGEN REQUEST STELLEN
-  /*  const newCollection = await db.collection(newCollectionObj.collectionTitle);
-  await newCollection.insertOne({ configuration: newCollectionObj.datasets });*/
+  const newCollection = await db.collection('username').insertOne({ configuration: newCollectionObj.datasets });
 
   await db
-    .collection('user')
+    .collection('username')
     .updateOne(
       { title: 'collectionInfo' },
       {
@@ -61,6 +58,7 @@ async function createNewCollection(ctx: Context) {
             numberOfDatasets: newCollectionObj.datasets.length,
             description: newCollectionObj.collectionDescription,
             numberOfEntries: 1,
+            created: new Date(),
           },
         },
       }
@@ -76,13 +74,14 @@ async function createNewCollection(ctx: Context) {
       ctx.status = 400;
     });
 }
-/*
 
 async function addNewFitnessDatapoint(ctx: Context) {
   const fitnessData: FitnessEntry = ctx.request.body;
-  await fitnessCollection
-    .insertOne(fitnessData)
-    .then(() => {
+  await db
+    .collection('username')
+    .updateOne({ title: 'fitness' }, { $push: { data: { fitnessData } } })
+    .then(async () => {
+      await db.collection('username').updateOne({ title: 'collectionInfo', collectionsMeta: { title: 'fitness' } }, { $inc: { numberOfEntries: +1 } });
       ctx.body = fitnessData;
       ctx.status = 200;
     })
@@ -94,18 +93,20 @@ async function addNewFitnessDatapoint(ctx: Context) {
 
 async function createNewDatapointForCollection(ctx: Context) {
   const targedCollectionName = ctx.query.collection;
-  ctx.request.body.map((entry: any) => {
+  let newDatapoints = ctx.request.body;
+  newDatapoints.map((entry: any) => {
     entry.submissionDate = new Date();
   });
   await db
-    .collection(targedCollectionName)
-    .insertMany(ctx.request.body)
+    .collection('username')
+    .updateMany({ title: targedCollectionName }, { $push: { data: { newDatapoints } } })
     .catch(() => {
       ctx.body = 'Didnt find the collection you were looking for';
       ctx.status = 400;
     });
-  await collectionInfo
-    .updateOne({ name: targedCollectionName }, { $inc: { numberOfEntries: +1 } })
+  await db
+    .collection('username')
+    .updateOne({ title: 'collectionInfo', collectionsMeta: { title: targedCollectionName } }, { $inc: { numberOfEntries: +1 } })
     .then(() => {
       ctx.body = ctx.request.body;
       ctx.status = 200;
@@ -115,4 +116,3 @@ async function createNewDatapointForCollection(ctx: Context) {
       ctx.status = 400;
     });
 }
-*/

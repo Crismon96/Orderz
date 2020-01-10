@@ -18,18 +18,20 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.12.3",
     "koa-static": "^5.0.0",
-    "mongodb": "^3.4.1"
+    "mongodb": "^3.4.1",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "@types/mongodb": "^3.3.14",
     "@types/koa": "^2.0.51",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-mount": "^4.0.0",
     "@types/koa-router": "^7.0.42",
     "@types/koa-static": "^4.0.1",
+    "@types/mongodb": "^3.3.14",
     "@types/node": "^12.12.0",
-    "tslint": "^5.20.0",
+    "@types/uuid": "^3.4.6",
     "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.4"
   }
