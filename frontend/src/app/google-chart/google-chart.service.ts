@@ -16,7 +16,7 @@ export class GoogleChartService {
     return this.google;
   }
 
-  displayCollectionData(collectionName) {
-    return this.http.get(`api/data?${collectionName}`);
+  displayCollectionData(collectionName: string) {
+    return this.http.get(`api/collections/data?collection=${collectionName}`);
   }
 }

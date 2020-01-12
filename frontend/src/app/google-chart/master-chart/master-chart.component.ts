@@ -20,18 +20,40 @@ export class MasterChartComponent implements OnInit {
   }
   ngOnInit() {
     this.lib.activeCollection.subscribe(collection => {
+      console.log('collection: ', collection);
       this.activeCollection = collection;
     });
   }
 
   private drawChart() {
     // TODO: Must sort array for date and then display correctly
-    this.gChart.displayCollectionData(this.activeCollection.title)._subscribe((data: Dataset[]) => {
-      const data = this.gLib.visualization.arrayToDataTable([['Year', 'First', 'Second', 'Third', 'Fourth'], ...data]);
+    this.gChart.displayCollectionData(this.activeCollection.title).subscribe((data: Dataset[]) => {
+      // Topic array
+      const totalArray = [];
+      const headerArray = ['Date'];
+      for (let i = 0; i < this.activeCollection.numberOfDatasets; i++) {
+        headerArray.push(data[i].title);
+      }
+      totalArray.push(headerArray);
+
+      // normal small array
+      let dataArray = [];
+      for (const dataPoint of data) {
+        if (dataArray.length === 0) {
+          const parsedDate = new Date(dataPoint.submissionDate);
+          dataArray.push(`${parsedDate.getDate()}.${parsedDate.getMonth() + 1}`);
+        }
+        dataArray.push(dataPoint.data);
+        if (dataArray.length > this.activeCollection.numberOfDatasets) {
+          totalArray.push(dataArray);
+          dataArray = [];
+        }
+      }
+      const chartData = this.gLib.visualization.arrayToDataTable(totalArray);
 
       const chart = new this.gLib.visualization.LineChart(document.getElementById('divLineChart'));
 
-      chart.draw(data);
+      chart.draw(chartData);
     });
   }
 }
