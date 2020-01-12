@@ -15,6 +15,7 @@ export function collectionController() {
   router.put('/create', createNewCollection);
   router.put('/fitness/datapoint', addNewFitnessDatapoint);
   router.put('/datapoint', createNewDatapointForCollection);
+  router.get('/data', getSpecificCollectionData);
 
   return router.routes();
 }
@@ -121,4 +122,17 @@ async function createNewDatapointForCollection(ctx: Context) {
       ctx.body = 'Couldnt adjust the collection information according to input.';
       ctx.status = 400;
     });
+}
+
+async function getSpecificCollectionData(ctx: Context) {
+  const collectionName = ctx.query.collection;
+
+  const targedCollection = await db.collection('username').findOne({ title: collectionName });
+  if (targedCollection) {
+    ctx.body = targedCollection.data;
+    ctx.status = 200;
+  } else {
+    ctx.body = 'The collection you are looking for wasnt found.';
+    ctx.status = 400;
+  }
 }

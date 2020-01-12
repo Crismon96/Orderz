@@ -37,6 +37,7 @@ import { AddNewDatasetModalComponent } from '../templates/add-new-dataset-modal/
 import { CollectionPanelComponent } from './library/collections/collection-panel/collection-panel.component';
 import { CollectionDataviewComponent } from './library/collections/collection-views/collection-dataview/collection-dataview.component';
 import { CollectionDatatableComponent } from './library/collections/collection-views/collection-datatable/collection-datatable.component';
+import { GoogleChartModule } from './google-chart/google-chart.module';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { CollectionDatatableComponent } from './library/collections/collection-v
     MatSnackBarModule,
     TextFieldModule,
     MatSlideToggleModule,
+    GoogleChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
