@@ -19,7 +19,6 @@ export class LibraryComponent implements OnInit {
   ngOnInit() {
     this.header.setTitle('Library');
     this.lib.getAllCollections().subscribe(data => {
-      console.log(data);
       this.collections = data;
     });
   }

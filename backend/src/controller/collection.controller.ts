@@ -126,7 +126,6 @@ async function createNewDatapointForCollection(ctx: Context) {
 
 async function getSpecificCollectionData(ctx: Context) {
   const collectionName = ctx.query.collection;
-  console.log('inside API: ', collectionName);
 
   const targedCollection = await db.collection('username').findOne({ title: collectionName });
   if (targedCollection) {

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library.service';
-import { ICollectionConfig, ICollectionInfo } from '../../../../../shared/IcollectionInfo';
+import { ICollectionInfo } from '../../../../../shared/IcollectionInfo';
 import { Dataset } from '../../../../../shared/Icollection';
-import { Subscription } from 'rxjs';
-import { FormArray, FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-collection-datatable',
@@ -14,7 +13,6 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 })
 export class CollectionDatatableComponent implements OnInit {
   collection: ICollectionInfo;
-  collectionDefinition: ICollectionConfig;
 
   // TODO: Edit Types so they make sense
   types = [1, 2, 3, 4];
@@ -40,8 +38,7 @@ export class CollectionDatatableComponent implements OnInit {
         .getCollectionByName(activeCollection)
         .pipe(take(1))
         .subscribe(result => {
-          console.log(result);
-          this.collectionDefinition = result;
+          this.lib.activeCollectionInfo.next(result);
           this.arrayItems = result.configuration;
           for (const dataPoint of result.configuration) {
             this.data.push(this.formBuilder.control(undefined));

@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LibraryService {
   activeCollection = new BehaviorSubject<ICollectionInfo>(null);
+  activeCollectionInfo = new BehaviorSubject<ICollectionConfig>(null);
 
   constructor(private http: HttpClient) {}
 
