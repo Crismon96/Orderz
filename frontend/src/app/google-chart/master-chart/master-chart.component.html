@@ -1,2 +1,18 @@
+<div class="selection-panel">
+  <form [formGroup]="form" (ngSubmit)="drawNewChart()">
+    <mat-form-field class="chart-selection">
+      <mat-select formControlName="chartType">
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="chart-selection-btn" type="submit">
+      Display!
+    </button>
+  </form>
+</div>
 <div id="divLineChart"></div>
-<div class="divTableChart"></div>
+<div id="divTableChart"></div>
+<div id="divPieChart"></div>

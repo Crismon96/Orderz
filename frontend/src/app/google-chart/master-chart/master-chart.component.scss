@@ -26,3 +26,19 @@
     width: 85%;
   }
 }
+
+.chart-selection {
+  position: relative;
+  display: inline-block;
+  float: right;
+  margin: 0 20px 0 20px;
+  width: 25%;
+  z-index: 100;
+}
+
+.chart-selection-btn {
+  position: relative;
+  display: inline-block;
+  float: right;
+  z-index: 100;
+}
