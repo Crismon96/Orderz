@@ -47,6 +47,8 @@ export class MasterChartComponent implements OnInit, OnDestroy {
     const containsNumbers = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'number');
     if (containsNumbers.length > 0) {
       this.drawLineChart();
+    } else {
+      // Hier DataTable material anzeigen lassen
     }
   }
 
@@ -54,16 +56,16 @@ export class MasterChartComponent implements OnInit, OnDestroy {
     const chartType = this.form.get('chartType').value;
     switch (chartType) {
       case 'Table-Chart (All)':
-        this.drawTableChart();
+        // Hier DataTable anzeigen lassen.
         break;
       case 'Line-Chart (number)':
         this.drawLineChart();
         break;
       case 'Yes/No-Donut (boolean)':
-        this.drawDonutChart();
+        this.drawDonutChartBool();
         break;
       case 'Diversified-Donut (selection)':
-        this.drawDonutChart();
+        this.drawDonutChartSelection();
         break;
       default:
         this.displayChartError();
@@ -106,31 +108,28 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   }
 
   private drawTableChart() {
-    const data = new this.gLib.visualization.DataTable();
-    data.addColumn('string', 'Name');
-    data.addColumn('number', 'Salary');
-    data.addColumn('boolean', 'Full Time Employee');
-    data.addRows([
-      ['Mike', { v: 10000, f: '$10,000' }, true],
-      ['Jim', { v: 8000, f: '$8,000' }, false],
-      ['Alice', { v: 12500, f: '$12,500' }, true],
-      ['Bob', { v: 7000, f: '$7,000' }, true],
-    ]);
-
-    const table = new this.gLib.visualization.Table(document.getElementById('divTableChart'));
-
-    table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+    // TODO: Hier methode zum anzeigen des angular Datables
   }
 
-  drawDonutChart() {
-    const data = this.gLib.visualization.arrayToDataTable([
-      ['Task', 'Hours per Day'],
-      ['Work', 11],
-      ['Eat', 2],
-      ['Commute', 2],
-      ['Watch TV', 2],
-      ['Sleep', 7],
-    ]);
+  drawDonutChartSelection() {
+    let filteredResults;
+    const dataArray: any[] = [['Dataset', 'Count']];
+    this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
+      filteredResults = wholeData.filter((dataset) => dataset.dataType === 'selection');
+      console.log(filteredResults);
+      for (const dataSet of filteredResults) {
+        for (const entry of dataArray) {
+          if (entry[0] === dataSet.title) {
+            entry[1] ++;
+          } else {
+            const newEntry = [dataSet.title, 1];
+            dataArray.push(newEntry);
+          }
+        }
+      }
+    });
+
+    const data = this.gLib.visualization.arrayToDataTable(dataArray);
 
     const options = {
       title: 'My Daily Activities',
@@ -139,6 +138,10 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
     const chart = new this.gLib.visualization.PieChart(document.getElementById('divPieChart'));
     chart.draw(data, options);
+  }
+
+  drawDonutChartBool() {
+    console.log('here comes chart bool');
   }
 
   displayChartError() {
