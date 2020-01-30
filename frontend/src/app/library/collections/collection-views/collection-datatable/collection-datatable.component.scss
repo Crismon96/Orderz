@@ -11,3 +11,21 @@
   width: 80%;
   margin: 20px 50%;
 }
+
+.dialog-content {
+  display: flex;
+  justify-items: center;
+  flex-wrap: wrap;
+}
+
+.dataset-repeater {
+  width: 45%;
+  text-align: center;
+}
+
+.action-buttons {
+  text-align: center;
+  button {
+    margin: 0 20px;
+  }
+}
