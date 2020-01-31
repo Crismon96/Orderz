@@ -1,18 +1,32 @@
 <div class="selection-panel">
-  <form [formGroup]="form" (ngSubmit)="drawNewChart()">
-    <mat-form-field class="chart-selection">
-      <mat-select formControlName="chartType">
-        <mat-option *ngFor="let type of types" [value]="type">
-          {{ type }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div style="margin-top: 5px;" class="chart-selection">
+    <form [formGroup]="form" (ngSubmit)="drawNewChart()">
+      <mat-form-field class="chart-selection-input">
+        <mat-label>Select visualization type</mat-label>
+        <mat-select matNativeControl formControlName="chartType">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <button mat-raised-button color="primary" class="chart-selection-btn" type="submit">
-      Display!
-    </button>
-  </form>
+      <button mat-raised-button color="primary" class="chart-selection-btn" type="submit">
+        Display!
+      </button>
+    </form>
+  </div>
+
+  <div class="chart-selection" *ngIf="selectedType === 'Diversified-Donut (selection)'">
+    <form [formGroup]="filterForm" (ngSubmit)="saveNewFilter()">
+      <mat-form-field class="chart-selection-input">
+        <mat-label>Select Filter</mat-label>
+        <input matInput style="width: 100%" formControlName="DonutFilter" />
+      </mat-form-field>
+      <button mat-raised-button color="accent" class="chart-selection-btn" type="submit">Filter Data</button>
+    </form>
+  </div>
+
+  <div id="divLineChart"></div>
+  <div id="divTableChart"></div>
+  <div class="PieChart" id="divPieChart"></div>
 </div>
-<div id="divLineChart"></div>
-<div id="divTableChart"></div>
-<div id="divPieChart"></div>

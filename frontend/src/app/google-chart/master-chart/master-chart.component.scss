@@ -28,17 +28,26 @@
 }
 
 .chart-selection {
-  position: relative;
-  display: inline-block;
-  float: right;
-  margin: 0 20px 0 20px;
-  width: 25%;
-  z-index: 100;
+  width: 50%;
+  z-index: 25;
+}
+
+.chart-selection-input {
+  margin: 0 10px;
+  width: 70%;
 }
 
 .chart-selection-btn {
-  position: relative;
-  display: inline-block;
-  float: right;
-  z-index: 100;
+  margin: 0 10px;
+}
+
+.selection-panel {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.PieChart {
+  margin: 0 25%;
 }

@@ -16,9 +16,11 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   private activeCollection: ICollectionInfo;
   activeCollectionConfig: ICollectionConfig;
   subscriptions = new Subscription();
-  selectedType = 'number';
+  selectedType = 'Line-Chart (number)';
   types = ['Line-Chart (number)', 'Yes/No-Donut (boolean)', 'Diversified-Donut (selection)', 'Table-Chart (All)'];
   form: FormGroup;
+  filterForm: FormGroup;
+  activeDataFilter: string;
 
   constructor(private gChart: GoogleChartService, private lib: LibraryService) {
     this.gLib = this.gChart.getGoogle();
@@ -37,8 +39,17 @@ export class MasterChartComponent implements OnInit, OnDestroy {
       })
     );
     this.form = new FormGroup({
-      chartType: new FormControl('number'),
+      chartType: new FormControl('Line-Chart (number)'),
     });
+    this.filterForm = new FormGroup({
+      DonutFilter: new FormControl(),
+    });
+  }
+
+  saveNewFilter() {
+    console.log(this.filterForm.controls.DonutFilter.value);
+    this.activeDataFilter = this.filterForm.controls.DonutFilter.value;
+    this.drawNewChart();
   }
 
   private drawChart() {
@@ -54,6 +65,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
   drawNewChart() {
     const chartType = this.form.get('chartType').value;
+    this.selectedType = chartType;
     switch (chartType) {
       case 'Table-Chart (All)':
         // Hier DataTable anzeigen lassen.
@@ -113,31 +125,41 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
   drawDonutChartSelection() {
     let filteredResults;
-    const dataArray: any[] = [['Dataset', 'Count']];
+    const totalArray: any[] = [['Value', 'Count']];
     this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
-      filteredResults = wholeData.filter((dataset) => dataset.dataType === 'selection');
-      console.log(filteredResults);
+      filteredResults = wholeData.filter(dataset => dataset.dataType === 'selection');
+
+      if (this.activeDataFilter) {
+        filteredResults = filteredResults.filter(dataset => {
+          return dataset.title.includes(this.activeDataFilter);
+        });
+      }
+
       for (const dataSet of filteredResults) {
-        for (const entry of dataArray) {
-          if (entry[0] === dataSet.title) {
-            entry[1] ++;
-          } else {
-            const newEntry = [dataSet.title, 1];
-            dataArray.push(newEntry);
+        let valueAllreadyExist = false;
+        for (const entry of totalArray) {
+          if (entry[0] === dataSet.data.toString()) {
+            valueAllreadyExist = true;
+            entry[1]++;
           }
         }
+        if (valueAllreadyExist === false) {
+          const newEntry = [dataSet.data.toString(), 1];
+          totalArray.push(newEntry);
+        }
       }
+
+      const data = this.gLib.visualization.arrayToDataTable(totalArray);
+      const options = {
+        width: 900,
+        height: 900,
+        title: 'My Daily Activities',
+        pieHole: 0.4,
+      };
+
+      const chart = new this.gLib.visualization.PieChart(document.getElementById('divPieChart'));
+      chart.draw(data, options);
     });
-
-    const data = this.gLib.visualization.arrayToDataTable(dataArray);
-
-    const options = {
-      title: 'My Daily Activities',
-      pieHole: 0.4,
-    };
-
-    const chart = new this.gLib.visualization.PieChart(document.getElementById('divPieChart'));
-    chart.draw(data, options);
   }
 
   drawDonutChartBool() {

@@ -7,21 +7,10 @@ import { HeaderService } from '../../services/header.service';
   templateUrl: './mainmenu.component.html',
   styleUrls: ['./mainmenu.component.scss'],
 })
-export class MainmenuComponent implements OnInit, OnDestroy {
-  @ViewChild('dataLibrary', { static: true }) dataLibraryNav: ElementRef;
-  dataLibraryClick: any;
+export class MainmenuComponent implements OnInit {
   constructor(private router: Router, private renderer: Renderer2, private header: HeaderService) {}
 
   ngOnInit() {
     this.header.setTitle('Data Diary');
-    this.dataLibraryClick = this.renderer.listen(this.dataLibraryNav.nativeElement, 'click', () => {
-      setTimeout(() => {
-        this.router.navigateByUrl('library');
-      }, 200);
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.dataLibraryClick();
   }
 }
