@@ -101,11 +101,20 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
       const totalArray = [];
       const headerArray = ['Date'];
-      for (let i = 0; i < numberOfInputs; i++) {
-        headerArray.push(filteredResults[i].title);
+      if (this.activeDataFilter) {
+        for (const entry of filteredResults) {
+          if (!(headerArray.indexOf(entry.title) > -1)) {
+            headerArray.push(entry.title);
+          }
+        }
+        numberOfInputs = headerArray.length - 1;
+      } else {
+        for (let i = 0; i < numberOfInputs; i++) {
+          headerArray.push(filteredResults[i].title);
+        }
       }
-      totalArray.push(headerArray);
 
+      totalArray.push(headerArray);
       let dataArray = [];
       for (const dataPoint of filteredResults) {
         if (dataArray.length === 0) {
@@ -175,10 +184,9 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
   applyActiveFilter(data: Dataset[]) {
     if (this.activeDataFilter) {
-      const filteredResults = data.filter(dataset => {
+      return data.filter(dataset => {
         return dataset.title.includes(this.activeDataFilter);
       });
-      return filteredResults;
     }
     return data;
   }
