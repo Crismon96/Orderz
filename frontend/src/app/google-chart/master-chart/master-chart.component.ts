@@ -127,7 +127,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
     let filteredResults;
     const totalArray: any[] = [['Value', 'Count']];
     this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
-      filteredResults = wholeData.filter(dataset => dataset.dataType === 'selection');
+      filteredResults = wholeData.filter(dataset => dataset.dataType === 'selection' && dataset.data !== null);
 
       if (this.activeDataFilter) {
         filteredResults = filteredResults.filter(dataset => {
@@ -153,7 +153,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
       const options = {
         width: 900,
         height: 900,
-        title: 'My Daily Activities',
+        title: 'My decisions in total',
         pieHole: 0.4,
       };
 

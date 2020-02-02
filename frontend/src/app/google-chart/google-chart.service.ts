@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GoogleChartModule } from './google-chart.module';
 import { HttpClient } from '@angular/common/http';
+import { Dataset } from '../../shared/Icollection';
 
 declare let google: any;
 @Injectable({
@@ -17,6 +18,6 @@ export class GoogleChartService {
   }
 
   displayCollectionData(collectionName: string) {
-    return this.http.get(`api/collections/data?collection=${collectionName}`);
+    return this.http.get<Dataset[]>(`api/collections/data?collection=${collectionName}`);
   }
 }

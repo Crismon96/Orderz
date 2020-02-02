@@ -1,14 +1,24 @@
 import { NgModule } from '@angular/core';
-import { MatInputModule, MatFormFieldModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatTableModule, MatButtonModule, MatSelectModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { MasterChartComponent } from './master-chart/master-chart.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatSelectModule } from '@angular/material';
+import { DatatableChartComponent } from './master-chart/chart-components/datatable-chart/datatable-chart.component';
 
 @NgModule({
-  declarations: [MasterChartComponent],
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, FormsModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  declarations: [MasterChartComponent, DatatableChartComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+  ],
   exports: [MasterChartComponent],
 })
 export class GoogleChartModule {}
