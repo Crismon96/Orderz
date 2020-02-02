@@ -8,3 +8,7 @@ td {
   overflow: scroll;
   text-align: center !important;
 }
+
+::ng-deep .mat-sort-header-button {
+  margin-left: 40% !important;
+}
