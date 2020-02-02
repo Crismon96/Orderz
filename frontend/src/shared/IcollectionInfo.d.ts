@@ -11,5 +11,8 @@ export interface ICollectionInfo {
 
 export interface ICollectionConfig {
   _id: string;
+  title: string;
   configuration: Dataset[];
+  type: string;
+  data: Dataset[];
 }

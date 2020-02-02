@@ -4,6 +4,7 @@ import { Dataset } from '../../shared/Icollection';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AddNewDatasetModalComponent } from '../add-new-dataset-modal/add-new-dataset-modal.component';
 import { MatSnackBar } from '@angular/material';
+import { AddNewSelectionOptionModalComponent } from '../add-new-selection-option-modal/add-new-selection-option-modal.component';
 
 @Component({
   selector: 'app-add-new-collection-modal',

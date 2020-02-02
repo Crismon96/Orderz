@@ -14,6 +14,22 @@
       </mat-select>
     </mat-form-field>
   </div>
+
+  <div class="selection-section" *ngIf="dataType === 'selection'">
+    <mat-form-field class="singleOptionAdd" style="width: 80%">
+      <input matInput placeholder="Create a new option for your selection" [(ngModel)]="singleOption" />
+    </mat-form-field>
+    <button style="float: right" mat-flat-button (click)="addOptionToSelection()">Add to selection</button>
+    <mat-form-field>
+      <mat-label>Your Final Selection</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let option of selectionOptions">
+          {{ option }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div mat-dialog-actions class="action-buttons">
     <button mat-button color="warn" (click)="onNoClick()">Dismiss</button>
     <button mat-button color="primary" (click)="addDatasetToCollection()">Add to Collection</button>

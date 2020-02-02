@@ -15,9 +15,14 @@
           >
             {{ arrayItem.title }}
           </mat-slide-toggle>
-          <mat-select *ngIf="arrayItem.dataType === 'selection'" class="dynamic-selection-input" [formControl]="data.controls[i]">
-            <mat-option *ngFor="let type of types" [value]="type">
-              {{ type }}
+          <mat-select
+            placeholder="Select your option"
+            *ngIf="arrayItem.dataType === 'selection'"
+            class="dynamic-selection-input"
+            [formControl]="data.controls[i]"
+          >
+            <mat-option *ngFor="let option of arrayItem.options" [value]="option">
+              {{ option }}
             </mat-option>
           </mat-select>
           <br />

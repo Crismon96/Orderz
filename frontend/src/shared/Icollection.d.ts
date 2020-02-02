@@ -8,4 +8,5 @@ export interface Dataset {
   dataType: string;
   data?: string | number | boolean;
   submissionDate?: Date;
+  options?: string[];
 }
