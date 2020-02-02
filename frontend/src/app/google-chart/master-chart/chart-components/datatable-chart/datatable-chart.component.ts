@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ICollectionInfo } from '../../../../../shared/IcollectionInfo';
 import { GoogleChartService } from '../../../google-chart.service';
 import { Dataset } from '../../../../../shared/Icollection';
@@ -13,6 +13,7 @@ export class DatatableChartComponent implements OnInit {
   @Input() activeCollection: ICollectionInfo;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @Output() noValidDataReceived: EventEmitter<void> = new EventEmitter();
 
   constructor(private gChart: GoogleChartService) {}
 
@@ -21,9 +22,13 @@ export class DatatableChartComponent implements OnInit {
 
   ngOnInit() {
     this.gChart.displayCollectionData(this.activeCollection.title).subscribe(wholeData => {
-      this.dataSource.data = wholeData;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      if (wholeData.length === 0) {
+        this.noValidDataReceived.emit();
+      } else {
+        this.dataSource.data = wholeData;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
     });
   }
 }

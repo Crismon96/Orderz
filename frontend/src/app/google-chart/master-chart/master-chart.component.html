@@ -16,6 +16,19 @@
     </form>
   </div>
 
+  <div id="Chart-Error-Modal">
+    <mat-card *ngIf="displayChartErrorModal">
+      <mat-card-title>No data for display was found for the choosen collection</mat-card-title>
+      <mat-card-content>
+        <p>We could not find valid data for the type of visualization you choose.</p>
+        <p>
+          Please make sure your collection contains data that fits your chart. If it does a problem on the database might be the reason your data does not get
+          displayed.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
   <div class="chart-selection" *ngIf="selectedType === 'Diversified-Donut (selection)'">
     <form [formGroup]="filterForm" (ngSubmit)="saveNewFilter()">
       <mat-form-field class="chart-selection-input">
@@ -28,5 +41,10 @@
 
   <div *ngIf="selectedType === 'Line-Chart (number)'" id="divLineChart"></div>
   <div *ngIf="selectedType === 'Diversified-Donut (selection)' || selectedType === 'Yes/No-Donut (boolean)'" class="PieChart" id="divPieChart"></div>
-  <app-datatable-chart class="Datatable-chart" *ngIf="selectedType === 'Table-Chart (All)'" [activeCollection]="activeCollection"></app-datatable-chart>
+  <app-datatable-chart
+    class="Datatable-chart"
+    (noValidDataReceived)="displayChartError()"
+    *ngIf="selectedType === 'Table-Chart (All)'"
+    [activeCollection]="activeCollection"
+  ></app-datatable-chart>
 </div>

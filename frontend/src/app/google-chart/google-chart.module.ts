@@ -1,5 +1,14 @@
 import { NgModule } from '@angular/core';
-import { MatInputModule, MatFormFieldModule, MatTableModule, MatButtonModule, MatSelectModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import {
+  MatInputModule,
+  MatFormFieldModule,
+  MatTableModule,
+  MatButtonModule,
+  MatSelectModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatCardModule,
+} from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { MasterChartComponent } from './master-chart/master-chart.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,6 +29,7 @@ import { DatatableChartComponent } from './master-chart/chart-components/datatab
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatCardModule,
   ],
   exports: [MasterChartComponent],
 })

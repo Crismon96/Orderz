@@ -13,7 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MasterChartComponent implements OnInit, OnDestroy {
   private gLib: any;
-  private activeCollection: ICollectionInfo;
+  activeCollection: ICollectionInfo;
   activeCollectionConfig: ICollectionConfig;
   subscriptions = new Subscription();
   selectedType = 'Line-Chart (number)';
@@ -21,6 +21,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   form: FormGroup;
   filterForm: FormGroup;
   activeDataFilter: string;
+  displayChartErrorModal = false;
 
   constructor(private gChart: GoogleChartService, private lib: LibraryService) {
     this.gLib = this.gChart.getGoogle();
@@ -64,17 +65,17 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   }
 
   drawNewChart() {
+    this.displayChartErrorModal = false;
     const chartType = this.form.get('chartType').value;
     this.selectedType = chartType;
     switch (chartType) {
       case 'Table-Chart (All)':
-        // Hier DataTable anzeigen lassen.
         break;
       case 'Line-Chart (number)':
         this.drawLineChart();
         break;
       case 'Yes/No-Donut (boolean)':
-        this.drawDonutChartBool();
+        this.drawBarChartBool();
         break;
       case 'Diversified-Donut (selection)':
         this.drawDonutChartSelection();
@@ -90,17 +91,23 @@ export class MasterChartComponent implements OnInit, OnDestroy {
     const filteredConfig = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'number');
     numberOfInputs = filteredConfig.length;
     this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
-      const data = wholeData.filter(dataset => dataset.dataType === 'number');
+      let filteredResults = wholeData.filter(dataset => dataset.dataType === 'number');
+
+      filteredResults = this.applyActiveFilter(filteredResults);
+      if (filteredResults.length === 0) {
+        this.displayChartErrorModal = true;
+        return;
+      }
 
       const totalArray = [];
       const headerArray = ['Date'];
       for (let i = 0; i < numberOfInputs; i++) {
-        headerArray.push(data[i].title);
+        headerArray.push(filteredResults[i].title);
       }
       totalArray.push(headerArray);
 
       let dataArray = [];
-      for (const dataPoint of data) {
+      for (const dataPoint of filteredResults) {
         if (dataArray.length === 0) {
           const parsedDate = new Date(dataPoint.submissionDate);
           dataArray.push(`${parsedDate.getDate()}.${parsedDate.getMonth() + 1}`);
@@ -119,20 +126,15 @@ export class MasterChartComponent implements OnInit, OnDestroy {
     });
   }
 
-  private drawTableChart() {
-    // TODO: Hier methode zum anzeigen des angular Datables
-  }
-
   drawDonutChartSelection() {
-    let filteredResults;
     const totalArray: any[] = [['Value', 'Count']];
     this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
-      filteredResults = wholeData.filter(dataset => dataset.dataType === 'selection' && dataset.data !== null);
+      let filteredResults = wholeData.filter(dataset => dataset.dataType === 'selection' && dataset.data !== null);
 
-      if (this.activeDataFilter) {
-        filteredResults = filteredResults.filter(dataset => {
-          return dataset.title.includes(this.activeDataFilter);
-        });
+      filteredResults = this.applyActiveFilter(filteredResults);
+      if (filteredResults.length === 0) {
+        this.displayChartErrorModal = true;
+        return;
       }
 
       for (const dataSet of filteredResults) {
@@ -162,12 +164,23 @@ export class MasterChartComponent implements OnInit, OnDestroy {
     });
   }
 
-  drawDonutChartBool() {
+  drawBarChartBool() {
     console.log('here comes chart bool');
   }
 
   displayChartError() {
-    console.log('Error happened, show a generic error message');
+    this.displayChartErrorModal = true;
+    this.selectedType = null;
+  }
+
+  applyActiveFilter(data: Dataset[]) {
+    if (this.activeDataFilter) {
+      const filteredResults = data.filter(dataset => {
+        return dataset.title.includes(this.activeDataFilter);
+      });
+      return filteredResults;
+    }
+    return data;
   }
 
   ngOnDestroy(): void {
