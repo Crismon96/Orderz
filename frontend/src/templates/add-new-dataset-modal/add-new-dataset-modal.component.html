@@ -16,7 +16,7 @@
   </div>
 
   <div class="selection-section" *ngIf="dataType === 'selection'">
-    <mat-form-field class="singleOptionAdd" style="width: 80%">
+    <mat-form-field class="singleOptionAdd" style="width: 70%">
       <input matInput placeholder="Create a new option for your selection" [(ngModel)]="singleOption" />
     </mat-form-field>
     <button style="float: right" mat-flat-button (click)="addOptionToSelection()">Add to selection</button>

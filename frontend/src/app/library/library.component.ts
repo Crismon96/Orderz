@@ -29,11 +29,13 @@ export class LibraryComponent implements OnInit {
       height: '500px',
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.lib.createNewCollection(result).subscribe(newCollection => {
-        this.lib.getAllCollections().subscribe(data => {
-          this.collections = data;
+      if (result) {
+        this.lib.createNewCollection(result).subscribe(() => {
+          this.lib.getAllCollections().subscribe(data => {
+            this.collections = data;
+          });
         });
-      });
+      }
     });
   }
 
