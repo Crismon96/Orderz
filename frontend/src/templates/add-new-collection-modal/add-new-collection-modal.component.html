@@ -1,19 +1,19 @@
 <div class="dialog">
   <button class="bottom-banner-button" mat-fab (click)="addNewDataset()"><i class="material-icons">add_circle_outline</i></button>
   <form [formGroup]="form" (ngSubmit)="createNewCollection()">
-    <h1 mat-dialog-title style="text-align: center">Create a new Collection</h1>
+    <h1 mat-dialog-title style="text-align: center; margin-bottom: 0">Create a new Collection</h1>
     <div mat-dialog-content class="dialog-content">
       <p>
         Enter the title of the collection:
-        <input type="text" formControlName="collectionTitle" />
+        <input mat-input type="text" formControlName="collectionTitle" />
       </p>
       <div formArrayName="datasets" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
-        <input type="text" [formControl]="datasets.controls[i]" [value]="arrayItem.title" readonly />
+        <input style="width: 50%" type="text" [formControl]="datasets.controls[i]" [value]="arrayItem.title" readonly />
         <label [for]="arrayItem" class="array-item-title"> {{ arrayItem.dataType }}</label>
         <br />
       </div>
       <mat-form-field class="collection-description">
-        <mat-label>Insert a detailed description of what you want to achieve and how to measure it.</mat-label>
+        <mat-label>A detailed description of your goal.</mat-label>
         <textarea matInput formControlName="collectionDescription" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
       </mat-form-field>
     </div>
