@@ -15,6 +15,7 @@ import {
   MatSelectModule,
   MatSnackBarModule,
   MatSlideToggleModule,
+  MatDividerModule,
 } from '@angular/material';
 import { TextFieldModule } from '@angular/cdk/text-field';
 
@@ -70,6 +71,7 @@ import { GoogleChartModule } from './google-chart/google-chart.module';
     MatDialogModule,
     MatToolbarModule,
     MatIconModule,
+    MatDividerModule,
     MatMenuModule,
     MatOptionModule,
     MatSelectModule,
