@@ -25,7 +25,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
   constructor(private gChart: GoogleChartService, private lib: LibraryService) {
     this.gLib = this.gChart.getGoogle();
-    this.gLib.charts.load('current', { packages: ['corechart', 'table'] });
+    this.gLib.charts.load('current', { packages: ['corechart', 'bar'] });
     this.gLib.charts.setOnLoadCallback(this.drawChart.bind(this));
   }
   ngOnInit() {
@@ -174,7 +174,39 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   }
 
   drawBarChartBool() {
-    console.log('here comes chart bool');
+   // this.gLib.charts.load('current', {'packages':['bar']});
+    // google.charts.setOnLoadCallback(drawChart);
+
+    // TODO: Bool chart fertigstellen
+    const headerArray = [];
+    const filteredConfig = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'boolean');
+    for (const config of filteredConfig) {
+      headerArray.push(config.title);
+    }
+    this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
+
+    });
+
+
+    const data = this.gLib.visualization.arrayToDataTable([
+      ['Year', 'Sales', 'Expenses', 'Profit'],
+      ['2014', 1000, 400, 200],
+      ['2015', 1170, 460, 250],
+      ['2016', 660, 1120, 300],
+      ['2017', 1030, 540, 350]
+    ]);
+
+    const options = {
+      chart: {
+        title: 'Company Performance',
+        subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+      },
+      bars: 'horizontal' // Required for Material Bar Charts.
+    };
+
+    const chart = new this.gLib.charts.Bar(document.getElementById('barchart'));
+
+    chart.draw(data, this.gLib.charts.Bar.convertOptions(options));
   }
 
   displayChartError() {

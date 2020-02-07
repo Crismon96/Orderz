@@ -3,7 +3,7 @@
     <form [formGroup]="form" (ngSubmit)="drawNewChart()">
       <mat-form-field class="chart-selection-input">
         <mat-label>Select visualization type</mat-label>
-        <mat-select matNativeControl formControlName="chartType">
+        <mat-select formControlName="chartType">
           <mat-option *ngFor="let type of types" [value]="type">
             {{ type }}
           </mat-option>
@@ -41,6 +41,7 @@
 
   <div *ngIf="selectedType === 'Line-Chart (number)'" id="divLineChart"></div>
   <div *ngIf="selectedType === 'Diversified-Donut (selection)' || selectedType === 'Yes/No-Donut (boolean)'" class="PieChart" id="divPieChart"></div>
+  <div id="barchart"></div>
   <app-datatable-chart
     class="Datatable-chart"
     (noValidDataReceived)="displayChartError()"
