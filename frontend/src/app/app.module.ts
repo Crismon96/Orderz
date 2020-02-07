@@ -1,12 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+/*import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatDividerModule} from '@angular/material/divider';*/
 
 import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatExpansionModule,
   MatDialogModule,
   MatToolbarModule,
   MatIconModule,
@@ -17,8 +29,8 @@ import {
   MatSlideToggleModule,
   MatDividerModule,
 } from '@angular/material';
-import { TextFieldModule } from '@angular/cdk/text-field';
 
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -67,7 +79,6 @@ import { GoogleChartModule } from './google-chart/google-chart.module';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
-    MatExpansionModule,
     MatDialogModule,
     MatToolbarModule,
     MatIconModule,
