@@ -174,39 +174,33 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   }
 
   drawBarChartBool() {
-   // this.gLib.charts.load('current', {'packages':['bar']});
-    // google.charts.setOnLoadCallback(drawChart);
-
-    // TODO: Bool chart fertigstellen
-    const headerArray = [];
+    const dataArray: any[] = [['Your Datasets', 'Yes', 'No']];
     const filteredConfig = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'boolean');
     for (const config of filteredConfig) {
-      headerArray.push(config.title);
+      dataArray.push([config.title, 0, 0]);
     }
+
     this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
+      for (const dataset of wholeData) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < dataArray.length; i++) {
+          if (dataArray[i][0] === dataset.title) {
+            dataset.data ? dataArray[i][1] = dataArray[i][1] + 1 : dataArray[i][2] = dataArray[i][2] + 1;
+          }
+        }
+      }
+      const data = this.gLib.visualization.arrayToDataTable(dataArray);
+      const options = {
+        chart: {
+          title: 'Visualization of your absolute decisions'
+        },
+        bars: 'horizontal'
+      };
 
+      const chart = new this.gLib.charts.Bar(document.getElementById('barchart'));
+
+      chart.draw(data, this.gLib.charts.Bar.convertOptions(options));
     });
-
-
-    const data = this.gLib.visualization.arrayToDataTable([
-      ['Year', 'Sales', 'Expenses', 'Profit'],
-      ['2014', 1000, 400, 200],
-      ['2015', 1170, 460, 250],
-      ['2016', 660, 1120, 300],
-      ['2017', 1030, 540, 350]
-    ]);
-
-    const options = {
-      chart: {
-        title: 'Company Performance',
-        subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-      },
-      bars: 'horizontal' // Required for Material Bar Charts.
-    };
-
-    const chart = new this.gLib.charts.Bar(document.getElementById('barchart'));
-
-    chart.draw(data, this.gLib.charts.Bar.convertOptions(options));
   }
 
   displayChartError() {

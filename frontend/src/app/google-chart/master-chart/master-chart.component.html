@@ -40,8 +40,8 @@
   </div>
 
   <div *ngIf="selectedType === 'Line-Chart (number)'" id="divLineChart"></div>
-  <div *ngIf="selectedType === 'Diversified-Donut (selection)' || selectedType === 'Yes/No-Donut (boolean)'" class="PieChart" id="divPieChart"></div>
-  <div id="barchart"></div>
+  <div *ngIf="selectedType === 'Diversified-Donut (selection)'" class="PieChart" id="divPieChart"></div>
+  <div *ngIf="selectedType === 'Yes/No-Donut (boolean)'" id="barchart"></div>
   <app-datatable-chart
     class="Datatable-chart"
     (noValidDataReceived)="displayChartError()"
