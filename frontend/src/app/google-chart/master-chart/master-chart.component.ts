@@ -175,26 +175,35 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
   drawBarChartBool() {
     const dataArray: any[] = [['Your Datasets', 'Yes', 'No']];
-    const filteredConfig = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'boolean');
+    const filteredConfig = this.activeCollectionConfig.configuration.filter(dataset => {
+      if (this.activeDataFilter) {
+        return dataset.dataType === 'boolean' && dataset.title.includes(this.activeDataFilter);
+      } else {
+        return dataset.dataType === 'boolean';
+      }
+    });
     for (const config of filteredConfig) {
       dataArray.push([config.title, 0, 0]);
     }
 
     this.gChart.displayCollectionData(this.activeCollection.title).subscribe((wholeData: Dataset[]) => {
+      if (this.activeDataFilter) {
+        wholeData = this.applyActiveFilter(wholeData);
+      }
       for (const dataset of wholeData) {
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < dataArray.length; i++) {
           if (dataArray[i][0] === dataset.title) {
-            dataset.data ? dataArray[i][1] = dataArray[i][1] + 1 : dataArray[i][2] = dataArray[i][2] + 1;
+            dataset.data ? (dataArray[i][1] = dataArray[i][1] + 1) : (dataArray[i][2] = dataArray[i][2] + 1);
           }
         }
       }
       const data = this.gLib.visualization.arrayToDataTable(dataArray);
       const options = {
         chart: {
-          title: 'Visualization of your absolute decisions'
+          title: 'Visualization of your absolute decisions',
         },
-        bars: 'horizontal'
+        bars: 'horizontal',
       };
 
       const chart = new this.gLib.charts.Bar(document.getElementById('barchart'));

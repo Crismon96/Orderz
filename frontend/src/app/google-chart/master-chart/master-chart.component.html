@@ -29,7 +29,7 @@
     </mat-card>
   </div>
 
-  <div class="chart-selection" *ngIf="selectedType === 'Diversified-Donut (selection)' || selectedType === 'Line-Chart (number)'">
+  <div class="chart-selection">
     <form [formGroup]="filterForm" (ngSubmit)="saveNewFilter()">
       <mat-form-field class="chart-selection-input">
         <mat-label>Select Filter</mat-label>
