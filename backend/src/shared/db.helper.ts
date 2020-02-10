@@ -7,6 +7,7 @@ const dbName = 'Orderz';
 // Create a new MongoClient
 let client: MongoClient;
 export let db: any;
+export let userDB: any;
 /*export async function fitnessCollection(userCollection: string) {
   return db.collection(userCollection)
       //.findOne({title: 'fitness'})
@@ -19,12 +20,12 @@ export let db: any;
 export async function connect() {
   client = await MongoClient.connect(dbUrl, { useNewUrlParser: true });
   db = client.db(dbName);
+  userDB = client.db('UsersDB');
 
   // Connect to Mongo and initiate DB with preset collections
   client.connect(async function(err) {
     console.log('Connected successfully to server');
-    db = client.db(dbName);
-    await db.createCollection('userInfoBundle');
+    await userDB.createCollection('userCredentials');
   });
 }
 

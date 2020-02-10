@@ -1,25 +1,55 @@
 <div class="login-card">
   <mat-card>
-    <form [formGroup]="form" (ngSubmit)="login()">
-    <mat-card-title style="text-align: center">Login</mat-card-title>
-    <mat-card-content>
+    <div *ngIf="isLoginScreen">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-card-title style="text-align: center">Login</mat-card-title>
+        <mat-card-content>
+          <div class="login-form">
+            <mat-form-field class="input-namepass">
+              <input matInput placeholder="Your username" type="text" formControlName="username" />
+            </mat-form-field>
+            <br />
+            <mat-form-field class="input-namepass">
+              <input matInput placeholder="Your password" type="password" formControlName="password" />
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div>
+            <button mat-stroked-button style="margin-left: 45%" type="submit">Log me in</button>
+            <button mat-flat-button style="float: right; font-size: 50%" type="button" (click)="forgotPassword()">Forgot my password</button>
+          </div>
+        </mat-card-actions>
+      </form>
+    </div>
 
-        <div class="login-form">
-          <mat-form-field class="input-namepass">
-            <input matInput placeholder="username" type="text" formControlName="username"/>
-          </mat-form-field>
-          <br/>
-          <mat-form-field class="input-namepass">
-            <input matInput placeholder="password" type="text" formControlName="password"/>
-          </mat-form-field>
-        </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <div>
-        <button mat-stroked-button style="margin-left: 45%" type="submit">Log me in</button>
-        <button mat-flat-button style="float: right; font-size: 50%" type="button" (click)="forgotPassword()">Forgot my password</button>
-      </div>
-    </mat-card-actions>
-    </form>
+    <div *ngIf="!isLoginScreen">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <mat-card-title style="text-align: center">Register yourself</mat-card-title>
+        <mat-card-content>
+          <div class="login-form">
+            <mat-form-field class="input-namepass">
+              <input matInput placeholder="Your username" type="text" formControlName="username" />
+            </mat-form-field>
+            <br />
+            <mat-form-field class="input-namepass">
+              <input matInput placeholder="Your password" type="password" formControlName="password" />
+            </mat-form-field>
+            <br />
+            <mat-form-field class="input-namepass">
+              <input matInput placeholder="Your email" type="text" formControlName="email" />
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div>
+            <button mat-stroked-button style="margin-left: 45%" type="submit">Register me</button>
+            <button mat-flat-button style="float: right; font-size: 50%" type="button" (click)="forgotPassword()">Forgot my password</button>
+          </div>
+        </mat-card-actions>
+      </form>
+    </div>
+
+    <button (click)="isLoginScreen = !isLoginScreen" mat-raised-button>{{ isLoginScreen ? 'Register an account' : 'Login with existing account' }}</button>
   </mat-card>
 </div>

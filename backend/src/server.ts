@@ -30,6 +30,11 @@ async function startApp() {
   await connect();
 }
 
+// CLIENT ID
+// 378821623207-c4vb7rlcfl6msons997cm7qhl1mqjk7t.apps.googleusercontent.com
+// CLIENT KEY
+// 3ILVjOA8FG7xsolKdmNAl-Fu
+
 startApp().catch(err => {
   if (err instanceof MongoNetworkError) {
     console.error(`connection to database failed: ${err.message}`);

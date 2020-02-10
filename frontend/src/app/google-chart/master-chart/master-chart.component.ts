@@ -17,7 +17,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   activeCollectionConfig: ICollectionConfig;
   subscriptions = new Subscription();
   selectedType = 'Line-Chart (number)';
-  types = ['Line-Chart (number)', 'Yes/No-Donut (boolean)', 'Diversified-Donut (selection)', 'Table-Chart (All)'];
+  types = ['Line-Chart (number)', 'Yea/No-Barchart (boolean)', 'Diversified-Donut (selection)', 'Table-Chart (All)'];
   form: FormGroup;
   filterForm: FormGroup;
   activeDataFilter: string;
@@ -74,7 +74,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
       case 'Line-Chart (number)':
         this.drawLineChart();
         break;
-      case 'Yes/No-Donut (boolean)':
+      case 'Yea/No-Barchart (boolean)':
         this.drawBarChartBool();
         break;
       case 'Diversified-Donut (selection)':

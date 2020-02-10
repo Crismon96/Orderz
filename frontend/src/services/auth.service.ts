@@ -10,12 +10,11 @@ export class AuthService {
   // TODO: Change default to false
   isLoggedIn = new BehaviorSubject(true);
 
-  logUserIn(username: string, password: string) {
-    const newUser = {
-      username,
-      password,
-      email: 'emailaddresse',
-    };
-    return this.http.put('api/auth/user', newUser, { responseType: 'text' });
+  logUserIn(user) {
+    return this.http.post('api/auth/login', user);
+  }
+
+  registerNewUser(user) {
+    return this.http.put('api/auth/user', user, { responseType: 'text' });
   }
 }
