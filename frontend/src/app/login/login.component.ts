@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
   isLoginScreen = true;
+  busy = false;
   constructor(private router: Router, private auth: AuthService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -40,10 +41,10 @@ export class LoginComponent implements OnInit {
       username: this.loginForm.controls.username.value,
       password: this.loginForm.controls.password.value,
     };
-
-    this.auth.logUserIn(user).subscribe(res => {
+    this.busy = true;
+    this.auth.logUserIn(user).subscribe(() => {
       this.router.navigateByUrl('/main').then(() => {
-        this.auth.isLoggedIn.next(true);
+        this.busy = false;
       });
     });
   }

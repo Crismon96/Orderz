@@ -31,7 +31,7 @@ import {
 } from '@angular/material';
 
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -51,6 +51,7 @@ import { CollectionPanelComponent } from './library/collections/collection-panel
 import { CollectionDataviewComponent } from './library/collections/collection-views/collection-dataview/collection-dataview.component';
 import { CollectionDatatableComponent } from './library/collections/collection-views/collection-datatable/collection-datatable.component';
 import { GoogleChartModule } from './google-chart/google-chart.module';
+import { JwtInterceptorService } from '../services/jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,7 @@ import { GoogleChartModule } from './google-chart/google-chart.module';
     MatSlideToggleModule,
     GoogleChartModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true }],
   bootstrap: [AppComponent],
   entryComponents: [AddNewCollectionModalComponent, AddNewDatasetModalComponent],
 })

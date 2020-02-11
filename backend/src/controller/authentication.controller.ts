@@ -40,7 +40,6 @@ async function logUserIn(ctx: Context) {
   } else if (user) {
     const token = await generateJWT(user);
     ctx.body = {
-      user: user,
       token: token,
     };
     ctx.status = 200;

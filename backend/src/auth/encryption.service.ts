@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 const saltRounds = 10;
 
-interface IToken {
+export interface IToken {
   username: string;
   email: string;
   expirationDate: number;
@@ -53,11 +53,10 @@ export async function decryptUser(username: string, password: string): Promise<I
 }
 
 export async function generateJWT(user: IUser): Promise<string> {
-  const expirationDate = await checkJWTexpirationDate;
+  const expirationDate = await checkJWTexpirationDate();
 
   //TODO: Store real secret in .env
-  const token = jwt.sign({ username: user.username, email: user.email, expirationDate: expirationDate }, 'secret');
-  return token;
+  return jwt.sign({ username: user.username, email: user.email, expirationDate: expirationDate }, 'secret');
 }
 
 async function checkJWTexpirationDate(): Promise<number> {
@@ -94,6 +93,7 @@ export async function validateJWT(ctx: Context, next: () => Promise<any>) {
     }
 
     const { username, email, expirationDate } = decodedToken;
+    console.log('THE TOKEN WAS READ: ', decodedToken);
     if (expirationDate < new Date().getTime()) {
       ctx.throw(401, 'No valid timestamp on token');
     }
