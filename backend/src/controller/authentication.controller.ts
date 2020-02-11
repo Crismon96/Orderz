@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import { Context } from 'koa';
 import { createFitnessCollection, db } from '../shared/db.helper';
-import { decryptUser, saltAndHashSaveUser } from '../auth/encryption.service';
+import { decryptUser, generateJWT, saltAndHashSaveUser } from '../auth/encryption.service';
 
 export function authenticationController() {
   const router = new Router();
@@ -38,7 +38,11 @@ async function logUserIn(ctx: Context) {
   if (typeof user === 'string') {
     ctx.throw(401, user);
   } else if (user) {
-    ctx.body = user;
+    const token = await generateJWT(user);
+    ctx.body = {
+      user: user,
+      token: token,
+    };
     ctx.status = 200;
   } else {
     ctx.throw(400, 'There was an error accessing the database');

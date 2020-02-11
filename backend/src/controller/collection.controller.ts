@@ -4,18 +4,18 @@ import { db } from '../shared/db.helper';
 import { FitnessEntry } from '../../../sharedModules/schemaInterfaces/fitness-POST-addNewEntry.schema';
 import { CreateNewCollection } from '../../../sharedModules/schemaInterfaces/collection-POST-createNewCollection.schema';
 import { MongoError } from 'mongodb';
-import uuidv4 from 'uuid/v4';
+import { validateJWT } from '../auth/encryption.service';
 
 // Routes
 export function collectionController() {
   const router = new Router();
 
-  router.get('', getAllCollections);
-  router.get('/collection', getSpecificCollection);
-  router.put('/create', createNewCollection);
-  router.put('/fitness/datapoint', addNewFitnessDatapoint);
-  router.put('/datapoint', createNewDatapointForCollection);
-  router.get('/data', getSpecificCollectionData);
+  router.get('', validateJWT, getAllCollections);
+  router.get('/collection', validateJWT, getSpecificCollection);
+  router.put('/create', validateJWT, createNewCollection);
+  router.put('/fitness/datapoint', validateJWT, addNewFitnessDatapoint);
+  router.put('/datapoint', validateJWT, createNewDatapointForCollection);
+  router.get('/data', validateJWT, getSpecificCollectionData);
 
   return router.routes();
 }
