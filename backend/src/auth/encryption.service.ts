@@ -1,6 +1,7 @@
 import { db, userDB } from '../shared/db.helper';
 import uuidv4 from 'uuid/v4';
 import { Context } from 'koa';
+import jwt from 'jsonwebtoken';
 
 import bcrypt from 'bcryptjs';
 const saltRounds = 10;
@@ -44,4 +45,10 @@ export async function decryptUser(username: string, password: string): Promise<I
   } else {
     return 'False Password entered';
   }
+}
+
+export async function generateJWT(user: IUser) {
+  //TODO: renew expirationDAte on database upon login.
+  const expirationDate = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
+  const token = jwt.sign({ username: user.username, email: user.email, expirationDate: expirationDate }, process.env['JWT_SECRET']);
 }

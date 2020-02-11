@@ -16,25 +16,19 @@ async function startApp() {
   console.log(`Serving static files from ${assetPath}`);
   app.use(koaStatic(assetPath));
 
-  // Serve API
   app.use(bodyParser());
 
   app.use(mount('/api/auth', authenticationController()));
   app.use(mount('/api/collections', collectionController()));
 
   // Start server
-  if (process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV !== 'development') {
     app.listen(3000, () => {
       console.log(`Backend listening at http://localhost:3000/`);
     });
   }
   await connect();
 }
-
-// CLIENT ID
-// 378821623207-c4vb7rlcfl6msons997cm7qhl1mqjk7t.apps.googleusercontent.com
-// CLIENT KEY
-// 3ILVjOA8FG7xsolKdmNAl-Fu
 
 startApp().catch(err => {
   if (err instanceof MongoNetworkError) {
