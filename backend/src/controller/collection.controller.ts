@@ -5,6 +5,7 @@ import { FitnessEntry } from '../../../sharedModules/schemaInterfaces/fitness-PO
 import { CreateNewCollection } from '../../../sharedModules/schemaInterfaces/collection-POST-createNewCollection.schema';
 import { MongoError } from 'mongodb';
 import { validateJWT } from '../auth/encryption.service';
+import { ICollectionInfo } from '../../../frontend/src/shared/IcollectionInfo';
 
 // Routes
 export function collectionController() {
@@ -23,7 +24,6 @@ export function collectionController() {
 async function getAllCollections(ctx: Context) {
   const username = ctx.state.username;
 
-  console.log('USERNAME IN FIRST: ', username);
   let allCollections = await db.collection(username).findOne({ title: 'collectionInfo' });
   allCollections = allCollections.collectionsMeta;
   if (allCollections) {
@@ -60,6 +60,7 @@ async function createNewCollection(ctx: Context) {
     .collection(username)
     .insertOne({ title: newCollectionObj.collectionTitle, configuration: newCollectionObj.datasets, type: 'collection', data: [] });
 
+  await db.collection(username).updateOne({ title: 'collectionInfo' }, { $inc: { numberOfCollections: 1 } });
   await db
     .collection(username)
     .updateOne(
@@ -121,9 +122,13 @@ async function createNewDatapointForCollection(ctx: Context) {
       ctx.body = 'Didnt find the collection you were looking for';
       ctx.status = 400;
     });
+
+  const updatedCollectionInfo = await db.collection(username).findOne({ 'collectionsMeta.title': targedCollectionName });
+  updatedCollectionInfo.collectionsMeta.find((doc: ICollectionInfo) => (doc.title = targedCollectionName)).numberOfEntries++;
+
   await db
     .collection(username)
-    .updateOne({ collectionsMeta: { title: targedCollectionName } }, { $inc: { numberOfEntries: +1 } })
+    .replaceOne({ title: 'collectionInfo' }, updatedCollectionInfo)
     .then(() => {
       ctx.body = ctx.request.body;
       ctx.status = 200;
