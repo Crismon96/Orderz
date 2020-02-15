@@ -21,7 +21,10 @@ export function collectionController() {
 }
 
 async function getAllCollections(ctx: Context) {
-  let allCollections = await db.collection('username').findOne({ title: 'collectionInfo' });
+  const username = ctx.state.username;
+
+  console.log('USERNAME IN FIRST: ', username);
+  let allCollections = await db.collection(username).findOne({ title: 'collectionInfo' });
   allCollections = allCollections.collectionsMeta;
   if (allCollections) {
     ctx.status = 200;
@@ -34,8 +37,9 @@ async function getAllCollections(ctx: Context) {
 
 async function getSpecificCollection(ctx: Context) {
   const collectionName: string = ctx.query.name;
+  const username = ctx.state.username;
 
-  const specCollection = await db.collection('username').findOne({ title: collectionName });
+  const specCollection = await db.collection(username).findOne({ title: collectionName });
   if (specCollection) {
     ctx.body = {
       title: specCollection.title,
@@ -50,12 +54,14 @@ async function getSpecificCollection(ctx: Context) {
 
 async function createNewCollection(ctx: Context) {
   const newCollectionObj: CreateNewCollection = ctx.request.body;
+  const username = ctx.state.username;
+
   const newCollection = await db
-    .collection('username')
+    .collection(username)
     .insertOne({ title: newCollectionObj.collectionTitle, configuration: newCollectionObj.datasets, type: 'collection', data: [] });
 
   await db
-    .collection('username')
+    .collection(username)
     .updateOne(
       { title: 'collectionInfo' },
       {
@@ -84,8 +90,10 @@ async function createNewCollection(ctx: Context) {
 // This Api is not getting used right now.
 async function addNewFitnessDatapoint(ctx: Context) {
   const fitnessData: FitnessEntry = ctx.request.body.newDatapoints;
+  const username = ctx.state.username;
+
   await db
-    .collection('username')
+    .collection(username)
     .updateOne({ title: 'fitness' }, { $push: { data: { fitnessData } } })
     .then(() => {
       ctx.body = fitnessData;
@@ -95,24 +103,26 @@ async function addNewFitnessDatapoint(ctx: Context) {
       ctx.body = 'Error trying to add new fitness entry: ' + err;
       ctx.status = 400;
     });
-  await db.collection('username').updateOne({ title: 'collectionInfo', collectionsMeta: { title: 'fitness' } }, { $inc: { numberOfEntries: +1 } });
+  await db.collection(username).updateOne({ title: 'collectionInfo', collectionsMeta: { title: 'fitness' } }, { $inc: { numberOfEntries: +1 } });
 }
 
 async function createNewDatapointForCollection(ctx: Context) {
   const targedCollectionName = ctx.query.collection;
+  const username = ctx.state.username;
+
   let newDatapoints = ctx.request.body;
   newDatapoints.map((entry: any) => {
     entry.submissionDate = new Date();
   });
   await db
-    .collection('username')
+    .collection(username)
     .updateMany({ title: targedCollectionName }, { $push: { data: { $each: newDatapoints } } })
     .catch(() => {
       ctx.body = 'Didnt find the collection you were looking for';
       ctx.status = 400;
     });
   await db
-    .collection('username')
+    .collection(username)
     .updateOne({ collectionsMeta: { title: targedCollectionName } }, { $inc: { numberOfEntries: +1 } })
     .then(() => {
       ctx.body = ctx.request.body;
@@ -126,8 +136,9 @@ async function createNewDatapointForCollection(ctx: Context) {
 
 async function getSpecificCollectionData(ctx: Context) {
   const collectionName = ctx.query.collection;
+  const username = ctx.state.username;
 
-  const targedCollection = await db.collection('username').findOne({ title: collectionName });
+  const targedCollection = await db.collection(username).findOne({ title: collectionName });
   if (targedCollection) {
     ctx.body = targedCollection.data;
     ctx.status = 200;

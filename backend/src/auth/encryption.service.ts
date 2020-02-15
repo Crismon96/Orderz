@@ -93,13 +93,13 @@ export async function validateJWT(ctx: Context, next: () => Promise<any>) {
     }
 
     const { username, email, expirationDate } = decodedToken;
-    console.log('THE TOKEN WAS READ: ', decodedToken);
     if (expirationDate < new Date().getTime()) {
       ctx.throw(401, 'No valid timestamp on token');
     }
 
-    const userRegistered = userDB.collectionNames(username);
+    const userRegistered = userDB.collection(username);
     if (userRegistered) {
+      ctx.state = { username };
       return next();
     }
   }
