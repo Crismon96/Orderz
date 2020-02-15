@@ -1,44 +1,30 @@
 #divLineChart {
-  margin: 50px 20px;
-  width: 95%;
-}
-@media (max-width: 400px) {
-  #divLineChart {
-    margin: 50px 20px;
-    width: 25%;
+  width: 100%;
+  @media (max-height: 749px) {
+    margin-top: -60px;
   }
-}
-@media (max-width: 600px) {
-  #divLineChart {
+  @media (min-height: 750px) {
     margin: 50px 20px;
-    width: 40%;
-  }
-}
-@media (max-width: 800px) {
-  #divLineChart {
-    margin: 50px 20px;
-    width: 50%;
-  }
-}
-@media (max-width: 1200px) {
-  #divLineChart {
-    margin: 50px 20px;
-    width: 85%;
   }
 }
 
 .chart-selection {
-  width: 50%;
+  margin-top: 5px;
   z-index: 25;
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+  @media (min-width: 501px) {
+    width: 50%;
+  }
 }
 
 .chart-selection-input {
   margin: 0 10px;
-  width: 70%;
+  width: 65%;
 }
 
 .chart-selection-btn {
-  margin: 0 10px;
 }
 
 .selection-panel {
@@ -48,8 +34,20 @@
   flex-wrap: wrap;
 }
 
-.PieChart {
-  margin: 0 25%;
+#divPieChart {
+  @media (max-width: 450px) {
+    width: 550px;
+    height: 550px;
+  }
+  @media (min-width: 900px) {
+    width: 750px;
+    height: 750px;
+  }
+  @media (min-width: 901px) {
+    width: 900px;
+    height: 900px;
+    margin: 0 25%;
+  }
 }
 
 .Datatable-chart {

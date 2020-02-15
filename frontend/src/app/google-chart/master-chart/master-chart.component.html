@@ -16,6 +16,16 @@
     </form>
   </div>
 
+  <div class="chart-selection">
+    <form [formGroup]="filterForm" (ngSubmit)="saveNewFilter()">
+      <mat-form-field class="chart-selection-input">
+        <mat-label>Select Filter</mat-label>
+        <input matInput style="width: 100%" formControlName="DonutFilter" />
+      </mat-form-field>
+      <button mat-raised-button color="accent" class="chart-selection-btn" type="submit">Filter Data</button>
+    </form>
+  </div>
+
   <div id="Chart-Error-Modal">
     <mat-card *ngIf="displayChartErrorModal">
       <mat-card-title>No data for display was found for the choosen collection</mat-card-title>
@@ -27,16 +37,6 @@
         </p>
       </mat-card-content>
     </mat-card>
-  </div>
-
-  <div class="chart-selection">
-    <form [formGroup]="filterForm" (ngSubmit)="saveNewFilter()">
-      <mat-form-field class="chart-selection-input">
-        <mat-label>Select Filter</mat-label>
-        <input matInput style="width: 100%" formControlName="DonutFilter" />
-      </mat-form-field>
-      <button mat-raised-button color="accent" class="chart-selection-btn" type="submit">Filter Data</button>
-    </form>
   </div>
 
   <div *ngIf="selectedType === 'Line-Chart (number)'" id="divLineChart"></div>
