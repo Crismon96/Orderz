@@ -3,19 +3,10 @@
   top: 0;
 }
 
-.toolbar-spacer {
-  flex: 1 1 auto;
-}
-
-.narrow {
-  height: 5px;
-  padding: 0;
-}
-
 .top-bar {
   position: fixed;
   width: 100%;
-  z-index: 99999;
+  z-index: 99997;
 }
 
 .header-title {
@@ -25,7 +16,14 @@
 }
 
 .header-hover {
+  margin: 0 10px;
+  background-color: #4a69bd;
+  color: white;
   &:hover {
     cursor: pointer;
   }
+}
+
+.toolbar-menu {
+  z-index: 99998;
 }

@@ -4,3 +4,8 @@
 
 /* To quickly generate your own theme, check out the color generator */
 /* https://ionicframework.com/docs/theming/color-generator */
+
+:root {
+  --ion-color-primary: #4a69bd;
+  --ion-color-secondary: #ffa801;
+}

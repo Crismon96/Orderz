@@ -1,13 +1,13 @@
 <div class="container" *ngIf="isLoggedIn | async">
-  <ion-fab-button color="primary" class="nav-circle" [@navState]="navState" (click)="onMobileNavActivation()"></ion-fab-button>
+  <ion-fab-button color="undefined" class="nav-circle" [@navState]="navState" (click)="onMobileNavActivation()"></ion-fab-button>
 
-  <ion-button color="primary" class="sub-menu-button" shape="round" (click)="onNavDataLib()" [@navState-sub1]="navState"
+  <ion-fab-button size="small" color="primary" class="sub-menu-button" (click)="onNavDataLib()" [@navState-sub1]="navState"
     ><ion-icon name="reorder-three-outline"></ion-icon
-  ></ion-button>
-  <ion-button color="primary" class="sub-menu-button" shape="round" (click)="onNavDataLib()" [@navState-sub2]="navState"
+  ></ion-fab-button>
+  <ion-fab-button size="small" color="primary" class="sub-menu-button" (click)="onNavDataLib()" [@navState-sub2]="navState"
     ><ion-icon name="analytics-outline"></ion-icon
-  ></ion-button>
-  <ion-button color="primary" class="sub-menu-button" shape="round" (click)="onNavDataLib()" [@navState-sub3]="navState"
+  ></ion-fab-button>
+  <ion-fab-button size="small" color="primary" class="sub-menu-button" (click)="onNavDataLib()" [@navState-sub3]="navState"
     ><ion-icon name="settings-outline"></ion-icon
-  ></ion-button>
+  ></ion-fab-button>
 </div>
