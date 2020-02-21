@@ -1,7 +1,6 @@
 <mat-toolbar id="header" color="primary" class="top-bar">
   <mat-toolbar-row class="mat-elevation-z8">
-    <button mat-icon-button (click)="navigateBackButton()"><i class="material-icons">reply</i></button>
-
+    <ion-icon size="large" (click)="navigateBackButton()" name="arrow-back-outline"></ion-icon>
     <div class="header-title">
       <div class="header-title">{{ title }}</div>
     </div>
@@ -10,11 +9,11 @@
 
     <div>
       <button mat-icon-button [matMenuTriggerFor]="account">
-        <mat-icon>person</mat-icon>
+        <ion-icon size="large" name="person-circle-outline"></ion-icon>
       </button>
       <mat-menu #account="matMenu">
         <button mat-menu-item (click)="logout()">
-          <mat-icon>exit_to_app</mat-icon>
+          <ion-icon name="exit-outline"></ion-icon>
           <span>Logout</span>
         </button>
       </mat-menu>

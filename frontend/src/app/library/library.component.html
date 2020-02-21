@@ -7,5 +7,9 @@
     [collection]="collection"
     (click)="chooseActiveCollection(collection)"
   ></app-collection-panel>
-  <button class="addNewCollection-Btn" mat-fab (click)="createNewCollection()"><i class="material-icons">playlist_add</i></button>
+  <ion-fab class="addNewCollection-Btn" vertical="bottom" horizontal="end" slot="fixed" (click)="createNewCollection()">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </div>

@@ -1,6 +1,13 @@
 <div class="container" *ngIf="isLoggedIn | async">
-  <button mat-stroked-button class="nav-circle" (click)="onMobileNavActivation()" [@navState]="navState"></button>
-  <button mat-mini-fab class="sub-menu-button" (click)="onNavDataLib()" [@navState-sub1]="navState"><i class="material-icons">storage</i></button>
-  <button mat-mini-fab class="sub-menu-button" (click)="onNavDataViz()" [@navState-sub2]="navState"><i class="material-icons">multiline_chart</i></button>
-  <button mat-mini-fab class="sub-menu-button" (click)="onNavUserOpt()" [@navState-sub3]="navState"><i class="material-icons">settings_applications</i></button>
+  <ion-fab-button color="primary" class="nav-circle" [@navState]="navState" (click)="onMobileNavActivation()"></ion-fab-button>
+
+  <ion-button color="primary" class="sub-menu-button" shape="round" (click)="onNavDataLib()" [@navState-sub1]="navState"
+    ><ion-icon name="reorder-three-outline"></ion-icon
+  ></ion-button>
+  <ion-button color="primary" class="sub-menu-button" shape="round" (click)="onNavDataLib()" [@navState-sub2]="navState"
+    ><ion-icon name="analytics-outline"></ion-icon
+  ></ion-button>
+  <ion-button color="primary" class="sub-menu-button" shape="round" (click)="onNavDataLib()" [@navState-sub3]="navState"
+    ><ion-icon name="settings-outline"></ion-icon
+  ></ion-button>
 </div>

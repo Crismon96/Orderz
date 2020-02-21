@@ -5,7 +5,14 @@
       <div mat-dialog-content class="dialog-content">
         <div formArrayName="data" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
           <label *ngIf="arrayItem.dataType === 'number'" [for]="arrayItem" class="array-item-title"> {{ arrayItem.title }}</label>
-          <input class="dynamic-number-input" *ngIf="arrayItem.dataType === 'number'" type="number" placeholder="null" [formControl]="data.controls[i]" />
+          <input
+            matInput
+            class="dynamic-number-input"
+            *ngIf="arrayItem.dataType === 'number'"
+            type="number"
+            placeholder="null"
+            [formControl]="data.controls[i]"
+          />
           <mat-slide-toggle
             class="dynamic-boolean-input"
             checked="false"

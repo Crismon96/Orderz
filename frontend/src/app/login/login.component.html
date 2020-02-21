@@ -1,55 +1,47 @@
 <div class="login-card">
-  <mat-card>
+  <ion-card>
     <div *ngIf="isLoginScreen">
       <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <mat-card-title style="text-align: center">Login</mat-card-title>
-        <mat-card-content>
+        <ion-card-header>
+          <ion-card-title style="text-align: center">Login</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
           <div class="login-form">
-            <mat-form-field class="input-namepass">
-              <input matInput placeholder="Your username" type="text" formControlName="username" />
-            </mat-form-field>
+            <ion-input class="input-namepass" placeholder="Your username" type="text" formControlName="username"></ion-input>
             <br />
-            <mat-form-field class="input-namepass">
-              <input matInput placeholder="Your password" type="password" formControlName="password" />
-            </mat-form-field>
+            <ion-input class="input-namepass" placeholder="Your password" type="password" formControlName="password"></ion-input>
           </div>
-        </mat-card-content>
-        <mat-card-actions>
           <div>
-            <button mat-stroked-button style="margin-left: 45%" type="submit">Log me in</button>
-            <button mat-flat-button style="float: right; font-size: 50%" type="button" (click)="forgotPassword()">Forgot my password</button>
+            <ion-button size="small" expand="block" type="submit" color="primary">Log me in</ion-button>
           </div>
-        </mat-card-actions>
+        </ion-card-content>
       </form>
     </div>
 
     <div *ngIf="!isLoginScreen">
       <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <mat-card-title style="text-align: center">Register yourself</mat-card-title>
-        <mat-card-content>
+        <ion-card-header>
+          <ion-card-title style="text-align: center">Register yourself</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
           <div class="login-form">
-            <mat-form-field class="input-namepass">
-              <input matInput placeholder="Your username" type="text" formControlName="username" />
-            </mat-form-field>
+            <ion-input class="input-namepass" placeholder="Your username" type="text" formControlName="username"></ion-input>
             <br />
-            <mat-form-field class="input-namepass">
-              <input matInput placeholder="Your password" type="password" formControlName="password" />
-            </mat-form-field>
+            <ion-input class="input-namepass" placeholder="Your password" type="password" formControlName="password"></ion-input>
             <br />
-            <mat-form-field class="input-namepass">
-              <input matInput placeholder="Your email" type="text" formControlName="email" />
-            </mat-form-field>
+            <ion-input class="input-namepass" placeholder="Your email" type="text" formControlName="email"></ion-input>
           </div>
-        </mat-card-content>
-        <mat-card-actions>
           <div>
-            <button mat-stroked-button style="margin-left: 45%" type="submit">Register me</button>
-            <button mat-flat-button style="float: right; font-size: 50%" type="button" (click)="forgotPassword()">Forgot my password</button>
+            <ion-button size="small" expand="block" type="submit" color="primary">Register me</ion-button>
           </div>
-        </mat-card-actions>
+        </ion-card-content>
       </form>
     </div>
 
-    <button (click)="isLoginScreen = !isLoginScreen" mat-raised-button>{{ isLoginScreen ? 'Register an account' : 'Login with existing account' }}</button>
-  </mat-card>
+    <ion-button size="small" color="medium" (click)="isLoginScreen = !isLoginScreen">{{
+      isLoginScreen ? 'Register an account' : 'Login with existing account'
+    }}</ion-button>
+    <ion-button *ngIf="isLoginScreen" style="float: right" size="small" type="button" color="light" (click)="forgotPassword()">Forgot my password</ion-button>
+  </ion-card>
 </div>
