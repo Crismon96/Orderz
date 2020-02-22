@@ -7,14 +7,21 @@
         <ion-input placeholder="Enter the title of the collection" type="text" formControlName="collectionTitle"></ion-input>
       </ion-item>
       <div formArrayName="datasets" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
-        <input style="width: 50%" type="text" [formControl]="datasets.controls[i]" [value]="arrayItem.title" readonly />
-        <label [for]="arrayItem" class="array-item-title"> {{ arrayItem.dataType }}</label>
-        <br />
+        <ion-item style="width: 90%; margin: auto">
+          <ion-input style="width: 50%" type="text" [formControl]="datasets.controls[i]" [value]="arrayItem.title" readonly></ion-input>
+          <ion-label class="array-item-title"> {{ arrayItem.dataType }}</ion-label>
+        </ion-item>
       </div>
-      <mat-form-field class="collection-description">
-        <mat-label>A detailed description of your goal.</mat-label>
-        <textarea matInput formControlName="collectionDescription" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
-      </mat-form-field>
+      <div class="collection-description">
+        <textarea
+          style="width: 95%"
+          placeholder="A detailed description of your goal."
+          formControlName="collectionDescription"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="3"
+        ></textarea>
+      </div>
     </div>
     <div mat-dialog-actions class="action-buttons">
       <ion-button size="small" color="primary" type="submit">Save</ion-button>

@@ -10,6 +10,7 @@
   justify-content: center;
   flex-wrap: wrap;
   overflow-y: scroll;
+  height: 100%;
   @media (max-height: 650px) {
     margin: 50px 20px;
     height: 81vh;
@@ -26,4 +27,9 @@
 
 .accordion-element:hover {
   cursor: pointer;
+}
+
+.spacer {
+  height: 100px;
+  width: 90%;
 }
