@@ -1,64 +1,48 @@
 <div class="selection-panel">
-  <div style="margin-top: 5px;" class="chart-selection">
-    <form [formGroup]="form" (ngSubmit)="drawNewChart()">
-      <div class="chart-selection-input">
-        <ion-item> </ion-item>
-        <ion-label>Select visualization type</ion-label>
-        <ion-select formControlName="chartType">
-          <ion-select-option *ngFor="let type of types" [value]="type">
-            {{ type }}
-          </ion-select-option>
-        </ion-select>
-      </div>
-
-      <!--      <mat-form-field class="chart-selection-input">
-        <mat-label>Select visualization type</mat-label>
-        <mat-select formControlName="chartType">
-          <mat-option *ngFor="let type of types" [value]="type">
-            {{ type }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>-->
-
-      <ion-button color="primary" class="chart-selection-btn" type="submit">
+  <form class="chart-selection" [formGroup]="form" (ngSubmit)="drawNewChart()">
+    <ion-item>
+      <ion-label>Viz-Type:</ion-label>
+      <ion-select class="ion-no-padding" formControlName="chartType">
+        <ion-select-option *ngFor="let type of types" [value]="type">
+          {{ type }}
+        </ion-select-option>
+      </ion-select>
+      <ion-button color="primary" type="submit">
         Display!
       </ion-button>
-    </form>
-  </div>
+    </ion-item>
+  </form>
 
-  <div class="chart-selection">
-    <form [formGroup]="filterForm" (ngSubmit)="saveNewFilter()">
-      <ion-label>Select Filter</ion-label>
-      <ion-input style="width: 100%" formControlName="DonutFilter"></ion-input>
-
-      <!--      <mat-form-field class="chart-selection-input">
-        <mat-label>Select Filter</mat-label>
-        <input matInput style="width: 100%" formControlName="DonutFilter" />
-      </mat-form-field>-->
-      <ion-button color="warning" class="chart-selection-btn" type="submit">Filter Data</ion-button>
-    </form>
-  </div>
-
-  <div id="Chart-Error-Modal">
-    <mat-card *ngIf="displayChartErrorModal">
-      <mat-card-title>No data for display was found for the choosen collection</mat-card-title>
-      <mat-card-content>
-        <p>We could not find valid data for the type of visualization you choose.</p>
-        <p>
-          Please make sure your collection contains data that fits your chart. If it does a problem on the database might be the reason your data does not get
-          displayed.
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div *ngIf="selectedType === 'Line-Chart (number)'" id="divLineChart"></div>
-  <div *ngIf="selectedType === 'Diversified-Donut (selection)'" class="PieChart" id="divPieChart"></div>
-  <div *ngIf="selectedType === 'Yea/No-Barchart (boolean)'" id="barchart"></div>
-  <app-datatable-chart
-    class="Datatable-chart"
-    (noValidDataReceived)="displayChartError()"
-    *ngIf="selectedType === 'Table-Chart (All)'"
-    [activeCollection]="activeCollection"
-  ></app-datatable-chart>
+  <form class="chart-selection" [formGroup]="filterForm" (ngSubmit)="saveNewFilter()">
+    <ion-item>
+      <ion-label>Filter:</ion-label>
+      <ion-input formControlName="DonutFilter"> </ion-input>
+      <ion-button color="warning" type="submit">Filter Data</ion-button>
+    </ion-item>
+  </form>
 </div>
+
+<div id="Chart-Error-Modal">
+  <ion-card *ngIf="displayChartErrorModal">
+    <ion-card-header>
+      <ion-card-title>No data for display was found for the choosen collection</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>We could not find valid data for the type of visualization you choose.</p>
+      <p>
+        Please make sure your collection contains data that fits your chart. If it does a problem on the database might be the reason your data does not get
+        displayed.
+      </p>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<div *ngIf="selectedType === 'Line-Chart (number)'" id="divLineChart"></div>
+<div *ngIf="selectedType === 'Diversified-Donut (selection)'" class="PieChart" id="divPieChart"></div>
+<div *ngIf="selectedType === 'Yea/No-Barchart (boolean)'" id="barchart"></div>
+<app-datatable-chart
+  class="Datatable-chart"
+  (noValidDataReceived)="displayChartError()"
+  *ngIf="selectedType === 'Table-Chart (All)'"
+  [activeCollection]="activeCollection"
+></app-datatable-chart>

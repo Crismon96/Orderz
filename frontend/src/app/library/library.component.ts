@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddNewCollectionModalComponent } from '../../templates/add-new-collection-modal/add-new-collection-modal.component';
 import { HeaderService } from '../../services/header.service';
 import { LibraryService } from '../../services/library.service';
+import { ICollectionInfo } from '../../shared/IcollectionInfo';
 
 @Component({
   selector: 'app-library',
@@ -38,7 +39,8 @@ export class LibraryComponent implements OnInit {
     });
   }
 
-  chooseActiveCollection(choosenCollection) {
+  chooseActiveCollection(choosenCollection: ICollectionInfo) {
     this.lib.activeCollection.next(choosenCollection);
+    this.header.setTitle(choosenCollection.title);
   }
 }

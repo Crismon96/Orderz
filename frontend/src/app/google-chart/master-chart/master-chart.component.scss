@@ -9,22 +9,13 @@
 }
 
 .chart-selection {
-  margin-top: 5px;
-  z-index: 25;
-  @media (max-width: 500px) {
-    width: 100%;
+  @media (max-width: 549px) {
+    width: 90%;
   }
-  @media (min-width: 501px) {
-    width: 50%;
+  @media (min-width: 550px) {
+    width: 48%;
+    margin: 10px auto;
   }
-}
-
-.chart-selection-input {
-  margin: 0 10px;
-  width: 65%;
-}
-
-.chart-selection-btn {
 }
 
 .selection-panel {
@@ -32,6 +23,9 @@
   align-items: center;
   align-content: center;
   flex-wrap: wrap;
+  @media (min-width: 550px) {
+    width: 100%;
+  }
 }
 
 #divPieChart {

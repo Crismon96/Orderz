@@ -1,14 +1,5 @@
 import { NgModule } from '@angular/core';
-import {
-  MatInputModule,
-  MatFormFieldModule,
-  MatTableModule,
-  MatButtonModule,
-  MatSelectModule,
-  MatPaginatorModule,
-  MatSortModule,
-  MatCardModule,
-} from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { MasterChartComponent } from './master-chart/master-chart.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,21 +9,7 @@ import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [MasterChartComponent, DatatableChartComponent],
-  imports: [
-    IonicModule,
-    CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatCardModule,
-  ],
+  imports: [IonicModule, CommonModule, HttpClientModule, ReactiveFormsModule, FormsModule, MatTableModule, MatPaginatorModule, MatSortModule],
   exports: [MasterChartComponent],
 })
 export class GoogleChartModule {}

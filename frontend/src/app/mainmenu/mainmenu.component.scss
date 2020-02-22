@@ -1,12 +1,23 @@
 .mainmenu {
-  position: relative;
-  top: 100px;
-  margin: 0 10%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  align-items: stretch;
+  @media (max-width: 549px) {
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  @media (min-width: 550px) {
+    width: 80%;
+    justify-content: center;
+    align-content: center;
+    align-items: stretch;
+    top: 100px;
+    margin: 0 10%;
+  }
 }
 
 .mainmenu-option {
@@ -39,7 +50,7 @@
 }
 
 .btn-selected:after {
-  content: "";
+  content: '';
   background: #4a69bd;
   display: block;
   position: absolute;
@@ -48,14 +59,23 @@
   margin-left: -20px !important;
   margin-top: -120%;
   opacity: 0;
-  transition: all 0.8s
+  transition: all 0.8s;
 }
 
 .btn-selected:active:after {
   padding: 0;
   margin: 0;
   opacity: 1;
-  transition: 0s
+  transition: 0s;
 }
 
-.btn-selected:focus { outline:0; }
+.btn-selected:focus {
+  outline: 0;
+}
+
+.spacer {
+  @media (max-width: 549px) {
+    height: 20px;
+    width: 100%;
+  }
+}

@@ -2,13 +2,21 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  overflow: hidden;
+  @media (max-width: 549px) {
+    height: 80vh;
+    overflow-y: scroll;
+  }
 }
 
 .dataset-repeater {
-  width: 50%;
+  width: 95%;
   height: 50px;
   margin: 20px auto;
   text-align: center;
+  @media (min-width: 550px) {
+    width: 48%;
+  }
 }
 
 .action-buttons {

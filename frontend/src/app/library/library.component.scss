@@ -6,16 +6,22 @@
 
 .lib-accordion {
   margin: 100px 20px;
-  height: 100vh;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   overflow-y: scroll;
+  @media (max-height: 650px) {
+    margin: 50px 20px;
+    height: 81vh;
+  }
 }
 
 .accordion-element {
   margin: 10px;
-  width: 44%;
+  width: 100%;
+  @media (min-width: 550px) {
+    width: 44%;
+  }
 }
 
 .accordion-element:hover {

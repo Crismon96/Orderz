@@ -1,5 +1,5 @@
 <div class="collection-view-header">
-  <ion-card>
+  <ion-card class="enable-scroll">
     <div class="header" [ngClass]="{ 'dataView-active': displayChoice === 'displayDataView', 'dataTable-active': displayChoice === 'displayDataTable' }">
       <div class="header-option" [ngClass]="{ 'active-header': displayChoice === 'displayDataView' }" (click)="displayDataView()">Data View</div>
       <div class="header-option" [ngClass]="{ 'active-header': displayChoice === 'displayDataTable' }" (click)="displayDataTable()">Data Tables</div>
