@@ -1,15 +1,16 @@
-<script src="../../templates/add-new-selection-option-modal/add-new-selection-option-modal.component.ts"></script>
-<div class="lib-accordion">
-  <app-collection-panel
-    class="accordion-element"
-    routerLink="collection"
-    *ngFor="let collection of collections"
-    [collection]="collection"
-    (click)="chooseActiveCollection(collection)"
-  ></app-collection-panel>
-  <ion-fab class="addNewCollection-Btn" vertical="bottom" horizontal="end" slot="fixed" (click)="createNewCollection()">
-    <ion-fab-button color="secondary">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+<div class="wrapper">
+  <div class="lib-accordion">
+    <app-collection-panel
+      class="accordion-element"
+      routerLink="collection"
+      *ngFor="let collection of collections"
+      [collection]="collection"
+      (click)="chooseActiveCollection(collection)"
+    ></app-collection-panel>
+    <ion-fab class="addNewCollection-Btn" vertical="bottom" horizontal="end" slot="fixed" (click)="createNewCollection()">
+      <ion-fab-button color="secondary">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
 </div>

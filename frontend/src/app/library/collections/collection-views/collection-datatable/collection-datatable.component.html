@@ -2,42 +2,21 @@
   <h2 style="text-align: center">Make a new submission for {{ collection.title }}</h2>
   <div>
     <form [formGroup]="form" (ngSubmit)="createNewDataPoint()">
-      <div mat-dialog-content class="dialog-content">
-        <div formArrayName="data" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
-          <label *ngIf="arrayItem.dataType === 'number'" [for]="arrayItem" class="array-item-title"> {{ arrayItem.title }}</label>
-          <input
-            matInput
-            class="dynamic-number-input"
-            *ngIf="arrayItem.dataType === 'number'"
-            type="number"
-            placeholder="null"
-            [formControl]="data.controls[i]"
-          />
-          <mat-slide-toggle
-            class="dynamic-boolean-input"
-            checked="false"
-            color="primary"
-            *ngIf="arrayItem.dataType === 'boolean'"
-            [formControl]="data.controls[i]"
-          >
-            {{ arrayItem.title }}
-          </mat-slide-toggle>
-          <mat-select
-            placeholder="Select your option"
-            *ngIf="arrayItem.dataType === 'selection'"
-            class="dynamic-selection-input"
-            [formControl]="data.controls[i]"
-          >
-            <mat-option *ngFor="let option of arrayItem.options" [value]="option">
-              {{ option }}
-            </mat-option>
-          </mat-select>
-          <br />
-        </div>
+      <div class="dialog-content">
+        <ion-item formArrayName="data" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
+          <ion-label class="array-item-title"> {{ arrayItem.title }}</ion-label>
+          <ion-input *ngIf="arrayItem.dataType === 'number'" type="number" placeholder="null" [formControl]="data.controls[i]"></ion-input>
+          <ion-toggle color="primary" checked="false" *ngIf="arrayItem.dataType === 'boolean'" [formControl]="data.controls[i]">{{
+            arrayItem.title
+          }}</ion-toggle>
+          <ion-select style="z-index: 1000;" placeholder="Select your option" *ngIf="arrayItem.dataType === 'selection'" [formControl]="data.controls[i]">
+            <ion-select-option *ngFor="let option of arrayItem.options" [value]="option">{{ option }}</ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
       <div mat-dialog-actions class="action-buttons">
-        <button mat-stroked-button type="submit" color="primary" [disabled]="sendDatapointBtnDisabled">Submit Data</button>
-        <button mat-stroked-button type="button" color="warn" (click)="resetDatapointForm()" [disabled]="sendDatapointBtnDisabled">Reset All!</button>
+        <ion-button type="submit" color="primary" [disabled]="sendDatapointBtnDisabled">Submit Data</ion-button>
+        <ion-button type="button" color="danger" (click)="resetDatapointForm()" [disabled]="sendDatapointBtnDisabled">Reset All!</ion-button>
       </div>
     </form>
   </div>

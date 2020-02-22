@@ -1,31 +1,24 @@
-.dynamic-number-input {
-  width: 85%;
-  margin: 20px;
-}
-
-.dynamic-boolean-input {
-  margin: 20px 50%;
-}
-
-.dynamic-selection-input {
-  width: 80%;
-  margin: 20px 50%;
-}
-
 .dialog-content {
   display: flex;
-  justify-items: center;
+  align-items: center;
   flex-wrap: wrap;
 }
 
 .dataset-repeater {
-  width: 45%;
+  width: 50%;
+  height: 50px;
+  margin: 20px auto;
   text-align: center;
 }
 
 .action-buttons {
   text-align: center;
   button {
-    margin: 0 20px;
+    margin: 20px;
   }
+}
+
+.array-item-title {
+  text-align: center;
+  display: block;
 }

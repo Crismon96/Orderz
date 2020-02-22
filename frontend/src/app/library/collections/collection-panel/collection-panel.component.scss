@@ -1,7 +1,3 @@
-.collection-panel {
-  height: 300px;
-}
-
 .collection-panel-title {
   text-align: center;
   font-weight: bold;
@@ -12,7 +8,7 @@
 
 .collection-panel-description {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 100%;
   margin: 15px 0;
 }
@@ -20,7 +16,7 @@
 .collection-panel-stats {
   margin: 15px 0;
   position: relative;
-  display: inline-block;
+  display: block;
   width: 100%;
 }
 
@@ -29,4 +25,8 @@
   left: 0;
   bottom: 0;
   margin: 10px;
+}
+
+.card-content {
+  margin-bottom: 55px;
 }
