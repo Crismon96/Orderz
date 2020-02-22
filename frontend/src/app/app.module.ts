@@ -23,11 +23,7 @@ import { CollectionDatatableComponent } from './library/collections/collection-v
 import { GoogleChartModule } from './google-chart/google-chart.module';
 import { JwtInterceptorService } from '../services/jwt-interceptor.service';
 import { IonicModule } from '@ionic/angular';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -59,11 +55,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     GoogleChartModule,
     IonicModule.forRoot(),
-    MatSlideToggleModule,
-    MatInputModule,
     MatDialogModule,
-    MatSelectModule,
-    MatButtonModule,
     MatSnackBarModule,
     MatToolbarModule,
     MatMenuModule,

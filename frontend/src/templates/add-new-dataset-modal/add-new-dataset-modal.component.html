@@ -1,37 +1,62 @@
 <div>
   <h1 mat-dialog-title>Please choose the preset of your dataset.</h1>
   <div mat-dialog-content>
-    <mat-form-field class="dataset-input">
+    <ion-item class="dataset-input">
+      <ion-input placeholder="Title of the dataset" [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <!--    <mat-form-field class="dataset-input">
       <input matInput placeholder="Title of the dataset" [(ngModel)]="title" />
-    </mat-form-field>
-
-    <mat-form-field class="dataset-input">
+    </mat-form-field>-->
+    <ion-item class="dataset-input">
+      <ion-label>Type of Data</ion-label>
+      <ion-select #datasetType>
+        <ion-select-option *ngFor="let type of types" [value]="type.value">
+          {{ type.text }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!--    <mat-form-field class="dataset-input">
       <mat-label>Type of Data</mat-label>
       <mat-select #datasetType>
         <mat-option *ngFor="let type of types" [value]="type.value">
           {{ type.text }}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field>-->
   </div>
 
   <div class="selection-section" *ngIf="dataType === 'selection'">
+    <ion-item class="singleOptionAdd">
+      <ion-input placeholder="Create a new option for your selection" [(ngModel)]="singleOption"></ion-input>
+    </ion-item>
+    <ion-button class="add-option-button" (click)="addOptionToSelection()">Add to selection</ion-button>
+
+    <!--
     <mat-form-field class="singleOptionAdd">
       <input matInput placeholder="Create a new option for your selection" [(ngModel)]="singleOption" />
     </mat-form-field>
     <button class="add-option-button" mat-flat-button (click)="addOptionToSelection()">Add to selection</button>
-    <mat-form-field>
+-->
+    <ion-item class="dataset-input">
+      <ion-label>Your Final Selection</ion-label>
+      <ion-select>
+        <ion-select-option *ngFor="let option of selectionOptions">
+          {{ option }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!--    <mat-form-field>
       <mat-label>Your Final Selection</mat-label>
       <mat-select>
         <mat-option *ngFor="let option of selectionOptions">
           {{ option }}
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field>-->
   </div>
 
   <div mat-dialog-actions class="action-buttons">
-    <button mat-button color="warn" (click)="onNoClick()">Dismiss</button>
-    <button mat-button color="primary" (click)="addDatasetToCollection()">Add to Collection</button>
+    <ion-button color="danger" (click)="onNoClick()">Dismiss</ion-button>
+    <ion-button color="success" (click)="addDatasetToCollection()">Add to Collection</ion-button>
   </div>
 </div>
