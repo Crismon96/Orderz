@@ -38,9 +38,10 @@ async function logUserIn(ctx: Context) {
   if (typeof user === 'string') {
     ctx.throw(401, user);
   } else if (user) {
-    generateJWT(user);
-
-    ctx.body = user;
+    const token = await generateJWT(user);
+    ctx.body = {
+      token: token,
+    };
     ctx.status = 200;
   } else {
     ctx.throw(400, 'There was an error accessing the database');

@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { HeaderService } from '../../services/header.service';
 import { debounceTime, skip, take } from 'rxjs/operators';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-header',

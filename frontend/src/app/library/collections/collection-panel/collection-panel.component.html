@@ -1,11 +1,15 @@
-<mat-card class="collection-panel" (click)="openCollection(collection)">
-  <mat-card-title class="collection-panel-title">{{ collection.title }}</mat-card-title>
-  <mat-card-content>
+<ion-card (click)="openCollection(collection)">
+  <ion-card-header>
+    <ion-card-title class="collection-panel-title">{{ collection.title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content class="card-content ion-padding-bottom">
     <div class="collection-panel-description">{{ collection.description }}</div>
-    <mat-divider style="width: 90%; margin-left: 5%;"></mat-divider>
+
+    <!--HERE COMES THE DIVIDER-->
+
     <div class="collection-panel-stats">
       Number of published entries: {{ collection.numberOfEntries }} Number of Datasets: {{ collection.numberOfDatasets }}
     </div>
-    <div class="created-timing">collection was created at: {{ collection.created | date }}</div>
-  </mat-card-content>
-</mat-card>
+  </ion-card-content>
+  <div class="created-timing">collection was created at: {{ collection.created | date }}</div>
+</ion-card>

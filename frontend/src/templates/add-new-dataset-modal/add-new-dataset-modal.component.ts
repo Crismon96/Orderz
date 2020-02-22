@@ -28,8 +28,8 @@ export class AddNewDatasetModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // @ts-ignore
-    this.subscription = this.dataTypeInput.valueChange.subscribe(val => {
-      this.dataType = val;
+    this.subscription = this.dataTypeInput.ionChange.subscribe(val => {
+      this.dataType = val.detail.value;
     });
   }
 

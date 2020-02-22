@@ -1,37 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-/*import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatOptionModule} from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatDividerModule} from '@angular/material/divider';*/
 
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDialogModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatMenuModule,
-  MatOptionModule,
-  MatSelectModule,
-  MatSnackBarModule,
-  MatSlideToggleModule,
-  MatDividerModule,
-} from '@angular/material';
-
-import { TextFieldModule } from '@angular/cdk/text-field';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -51,6 +21,12 @@ import { CollectionPanelComponent } from './library/collections/collection-panel
 import { CollectionDataviewComponent } from './library/collections/collection-views/collection-dataview/collection-dataview.component';
 import { CollectionDatatableComponent } from './library/collections/collection-views/collection-datatable/collection-datatable.component';
 import { GoogleChartModule } from './google-chart/google-chart.module';
+import { JwtInterceptorService } from '../services/jwt-interceptor.service';
+import { IonicModule } from '@ionic/angular';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -73,27 +49,18 @@ import { GoogleChartModule } from './google-chart/google-chart.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatCardModule,
-    MatFormFieldModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatDividerModule,
-    MatMenuModule,
-    MatOptionModule,
-    MatSelectModule,
     FormsModule,
     HttpClientModule,
-    MatSnackBarModule,
-    TextFieldModule,
-    MatSlideToggleModule,
     GoogleChartModule,
+    IonicModule.forRoot(),
+    MatDialogModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatMenuModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true }],
   bootstrap: [AppComponent],
   entryComponents: [AddNewCollectionModalComponent, AddNewDatasetModalComponent],
 })

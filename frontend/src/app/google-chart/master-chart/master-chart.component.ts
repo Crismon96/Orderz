@@ -162,8 +162,6 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
       const data = this.gLib.visualization.arrayToDataTable(totalArray);
       const options = {
-        width: 900,
-        height: 900,
         title: 'My decisions in total',
         pieHole: 0.4,
       };

@@ -1,19 +1,28 @@
 import { Collection, MongoClient } from 'mongodb';
 
-const dbName = 'Orderz';
+// Connection URL
+const dbUrl = 'mongodb://localhost:27017';
 // Create a new MongoClient
 let client: MongoClient;
 export let db: any;
 export let userDB: any;
 
 export async function connect() {
-  client = await MongoClient.connect(process.env['DB_HOST'], { useNewUrlParser: true });
-  db = client.db(dbName);
+  client = await MongoClient.connect(dbUrl, { useNewUrlParser: true });
+  db = client.db('Orderz');
   userDB = client.db('UsersDB');
 
+  // Connect to Mongo and initiate DB with preset collections
   client.connect(async function(err) {
     console.log('Connected successfully to server');
     await userDB.createCollection('userCredentials');
+    const expDate = await userDB.collection('serverConfig').findOne({ expirationDate: { $exists: true } });
+    const newExpDate = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
+    if (!expDate) {
+      await userDB.collection('serverConfig').insertOne({ expirationDate: newExpDate });
+    } else if (expDate > new Date().getTime()) {
+      await userDB.collection('serverConfig').updateOne({ expirationDate: { $exists: true } }, { expirationDate: newExpDate });
+    }
   });
 }
 
@@ -52,8 +61,6 @@ export async function disconnect() {
   }
 }
 
-// a small wrapper around Collection.drop() that
-// doesn't throw an error if the collection doesn't exist
 export async function dropCollection(collection: Collection): Promise<void> {
   try {
     await collection.drop();

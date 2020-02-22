@@ -2,23 +2,34 @@
   position: fixed;
   right: 20px;
   bottom: 20px;
-  background-color: #ffa801;
 }
 
 .lib-accordion {
   margin: 100px 20px;
   display: flex;
   justify-content: center;
-  align-items: stretch;
   flex-wrap: wrap;
+  overflow-y: scroll;
+  height: 100%;
+  @media (max-height: 650px) {
+    margin: 50px 20px;
+    height: 81vh;
+  }
 }
 
 .accordion-element {
   margin: 10px;
-  width: 44%;
+  width: 100%;
+  @media (min-width: 550px) {
+    width: 44%;
+  }
 }
 
 .accordion-element:hover {
-  border: 2px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.spacer {
+  height: 100px;
+  width: 90%;
 }
