@@ -12,7 +12,7 @@ import { connect } from './shared/db.helper';
 async function startApp() {
   const app = new Koa();
   // Serve static HTML files (our frontend) - only used in production
-  const assetPath = path.join(__dirname, '../frontend');
+  const assetPath = path.join(__dirname, '../../frontend/dist');
   console.log(`Serving static files from ${assetPath}`);
   app.use(koaStatic(assetPath));
 
@@ -23,7 +23,7 @@ async function startApp() {
 
   // Start server
   if (process.env['NODE_ENV'] !== 'testing') {
-    app.listen(3000, () => {
+    app.listen(process.env['PORT'] || 3000, () => {
       console.log(`Backend listening at http://localhost:3000/`);
     });
   }

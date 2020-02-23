@@ -5,7 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "serve": "ts-node-dev src/server.ts",
-    "build": "tsc"
+    "start": "node ./build/main.js",
+    "build": "tsc --build"
   },
   "author": "",
   "license": "ISC",
