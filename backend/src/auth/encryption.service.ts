@@ -55,18 +55,17 @@ export async function decryptUser(username: string, password: string): Promise<I
 export async function generateJWT(user: IUser): Promise<string> {
   const expirationDate = await checkJWTexpirationDate();
 
-  //TODO: Store real secret in .env
   return jwt.sign({ username: user.username, email: user.email, expirationDate: expirationDate }, process.env['JWT_SECRET']);
 }
 
 async function checkJWTexpirationDate(): Promise<number> {
   const timestamp = new Date().getTime();
-  const currentExpirationDate = userDB.collection('serverConfig').findOne({ expirationDate: { $exists: true } }).expirationDate;
-  if (currentExpirationDate < timestamp) {
+  const currentExpirationDate = userDB.collection('serverConfig').findOne({ expirationDate: { $exists: true } });
+  if (currentExpirationDate.expirationDate < timestamp) {
     await userDB.collection('serverConfig').updateOne({ expirationDate: { $exists: true } }, { expirationDate: timestamp });
     return timestamp;
   } else {
-    return currentExpirationDate;
+    return currentExpirationDate.expirationDate;
   }
 }
 
@@ -87,7 +86,7 @@ export async function validateJWT(ctx: Context, next: () => Promise<any>) {
   if (encodedToken) {
     try {
       //TODO: use real secret
-      decodedToken = jwt.verify(encodedToken, 'secret') as IToken;
+      decodedToken = jwt.verify(encodedToken, process.env['JWT_SECRET']) as IToken;
     } catch {
       ctx.throw(401, 'Token is not valid');
     }

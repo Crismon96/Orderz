@@ -1,7 +1,7 @@
 import { Collection, MongoClient } from 'mongodb';
 
 // Connection URL
-const dbUrl = 'mongodb://localhost:27017';
+const dbUrl = process.env['DB_HOST'];
 // Create a new MongoClient
 let client: MongoClient;
 export let db: any;
