@@ -42,5 +42,13 @@ export class LibraryComponent implements OnInit {
   chooseActiveCollection(choosenCollection: ICollectionInfo) {
     this.lib.activeCollection.next(choosenCollection);
     this.header.setTitle(choosenCollection.title);
+    this.router.navigateByUrl('library/collection');
+  }
+
+  removeCollection(event: ICollectionInfo) {
+    const removedIndex = this.collections.findIndex((collection: ICollectionInfo) => {
+      return collection.title === event.title;
+    });
+    this.collections.splice(removedIndex, 1);
   }
 }

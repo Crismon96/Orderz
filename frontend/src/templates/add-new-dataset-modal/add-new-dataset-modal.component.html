@@ -33,6 +33,6 @@
 
   <div mat-dialog-actions class="action-buttons">
     <ion-button color="danger" (click)="onNoClick()">Dismiss</ion-button>
-    <ion-button color="success" (click)="addDatasetToCollection()">Add to Collection</ion-button>
+    <ion-button color="success" [disabled]="!dataType || !title" (click)="addDatasetToCollection()">Add to Collection</ion-button>
   </div>
 </div>

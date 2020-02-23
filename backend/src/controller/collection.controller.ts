@@ -13,6 +13,7 @@ export function collectionController() {
 
   router.get('', validateJWT, getAllCollections);
   router.get('/collection', validateJWT, getSpecificCollection);
+  router.delete('/collection', validateJWT, deleteCollection);
   router.put('/create', validateJWT, createNewCollection);
   router.put('/fitness/datapoint', validateJWT, addNewFitnessDatapoint);
   router.put('/datapoint', validateJWT, createNewDatapointForCollection);
@@ -30,8 +31,7 @@ async function getAllCollections(ctx: Context) {
     ctx.status = 200;
     ctx.body = allCollections;
   } else {
-    ctx.body = 'Could not find the collection info bundle';
-    ctx.status = 400;
+    ctx.throw(400, 'Could not find the collection info bundle');
   }
 }
 
@@ -47,8 +47,36 @@ async function getSpecificCollection(ctx: Context) {
     };
     ctx.status = 200;
   } else {
-    ctx.body = 'Could not find the queried collection';
-    ctx.status = 400;
+    ctx.throw(400, 'Could not find the queried collection');
+  }
+}
+
+async function deleteCollection(ctx: Context) {
+  const collectionName: string = ctx.query.name;
+  const username = ctx.state.username;
+
+  const allCollectionMeta = await db.collection(username).findOne({ title: 'collectionInfo' });
+  const deletedCollection = allCollectionMeta.collectionsMeta.find((coll: any) => {
+    return coll.title === collectionName;
+  });
+
+  await db.collection(username).deleteOne({ title: collectionName });
+  await db.collection(username).updateOne({ title: 'collectionInfo' }, { $inc: { numberOfCollections: -1 } });
+
+  const collectionsMetaInfo = await db.collection(username).findOne({ title: 'collectionInfo' });
+  const deletedMetaIndex = collectionsMetaInfo.collectionsMeta.findIndex((collection: any) => {
+    return collection.title === collectionName;
+  });
+  if (deletedMetaIndex !== -1) {
+    collectionsMetaInfo.collectionsMeta.splice(deletedMetaIndex, 1);
+  }
+
+  const success = await db.collection(username).replaceOne({ title: 'collectionInfo' }, collectionsMetaInfo);
+  if (success && deletedCollection) {
+    ctx.body = deletedCollection;
+    ctx.status = 200;
+  } else {
+    ctx.throw(400, 'Could not delete the target collection or configure the meta information');
   }
 }
 
@@ -84,8 +112,7 @@ async function createNewCollection(ctx: Context) {
       }
     })
     .catch(() => {
-      ctx.body = 'Error while trying to create new Collection';
-      ctx.status = 400;
+      ctx.throw(400, 'Error while trying to create new Collection');
     });
 }
 // This Api is not getting used right now.
@@ -101,8 +128,7 @@ async function addNewFitnessDatapoint(ctx: Context) {
       ctx.status = 200;
     })
     .catch((err: MongoError) => {
-      ctx.body = 'Error trying to add new fitness entry: ' + err;
-      ctx.status = 400;
+      ctx.throw(400, 'Error trying to add new fitness entry: ' + err);
     });
   await db.collection(username).updateOne({ title: 'collectionInfo', collectionsMeta: { title: 'fitness' } }, { $inc: { numberOfEntries: +1 } });
 }
@@ -119,8 +145,7 @@ async function createNewDatapointForCollection(ctx: Context) {
     .collection(username)
     .updateMany({ title: targedCollectionName }, { $push: { data: { $each: newDatapoints } } })
     .catch(() => {
-      ctx.body = 'Didnt find the collection you were looking for';
-      ctx.status = 400;
+      ctx.throw(400, 'Didnt find the collection you were looking for');
     });
 
   const updatedCollectionInfo = await db.collection(username).findOne({ 'collectionsMeta.title': targedCollectionName });
@@ -134,8 +159,7 @@ async function createNewDatapointForCollection(ctx: Context) {
       ctx.status = 200;
     })
     .catch(() => {
-      ctx.body = 'Couldnt adjust the collection information according to input.';
-      ctx.status = 400;
+      ctx.throw(400, 'Couldnt adjust the collection information according to input.');
     });
 }
 
@@ -148,7 +172,6 @@ async function getSpecificCollectionData(ctx: Context) {
     ctx.body = targedCollection.data;
     ctx.status = 200;
   } else {
-    ctx.body = 'The collection you are looking for wasnt found.';
-    ctx.status = 400;
+    ctx.throw(400, 'The collection you are looking for wasnt found.');
   }
 }

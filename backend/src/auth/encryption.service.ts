@@ -56,7 +56,7 @@ export async function generateJWT(user: IUser): Promise<string> {
   const expirationDate = await checkJWTexpirationDate();
 
   //TODO: Store real secret in .env
-  return jwt.sign({ username: user.username, email: user.email, expirationDate: expirationDate }, 'secret');
+  return jwt.sign({ username: user.username, email: user.email, expirationDate: expirationDate }, process.env['JWT_SECRET']);
 }
 
 async function checkJWTexpirationDate(): Promise<number> {

@@ -56,6 +56,7 @@ export class AddNewDatasetModalComponent implements OnInit, OnDestroy {
   }
 
   onNoClick(): void {
+    console.log(this.dataType);
     this.dialogRef.close();
   }
 

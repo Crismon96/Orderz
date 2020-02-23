@@ -30,3 +30,17 @@
 .card-content {
   margin-bottom: 55px;
 }
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.viz-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  cursor: pointer;
+}

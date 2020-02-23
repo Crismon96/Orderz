@@ -21,6 +21,10 @@ export class LibraryService {
     return this.http.put<ICollectionInfo>('api/collections/create', newCollection);
   }
 
+  deleteCollection(collection: ICollectionInfo) {
+    return this.http.delete<ICollectionInfo>(`api/collections/collection?name=${collection.title}`);
+  }
+
   getCollectionByName(collection: ICollectionInfo) {
     return this.http.get<ICollectionConfig>(`api/collections/collection?name=${collection.title}`);
   }
