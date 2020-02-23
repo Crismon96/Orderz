@@ -5,9 +5,18 @@
   margin-bottom: 100px !important;
   max-height: 500px;
   max-width: 800px;
+  @media (max-width: 850px) {
+    margin: 50% auto;
+  }
+}
+
+.mobile-btn {
+  @media (max-width: 400px) {
+    width: 90%;
+    margin: 5px 5%;
+  }
 }
 
 ::ng-deep .input-namepass {
   width: 100% !important;
 }
-

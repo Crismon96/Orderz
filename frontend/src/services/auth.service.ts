@@ -36,10 +36,10 @@ export class AuthService {
   }
 
   logUserOut() {
+    window.localStorage.removeItem('diaryUserToken');
     this.router
       .navigateByUrl('')
       .then(() => {
-        localStorage.removeItem('diaryUserToken');
         this.isLoggedIn.next(false);
         this.hasToken.next(null);
       })

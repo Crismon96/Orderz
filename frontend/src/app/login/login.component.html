@@ -39,9 +39,11 @@
       </form>
     </div>
 
-    <ion-button size="small" color="medium" (click)="isLoginScreen = !isLoginScreen">{{
+    <ion-button class="mobile-btn" size="small" color="medium" (click)="isLoginScreen = !isLoginScreen">{{
       isLoginScreen ? 'Register an account' : 'Login with existing account'
     }}</ion-button>
-    <ion-button *ngIf="isLoginScreen" style="float: right" size="small" type="button" color="light" (click)="forgotPassword()">Forgot my password</ion-button>
+    <ion-button class="mobile-btn" *ngIf="isLoginScreen" style="float: right" size="small" type="button" color="light" (click)="forgotPassword()"
+      >Forgot my password</ion-button
+    >
   </ion-card>
 </div>
