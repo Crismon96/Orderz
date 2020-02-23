@@ -11,9 +11,9 @@
   flex-wrap: wrap;
   overflow-y: scroll;
   height: 100%;
-  @media (max-height: 650px) {
-    margin: 50px 20px;
-    height: 81vh;
+  @media (max-height: 850px) {
+    margin: 20px;
+    height: 100vh;
   }
 }
 

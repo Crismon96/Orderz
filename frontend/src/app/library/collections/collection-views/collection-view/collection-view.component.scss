@@ -40,6 +40,6 @@
 .enable-scroll {
   @media (max-width: 549px) {
     height: 84vh;
-    overflow-y: scroll;
+    overflow: auto;
   }
 }

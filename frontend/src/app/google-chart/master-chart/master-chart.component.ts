@@ -48,19 +48,25 @@ export class MasterChartComponent implements OnInit, OnDestroy {
   }
 
   saveNewFilter() {
-    console.log(this.filterForm.controls.DonutFilter.value);
     this.activeDataFilter = this.filterForm.controls.DonutFilter.value;
     this.drawNewChart();
   }
 
   private drawChart() {
-    // TODO:  Draw LineChart initially if numbers exist, else go to other Charttype, but do the Request inside the chart function
-    console.log(this.activeCollectionConfig);
     const containsNumbers = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'number');
+    const containsBools = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'boolean');
+    const containsSelection = this.activeCollectionConfig.configuration.filter(dataset => dataset.dataType === 'selection');
+
     if (containsNumbers.length > 0) {
       this.drawLineChart();
+    } else if (containsBools.length > 0) {
+      this.drawBarChartBool();
+      this.selectedType = 'Yea/No-Barchart (boolean)';
+    } else if (containsSelection.length > 0) {
+      this.drawDonutChartSelection();
+      this.selectedType = 'Diversified-Donut (selection)';
     } else {
-      // Hier DataTable material anzeigen lassen
+      this.displayChartError();
     }
   }
 
@@ -95,7 +101,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
       filteredResults = this.applyActiveFilter(filteredResults);
       if (filteredResults.length === 0) {
-        this.displayChartErrorModal = true;
+        this.displayChartError();
         return;
       }
 
@@ -130,7 +136,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
       const chartData = this.gLib.visualization.arrayToDataTable(totalArray);
       const chart = new this.gLib.visualization.LineChart(document.getElementById('divLineChart'));
 
-      const options = { title: `${this.activeCollection.title} - Linechart`, height: 650, is3D: true };
+      const options = { title: `${this.activeCollection.title} - Linechart`, height: 650, is3D: true, legend: {position: 'bottom'}};
       chart.draw(chartData, options);
     });
   }
@@ -142,7 +148,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
 
       filteredResults = this.applyActiveFilter(filteredResults);
       if (filteredResults.length === 0) {
-        this.displayChartErrorModal = true;
+        this.displayChartError();
         return;
       }
 
@@ -164,6 +170,7 @@ export class MasterChartComponent implements OnInit, OnDestroy {
       const options = {
         title: 'My decisions in total',
         pieHole: 0.4,
+        legend: {position: 'bottom'}
       };
 
       const chart = new this.gLib.visualization.PieChart(document.getElementById('divPieChart'));
@@ -180,6 +187,10 @@ export class MasterChartComponent implements OnInit, OnDestroy {
         return dataset.dataType === 'boolean';
       }
     });
+    if (filteredConfig.length === 0) {
+      this.displayChartError();
+      return;
+    }
     for (const config of filteredConfig) {
       dataArray.push([config.title, 0, 0]);
     }

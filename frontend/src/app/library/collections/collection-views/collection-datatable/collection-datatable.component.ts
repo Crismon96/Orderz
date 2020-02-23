@@ -69,7 +69,7 @@ export class CollectionDatatableComponent implements OnInit {
           },
         ],
       });
-      toast.present();
+      await toast.present();
     });
   }
 }
