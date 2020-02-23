@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { map, tap } from 'rxjs/operators';
-import { IToken } from '../../../backend/src/auth/encryption.service';
 import { LoginResponse } from '../sharedModules/schemaInterfaces/POST-login-res.schema';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +13,7 @@ export class AuthService {
   isLoggedIn = new BehaviorSubject<boolean>(false);
   hasToken = new BehaviorSubject<string | null>(null);
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, private router: Router, public toastController: ToastController) {
     const token = localStorage.getItem('diaryUserToken');
     if (token && token !== '') {
       this.hasToken.next(token);
@@ -50,9 +48,13 @@ export class AuthService {
       });
   }
 
-  throw401Error() {
+  async throw401Error() {
     this.logUserOut();
-    this.snackBar.open('Your session has expired or could not be validated. Please log in again.', 'close');
+    const toast = await this.toastController.create({
+      message: 'Your session has expired or could not be validated. Please log in again.',
+      duration: 2000,
+    });
+    await toast.present();
   }
 
   registerNewUser(user) {

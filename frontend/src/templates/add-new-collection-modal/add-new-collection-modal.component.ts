@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Dataset } from '../../shared/Icollection';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AddNewDatasetModalComponent } from '../add-new-dataset-modal/add-new-dataset-modal.component';
-import { MatSnackBar } from '@angular/material';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-new-collection-modal',
@@ -22,7 +22,7 @@ export class AddNewCollectionModalComponent implements OnInit {
     public dialogRef: MatDialogRef<AddNewCollectionModalComponent>,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    public toastController: ToastController
   ) {
     this.form = this.formBuilder.group({
       collectionTitle: this.formBuilder.control([]),
@@ -47,11 +47,12 @@ export class AddNewCollectionModalComponent implements OnInit {
     });
   }
 
-  discardChanges(): void {
-    this.snackBar.open('Changes have been discharged', 'Close', {
-      duration: 2500,
-      panelClass: ['black'],
+  async discardChanges(): Promise<void> {
+    const toast = await this.toastController.create({
+      message: 'Changes have been discharged',
+      duration: 2000,
     });
+    await toast.present();
     this.dialogRef.close();
   }
 

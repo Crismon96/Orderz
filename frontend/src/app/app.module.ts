@@ -26,7 +26,6 @@ import { IonicModule } from '@ionic/angular';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -56,7 +55,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     GoogleChartModule,
     IonicModule.forRoot(),
     MatDialogModule,
-    MatSnackBarModule,
     MatToolbarModule,
     MatMenuModule,
   ],

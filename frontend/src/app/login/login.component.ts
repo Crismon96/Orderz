@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   registerForm: FormGroup;
   isLoginScreen = true;
   busy = false;
-  constructor(private router: Router, private auth: AuthService, private snackBar: MatSnackBar) {}
+  constructor(private router: Router, private auth: AuthService, public toastController: ToastController) {}
 
   ngOnInit() {
     this.initForm();
@@ -56,8 +56,12 @@ export class LoginComponent implements OnInit {
       email: this.registerForm.controls.email.value,
     };
 
-    this.auth.registerNewUser(user).subscribe(res => {
-      this.snackBar.open('Your account was created. Please log in to enter', 'close');
+    this.auth.registerNewUser(user).subscribe(async res => {
+      const toast = await this.toastController.create({
+        message: 'Your account was created. Please log in to enter.',
+        duration: 2000,
+      });
+      await toast.present();
       this.isLoginScreen = true;
     });
   }

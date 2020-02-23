@@ -4,7 +4,7 @@ import { ICollectionInfo } from '../../../../../shared/IcollectionInfo';
 import { Dataset } from '../../../../../shared/Icollection';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-collection-datatable',
@@ -13,9 +13,6 @@ import { MatSnackBar } from '@angular/material';
 })
 export class CollectionDatatableComponent implements OnInit {
   collection: ICollectionInfo;
-
-  // TODO: Edit Types so they make sense
-  types = [1, 2, 3, 4];
   sendDatapointBtnDisabled = false;
 
   form: FormGroup;
@@ -25,7 +22,7 @@ export class CollectionDatatableComponent implements OnInit {
     return this.form.get('data') as FormArray;
   }
 
-  constructor(private lib: LibraryService, private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(private lib: LibraryService, private formBuilder: FormBuilder, public toastController: ToastController) {
     this.form = this.formBuilder.group({
       data: this.formBuilder.array([]),
     });
@@ -58,13 +55,21 @@ export class CollectionDatatableComponent implements OnInit {
       dataField.data = this.form.value.data[positionCounter];
       positionCounter++;
     });
-    this.lib.submitNewDatapoint(this.arrayItems, this.collection).subscribe(result => {
-      this.snackBar
-        .open('Your data was saved successfully. Close to continue sending.', 'close')
-        .afterDismissed()
-        .subscribe(wasDismissed => {
-          this.sendDatapointBtnDisabled = false;
-        });
+    this.lib.submitNewDatapoint(this.arrayItems, this.collection).subscribe(async result => {
+      const toast = await this.toastController.create({
+        header: 'Saved',
+        message: 'Your data was saved successfully. Close to continue sending.',
+        buttons: [
+          {
+            text: 'Done',
+            role: 'cancel',
+            handler: () => {
+              this.sendDatapointBtnDisabled = false;
+            },
+          },
+        ],
+      });
+      toast.present();
     });
   }
 }
