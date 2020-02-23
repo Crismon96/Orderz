@@ -5,7 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "serve": "ts-node-dev src/server.ts",
-    "start": "node ./build/main.js",
+    "start": "node ./build/server.js",
     "build": "tsc --build"
   },
   "author": "",
