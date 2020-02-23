@@ -25,7 +25,17 @@
     "mongodb": "^3.4.1",
     "passport-google-oauth20": "^2.0.0",
     "uuid": "^3.3.3",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.3.7",
+    "@types/koa": "^2.0.51",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-mount": "^4.0.0",
+    "@types/koa-router": "^7.0.42",
+    "@types/koa-static": "^4.0.1",
+    "@types/mongodb": "^3.3.14",
+    "@types/node": "^12.12.0",
+    "@types/uuid": "^3.4.6"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
