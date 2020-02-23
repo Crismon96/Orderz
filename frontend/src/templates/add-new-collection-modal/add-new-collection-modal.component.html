@@ -4,7 +4,7 @@
     <h1 mat-dialog-title style="text-align: center; margin-bottom: 0">Create a new Collection</h1>
     <div mat-dialog-content class="dialog-content">
       <ion-item>
-        <ion-input placeholder="Enter the title of the collection" type="text" formControlName="collectionTitle"></ion-input>
+        <ion-input required placeholder="Enter the title of the collection" type="text" formControlName="collectionTitle"></ion-input>
       </ion-item>
       <div formArrayName="datasets" *ngFor="let arrayItem of arrayItems; let i = index" class="dataset-repeater">
         <ion-item style="width: 90%; margin: auto">
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div mat-dialog-actions class="action-buttons">
-      <ion-button size="small" color="success" type="submit">Save</ion-button>
+      <ion-button size="small" color="success" type="submit" [disabled]="form.invalid">Save</ion-button>
       <ion-button size="small" color="warning" type="button" (click)="discardChanges()">Discard All!</ion-button>
     </div>
   </form>

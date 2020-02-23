@@ -22,7 +22,7 @@ async function startApp() {
   app.use(mount('/api/collections', collectionController()));
 
   // Start server
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env['NODE_ENV'] !== 'testing') {
     app.listen(3000, () => {
       console.log(`Backend listening at http://localhost:3000/`);
     });
