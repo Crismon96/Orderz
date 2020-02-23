@@ -12,7 +12,7 @@ import { connect } from './shared/db.helper';
 async function startApp() {
   const app = new Koa();
   // Serve static HTML files (our frontend) - only used in production
-  const assetPath = path.join(__dirname, '../../frontend/dist');
+  const assetPath = path.join(__dirname, '../../frontend/dist/Orderz');
   console.log(`Serving static files from ${assetPath}`);
   app.use(koaStatic(assetPath));
 
