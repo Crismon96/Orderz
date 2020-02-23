@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd backend/ && npm run start",
-    "build": "sudo cd backend && npm run build && cd ../frontend && npm run build",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
     "serve": "concurrently \"cd frontend && npm run start\" \"cd backend && npm run serve\"",
     "postinstall": "cd frontend && npm install && cd ../backend && npm install",
     "interface": "bash schema_to_interface.sh"
