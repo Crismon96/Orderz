@@ -15,7 +15,6 @@ export async function connect() {
   // Connect to Mongo and initiate DB with preset collections
   client.connect(async function(err) {
     console.log('Connected successfully to server');
-    await userDB.createCollection('userCredentials');
     const expDate = await userDB.collection('serverConfig').findOne({ expirationDate: { $exists: true } });
     const newExpDate = new Date().getTime() + 1000 * 60 * 60 * 24 * 7;
     if (!expDate) {
