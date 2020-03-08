@@ -14,7 +14,7 @@ export class AuthService {
   hasToken = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient, private router: Router, public toastController: ToastController) {
-    const token = localStorage.getItem('diaryUserToken');
+    const token = localStorage.getItem('diarytoken');
     if (token && token !== '') {
       this.hasToken.next(token);
       this.isLoggedIn.next(true);
@@ -29,19 +29,20 @@ export class AuthService {
         this.isLoggedIn.next(!!res);
       }),
       map((token: LoginResponse) => {
-        localStorage.setItem('diaryUserToken', token.token);
+        localStorage.setItem('diarytoken', token.token);
         return !!token;
       })
     );
   }
 
   logUserOut() {
-    window.localStorage.removeItem('diaryUserToken');
+    localStorage.removeItem('diarytoken');
+    this.isLoggedIn.next(false);
+    this.hasToken.next(null);
     this.router
       .navigateByUrl('')
       .then(() => {
-        this.isLoggedIn.next(false);
-        this.hasToken.next(null);
+        console.log('Logging out...');
       })
       .catch(() => {
         console.error('Problem logging user out');
