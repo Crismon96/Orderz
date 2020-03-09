@@ -18,6 +18,13 @@
       }
     },
     {
+      "name": "library",
+      "installMode": "lazy",
+      "resources": {
+        "files": ["app/library/library.component.html", "/*.css", "/*.js"]
+      }
+    },
+    {
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",

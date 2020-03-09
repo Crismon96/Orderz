@@ -5,7 +5,8 @@ import { FitnessEntry } from '../../../sharedModules/schemaInterfaces/fitness-PO
 import { CreateNewCollection } from '../../../sharedModules/schemaInterfaces/collection-POST-createNewCollection.schema';
 import { MongoError } from 'mongodb';
 import { validateJWT } from '../auth/encryption.service';
-import { ICollectionInfo } from '../../../frontend/src/shared/IcollectionInfo';
+import { ICollectionConfig, ICollectionInfo } from '../../../frontend/src/shared/IcollectionInfo';
+import { send404, sendError, sendOk } from '../helper/httpMethods';
 
 // Routes
 export function collectionController() {
@@ -30,10 +31,9 @@ async function getAllCollections(ctx: Context) {
   let allCollections = await db.collection(username).findOne({ title: 'collectionInfo' });
   allCollections = allCollections.collectionsMeta;
   if (allCollections) {
-    ctx.status = 200;
-    ctx.body = allCollections;
+    sendOk({ ctx, data: allCollections });
   } else {
-    ctx.throw(400, 'Could not find the collection info bundle');
+    sendError({ ctx, errorMessage: 'Could not find the collection info bundle' });
   }
 }
 
@@ -42,15 +42,15 @@ async function getSpecificCollection(ctx: Context) {
   const username = ctx.state.username;
 
   const specCollection = await db.collection(username).findOne({ title: collectionName });
-  if (specCollection) {
-    ctx.body = {
-      title: specCollection.title,
-      configuration: specCollection.configuration,
-    };
-    ctx.status = 200;
-  } else {
-    ctx.throw(400, 'Could not find the queried collection');
-  }
+  specCollection
+    ? sendOk({
+        ctx,
+        data: {
+          title: specCollection.title,
+          configuration: specCollection.configuration,
+        },
+      })
+    : send404({ ctx, errorMessage: 'Could not find the queried collection' });
 }
 
 async function deleteCollection(ctx: Context) {
@@ -74,12 +74,9 @@ async function deleteCollection(ctx: Context) {
   }
 
   const success = await db.collection(username).replaceOne({ title: 'collectionInfo' }, collectionsMetaInfo);
-  if (success && deletedCollection) {
-    ctx.body = deletedCollection;
-    ctx.status = 200;
-  } else {
-    ctx.throw(400, 'Could not delete the target collection or configure the meta information');
-  }
+  success && deletedCollection
+    ? sendOk({ ctx, data: deletedCollection })
+    : send404({ ctx, errorMessage: 'Could not delete the target collection or configure the meta information' });
 }
 
 async function createNewCollection(ctx: Context) {
@@ -102,19 +99,17 @@ async function createNewCollection(ctx: Context) {
             numberOfDatasets: newCollectionObj.datasets.length,
             description: newCollectionObj.collectionDescription,
             numberOfEntries: 1,
+            favorite: false,
             created: new Date(),
           },
         },
       }
     )
     .then(() => {
-      if (newCollection) {
-        ctx.body = newCollectionObj;
-        ctx.status = 200;
-      }
+      newCollection ? sendOk({ ctx, data: newCollectionObj }) : null;
     })
     .catch(() => {
-      ctx.throw(400, 'Error while trying to create new Collection');
+      send404({ ctx, errorMessage: 'Error while trying to create new Collection' });
     });
 }
 // This Api is not getting used right now.
@@ -126,11 +121,10 @@ async function addNewFitnessDatapoint(ctx: Context) {
     .collection(username)
     .updateOne({ title: 'fitness' }, { $push: { data: { fitnessData } } })
     .then(() => {
-      ctx.body = fitnessData;
-      ctx.status = 200;
+      sendOk({ ctx, data: fitnessData });
     })
     .catch((err: MongoError) => {
-      ctx.throw(400, 'Error trying to add new fitness entry: ' + err);
+      send404({ ctx, errorMessage: 'Error trying to add new fitness entry: ' + err });
     });
   await db.collection(username).updateOne({ title: 'collectionInfo', collectionsMeta: { title: 'fitness' } }, { $inc: { numberOfEntries: +1 } });
 }
@@ -147,7 +141,7 @@ async function createNewDatapointForCollection(ctx: Context) {
     .collection(username)
     .updateMany({ title: targedCollectionName }, { $push: { data: { $each: newDatapoints } } })
     .catch(() => {
-      ctx.throw(400, 'Didnt find the collection you were looking for');
+      send404({ ctx, errorMessage: 'Didnt find the collection you were looking for' });
     });
 
   const updatedCollectionInfo = await db.collection(username).findOne({ 'collectionsMeta.title': targedCollectionName });
@@ -157,11 +151,10 @@ async function createNewDatapointForCollection(ctx: Context) {
     .collection(username)
     .replaceOne({ title: 'collectionInfo' }, updatedCollectionInfo)
     .then(() => {
-      ctx.body = ctx.request.body;
-      ctx.status = 200;
+      sendOk({ ctx, data: ctx.request.body });
     })
     .catch(() => {
-      ctx.throw(400, 'Couldnt adjust the collection information according to input.');
+      send404({ ctx, errorMessage: 'Couldnt adjust the collection information according to input.' });
     });
 }
 
@@ -170,18 +163,36 @@ async function getSpecificCollectionData(ctx: Context) {
   const username = ctx.state.username;
 
   const targedCollection = await db.collection(username).findOne({ title: collectionName });
-  if (targedCollection) {
-    ctx.body = targedCollection.data;
-    ctx.status = 200;
-  } else {
-    ctx.throw(400, 'The collection you are looking for wasnt found.');
-  }
+  targedCollection ? sendOk({ ctx, data: targedCollection.data }) : send404({ ctx, errorMessage: 'The collection you are looking for wasnt found.' });
 }
 
 async function getFavoriteCollections(ctx: Context) {
   const username = ctx.state.username;
 
   const cachedCollections = await db.collection(username).findOne({ title: 'Favorites' });
+  cachedCollections ? sendOk({ ctx, data: cachedCollections }) : send404({ ctx, errorMessage: 'Could not find the cached collections' });
 }
 
-async function addToFavoriteCollections(ctx: Context) {}
+async function addToFavoriteCollections(ctx: Context) {
+  const username = ctx.state.username;
+  const collectionToAdd: ICollectionInfo = ctx.request.body;
+  const collectionData: ICollectionConfig = await db.collection(username).findOne({ title: collectionToAdd.title });
+  toogleFavorite(username, collectionToAdd.title).then(() => (collectionToAdd.favorite = !collectionToAdd.favorite));
+  const favorites = await db.collection(username).findOne({ title: 'Favorites' });
+  if (!favorites) {
+    const startFavorites = await db.collection(username).insertOne({ title: 'Favorites', info: [collectionToAdd], config: [collectionData] });
+    startFavorites ? sendOk({ ctx, data: startFavorites.ops[0] }) : send404({ ctx, errorMessage: 'Could not create the favorites collection' });
+  } else {
+    await db.collection(username).updateOne({ title: 'Favorites' }, { $push: { info: collectionToAdd, config: { data: collectionData } } });
+    const cachedCollections = await db.collection(username).findOne({ title: 'Favorites' });
+    cachedCollections ? sendOk({ ctx, data: cachedCollections }) : send404({ ctx, errorMessage: 'Could not update or find the cached collections' });
+  }
+}
+async function toogleFavorite(username: string, collectionTitle: string) {
+  let collectionBundle = await db.collection(username).findOne({ title: 'collectionInfo' });
+  let targetCollection = collectionBundle.collectionsMeta.find((col: ICollectionInfo) => col.title === collectionTitle);
+  targetCollection.favorite = !targetCollection.favorite;
+  console.log('TARGET: ', targetCollection);
+
+  // TOBE CONTINUED
+}

@@ -32,4 +32,8 @@ export class LibraryService {
   submitNewDatapoint(newDatapoint: Dataset[], collection: ICollectionInfo) {
     return this.http.put(`api/collections/datapoint?collection=${collection.title}`, newDatapoint);
   }
+
+  addCollectionToFavorites(newCollection: ICollectionInfo) {
+    return this.http.post<ICollectionInfo>('api/collections/favorites', newCollection);
+  }
 }

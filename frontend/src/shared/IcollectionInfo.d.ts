@@ -6,6 +6,7 @@ export interface ICollectionInfo {
   description: string;
   numberOfDatasets: number;
   numberOfEntries: number;
+  favorite: boolean;
   created: string;
 }
 

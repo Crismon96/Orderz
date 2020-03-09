@@ -42,4 +42,10 @@ export class CollectionPanelComponent implements OnInit {
 
     await alert.present();
   }
+
+  favoriteCollection(collection: ICollectionInfo) {
+    this.lib.addCollectionToFavorites(collection).subscribe((res) => {
+      console.log(res);
+    });
+  }
 }

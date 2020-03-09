@@ -97,6 +97,9 @@ export class SidebarComponent implements OnInit {
   onNavDataLib() {
     this.router.navigateByUrl('/library');
   }
+  onNavFavorites() {
+    console.log();
+  }
   onNavDataViz() {
     this.router.navigateByUrl('/vizard');
   }
