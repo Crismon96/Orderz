@@ -6,12 +6,13 @@
       "name": "app",
       "installMode": "prefetch",
       "resources": {
-        "files": ["/favicon.ico", "/index.html", "/manifest.webmanifest", "/*.css", "/*.js"]
+        "files": ["/favicon.ico", "/index.html", "/manifest.webmanifest", "/*.css", "/*.js"],
+        "urls": ["https://fonts.googleapis.com/icon?family=Material+Icons", "https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap"]
       }
     },
     {
       "name": "login",
-      "installMode": "prefetch",
+      "installMode": "lazy",
       "resources": {
         "files": ["app/login/login.component.html", "/*.css", "/*.js"]
       }
@@ -22,6 +23,17 @@
       "updateMode": "prefetch",
       "resources": {
         "files": ["/assets/**", "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "favorites",
+      "urls": ["api/collections/favorites"],
+      "cacheConfig": {
+        "maxSize": 1,
+        "maxAge": "24h",
+        "strategy": "performance"
       }
     }
   ]

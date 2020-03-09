@@ -18,6 +18,8 @@ export function collectionController() {
   router.put('/fitness/datapoint', validateJWT, addNewFitnessDatapoint);
   router.put('/datapoint', validateJWT, createNewDatapointForCollection);
   router.get('/data', validateJWT, getSpecificCollectionData);
+  router.get('/favorites', validateJWT, getFavoriteCollections);
+  router.post('/favorites', validateJWT, addToFavoriteCollections);
 
   return router.routes();
 }
@@ -175,3 +177,11 @@ async function getSpecificCollectionData(ctx: Context) {
     ctx.throw(400, 'The collection you are looking for wasnt found.');
   }
 }
+
+async function getFavoriteCollections(ctx: Context) {
+  const username = ctx.state.username;
+
+  const cachedCollections = await db.collection(username).findOne({ title: 'Favorites' });
+}
+
+async function addToFavoriteCollections(ctx: Context) {}
