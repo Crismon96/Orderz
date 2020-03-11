@@ -44,8 +44,8 @@ export class CollectionPanelComponent implements OnInit {
   }
 
   favoriteCollection(collection: ICollectionInfo) {
-    this.lib.addCollectionToFavorites(collection).subscribe((res) => {
-      console.log(res);
+    this.lib.addCollectionToFavorites(collection).subscribe(res => {
+      this.collection = res;
     });
   }
 }

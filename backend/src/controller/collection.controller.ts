@@ -177,22 +177,22 @@ async function addToFavoriteCollections(ctx: Context) {
   const username = ctx.state.username;
   const collectionToAdd: ICollectionInfo = ctx.request.body;
   const collectionData: ICollectionConfig = await db.collection(username).findOne({ title: collectionToAdd.title });
-  toogleFavorite(username, collectionToAdd.title).then(() => (collectionToAdd.favorite = !collectionToAdd.favorite));
+  collectionToAdd.favorite = !collectionToAdd.favorite;
   const favorites = await db.collection(username).findOne({ title: 'Favorites' });
   if (!favorites) {
     const startFavorites = await db.collection(username).insertOne({ title: 'Favorites', info: [collectionToAdd], config: [collectionData] });
     startFavorites ? sendOk({ ctx, data: startFavorites.ops[0] }) : send404({ ctx, errorMessage: 'Could not create the favorites collection' });
   } else {
-    await db.collection(username).updateOne({ title: 'Favorites' }, { $push: { info: collectionToAdd, config: { data: collectionData } } });
-    const cachedCollections = await db.collection(username).findOne({ title: 'Favorites' });
-    cachedCollections ? sendOk({ ctx, data: cachedCollections }) : send404({ ctx, errorMessage: 'Could not update or find the cached collections' });
+    toogleFavorite(username, collectionToAdd.title).catch(async () => {
+      await db.collection(username).updateOne({ title: 'Favorites' }, { $push: { info: collectionToAdd, config: { data: collectionData } } });
+    });
+    sendOk({ ctx, data: collectionToAdd });
   }
 }
+
 async function toogleFavorite(username: string, collectionTitle: string) {
   let collectionBundle = await db.collection(username).findOne({ title: 'collectionInfo' });
-  let targetCollection = collectionBundle.collectionsMeta.find((col: ICollectionInfo) => col.title === collectionTitle);
-  targetCollection.favorite = !targetCollection.favorite;
-  console.log('TARGET: ', targetCollection);
-
-  // TOBE CONTINUED
+  let targedIndex = collectionBundle.collectionsMeta.findIndex((col: ICollectionInfo) => col.title === collectionTitle);
+  collectionBundle.collectionsMeta[targedIndex].favorite = !collectionBundle.collectionsMeta[targedIndex].favorite;
+  await db.collection(username).replaceOne({ title: 'collectionInfo' }, collectionBundle);
 }
