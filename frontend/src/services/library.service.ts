@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ICollectionConfig, ICollectionInfo } from '../shared/IcollectionInfo';
 import { Dataset, ICollection } from '../shared/Icollection';
 import { BehaviorSubject } from 'rxjs';
+import { ROUTES } from '../helper/Routes';
 
 @Injectable({
   providedIn: 'root',
@@ -14,26 +15,30 @@ export class LibraryService {
   constructor(private http: HttpClient) {}
 
   getAllCollections() {
-    return this.http.get<ICollectionInfo[]>('api/collections');
+    return this.http.get<ICollectionInfo[]>(ROUTES.lib.allCollections);
   }
 
   createNewCollection(newCollection: ICollection) {
-    return this.http.put<ICollectionInfo>('api/collections/create', newCollection);
+    return this.http.put<ICollectionInfo>(ROUTES.lib.createCollection, newCollection);
   }
 
   deleteCollection(collection: ICollectionInfo) {
-    return this.http.delete<ICollectionInfo>(`api/collections/collection?name=${collection.title}`);
+    return this.http.delete<ICollectionInfo>(`${ROUTES.lib.collectionByName}${collection.title}`);
   }
 
   getCollectionByName(collection: ICollectionInfo) {
-    return this.http.get<ICollectionConfig>(`api/collections/collection?name=${collection.title}`);
+    return this.http.get<ICollectionConfig>(`${ROUTES.lib.collectionByName}${collection.title}`);
   }
 
   submitNewDatapoint(newDatapoint: Dataset[], collection: ICollectionInfo) {
-    return this.http.put(`api/collections/datapoint?collection=${collection.title}`, newDatapoint);
+    return this.http.put(`${ROUTES.lib.newDatapoint}${collection.title}`, newDatapoint);
   }
 
   addCollectionToFavorites(newCollection: ICollectionInfo) {
-    return this.http.post<ICollectionInfo>('api/collections/favorites', newCollection);
+    return this.http.post<ICollectionInfo>(ROUTES.lib.addFavorite, newCollection);
+  }
+
+  getAllFavorites() {
+    return this.http.get<ICollectionInfo[]>(ROUTES.lib.getFavorites);
   }
 }

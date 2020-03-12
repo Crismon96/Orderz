@@ -1,0 +1,9 @@
+<div class="lib-accordion">
+  <app-collection-panel
+    class="accordion-element"
+    *ngFor="let collection of collections"
+    [collection]="collection"
+    (clickCollection)="chooseActiveCollection(collection)"
+  ></app-collection-panel>
+  <div class="spacer"></div>
+</div>

@@ -18,10 +18,24 @@
       }
     },
     {
+      "name": "collectionpanel",
+      "installMode": "lazy",
+      "resources": {
+        "files": ["app/library/collections/collection-panel/collection-panel.component.html", "/*.css", "/*.js"]
+      }
+    },
+    {
+      "name": "collectiontable",
+      "installMode": "lazy",
+      "resources": {
+        "files": ["app/library/collections/collection-views/collection-datatable/collection-datatable.component.html", "/*.css", "/*.js"]
+      }
+    },
+    {
       "name": "library",
       "installMode": "lazy",
       "resources": {
-        "files": ["app/library/library.component.html", "/*.css", "/*.js"]
+        "files": ["app/library/offline-library.component.html", "/*.css", "/*.js"]
       }
     },
     {

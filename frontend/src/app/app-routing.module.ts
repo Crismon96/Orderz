@@ -7,13 +7,14 @@ import { CollectionViewComponent } from './library/collections/collection-views/
 import { VizardComponent } from './vizard/vizard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserOptionsComponent } from './user-options/user-options.component';
-import {CollectionDataviewComponent} from './library/collections/collection-views/collection-dataview/collection-dataview.component';
-import {CollectionDatatableComponent} from './library/collections/collection-views/collection-datatable/collection-datatable.component';
+import { OfflineLibraryComponent } from './library/offline-library/offline-library.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'main', component: MainmenuComponent },
   { path: 'library', component: LibraryComponent },
+  { path: 'library', component: LibraryComponent },
+  { path: 'libraryOff', component: OfflineLibraryComponent },
   { path: 'library/collection', component: CollectionViewComponent },
   { path: 'vizard', component: VizardComponent },
   { path: 'options', component: UserOptionsComponent },

@@ -28,6 +28,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { OfflineLibraryComponent } from './library/offline-library/offline-library.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { environment } from '../environments/environment';
     CollectionPanelComponent,
     CollectionDataviewComponent,
     CollectionDatatableComponent,
+    OfflineLibraryComponent,
   ],
   imports: [
     BrowserModule,
