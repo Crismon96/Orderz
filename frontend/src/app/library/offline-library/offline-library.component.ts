@@ -3,7 +3,13 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { HeaderService } from '../../../services/header.service';
 import { LibraryService } from '../../../services/library.service';
-import { ICollectionInfo } from '../../../shared/IcollectionInfo';
+import { ICollectionConfig, ICollectionInfo } from '../../../shared/IcollectionInfo';
+
+export interface IOfflineCollections {
+  info: ICollectionInfo[];
+  config: ICollectionConfig[];
+  title: string;
+}
 
 @Component({
   selector: 'app-offline-library',
@@ -11,7 +17,8 @@ import { ICollectionInfo } from '../../../shared/IcollectionInfo';
   styleUrls: ['./offline-library.component.scss'],
 })
 export class OfflineLibraryComponent implements OnInit {
-  collections = [];
+  collections: ICollectionInfo[];
+  collectionsData: ICollectionConfig[];
 
   constructor(private router: Router, public dialog: MatDialog, private header: HeaderService, private lib: LibraryService) {}
 
@@ -19,7 +26,8 @@ export class OfflineLibraryComponent implements OnInit {
     this.header.setTitle('Favorites (Offline-Mode)');
     this.lib.getAllFavorites().subscribe(data => {
       console.log('THE OFFLINE DATA: ', data);
-      this.collections = data;
+      this.collections = data.info;
+      this.collectionsData = data.config;
     });
   }
 

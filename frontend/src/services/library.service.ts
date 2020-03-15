@@ -4,6 +4,7 @@ import { ICollectionConfig, ICollectionInfo } from '../shared/IcollectionInfo';
 import { Dataset, ICollection } from '../shared/Icollection';
 import { BehaviorSubject } from 'rxjs';
 import { ROUTES } from '../helper/Routes';
+import { IOfflineCollections } from '../app/library/offline-library/offline-library.component';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,6 @@ export class LibraryService {
   }
 
   getAllFavorites() {
-    return this.http.get<ICollectionInfo[]>(ROUTES.lib.getFavorites);
+    return this.http.get<IOfflineCollections>(ROUTES.lib.getFavorites);
   }
 }

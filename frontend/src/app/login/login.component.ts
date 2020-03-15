@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastController } from '@ionic/angular';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -42,11 +43,17 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.controls.password.value,
     };
     this.busy = true;
-    this.auth.logUserIn(user).subscribe(() => {
-      this.router.navigateByUrl('/main').then(() => {
-        this.busy = false;
-      });
-    });
+    this.auth.logUserIn(user).subscribe(
+      val => {
+        this.router.navigateByUrl('/main').then(() => {
+          this.busy = false;
+        });
+      },
+      error => {
+        console.log('ERROR REGISTERED');
+        this.router.navigateByUrl('/libraryOff');
+      }
+    );
   }
 
   register() {

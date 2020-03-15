@@ -20,7 +20,7 @@ export function collectionController() {
   router.put('/datapoint', validateJWT, createNewDatapointForCollection);
   router.get('/data', validateJWT, getSpecificCollectionData);
   router.get('/favorites', validateJWT, getFavoriteCollections);
-  router.post('/favorites', validateJWT, addToFavoriteCollections);
+  router.post('/favorite', validateJWT, addToFavoriteCollections);
 
   return router.routes();
 }

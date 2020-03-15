@@ -1,0 +1,33 @@
+.dialog-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  @media (max-width: 549px) {
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
+
+.dataset-repeater {
+  width: 95%;
+  height: 50px;
+  margin: 20px auto;
+  text-align: center;
+  @media (min-width: 550px) {
+    width: 48%;
+  }
+}
+
+.action-buttons {
+  width: 100%;
+  text-align: center;
+  button {
+    margin: 20px;
+  }
+}
+
+.array-item-title {
+  text-align: center;
+  display: block;
+}

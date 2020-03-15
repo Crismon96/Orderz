@@ -1,7 +1,7 @@
 <div class="lib-accordion">
   <app-collection-panel
     class="accordion-element"
-    *ngFor="let collection of collections"
+    *ngFor="let collection of collections; let i = index"
     [collection]="collection"
     (clickCollection)="chooseActiveCollection(collection)"
   ></app-collection-panel>

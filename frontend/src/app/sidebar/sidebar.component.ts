@@ -98,10 +98,10 @@ export class SidebarComponent implements OnInit {
     this.router.navigateByUrl('/library');
   }
   onNavFavorites() {
-    console.log();
+    this.router.navigateByUrl('/libraryOff');
   }
   onNavDataViz() {
-    this.router.navigateByUrl('/vizard');
+    this.router.navigateByUrl('/libraryOff');
   }
   onNavUserOpt() {
     this.router.navigateByUrl('/options');

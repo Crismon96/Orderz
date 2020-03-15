@@ -29,6 +29,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { OfflineLibraryComponent } from './library/offline-library/offline-library.component';
+import { OfflinePanelComponent } from './library/offline-library/offline-panel/offline-panel.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { OfflineLibraryComponent } from './library/offline-library/offline-libra
     CollectionDataviewComponent,
     CollectionDatatableComponent,
     OfflineLibraryComponent,
+    OfflinePanelComponent,
   ],
   imports: [
     BrowserModule,
