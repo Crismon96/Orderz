@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ajv": "^6.10.2",
+    "ajv": "^6.12.3",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.5.1",
     "dotenv": "^8.2.0",
